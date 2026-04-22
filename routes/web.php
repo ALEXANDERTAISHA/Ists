@@ -1,0 +1,388 @@
+<?php
+// Ruta pública para enviar mensajes al chatbot
+use App\Http\Controllers\ChatbotController as PublicChatbotController;
+use App\Http\Controllers\Admin\ChatbotController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicController;
+Route::post('/chatbot/send', [PublicChatbotController::class, 'send'])->name('chatbot.send');
+
+// Ruta para crear docentes desde la gestión de Acerca (si se requiere fuera del resource)
+// Route::get('/admin/teachers/create', [TeacherController::class, 'create'])->name('teachers.create');
+// ...existing code...
+
+// Ruta pública para sección de visitar por slug
+Route::get('/visitar/{slug}', [PublicController::class, 'showVisitSection'])->name('visitar.section');
+use App\Http\Controllers\Admin\InscripcionAdminController;
+// Inscripciones admin
+Route::middleware(["auth", "is_admin"])
+    ->get("/admin/inscripciones", [InscripcionAdminController::class, "index"])
+    ->name("admin.inscripciones.index");
+use App\Http\Controllers\InscripcionController;
+// Inscripción a cursos de educación continua
+Route::get("/inscripcion/{programa}", [
+    InscripcionController::class,
+    "create",
+])->name("inscripcion.create");
+// Redirección para login admin
+Route::get("/admin/login", function () {
+    return redirect("/login");
+});
+// ...existing code...
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\QAController;
+use App\Http\Controllers\LeadershipController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CampusItemController;
+use App\Http\Controllers\AcademicSectionController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\Admin\CareerController;
+use App\Http\Controllers\Admin\AutoridadController;
+use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\PublicEventController;
+use App\Http\Controllers\MenuItemPdfController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Public routes
+Route::get("/", [PublicController::class, "home"])->name("home");
+Route::get("/ajax/content/mision-vision", [
+    PublicController::class,
+    "getMisionVisionAjax",
+])->name("ajax.mision-vision");
+
+// Página principal de transparencia con jerarquía correcta
+Route::get("/transparency", [
+    PublicController::class,
+    "showTransparency",
+])->name("transparency.index");
+
+// Detalle de reglamento o subreglamento
+Route::get("/transparency/{slug}", [
+    PublicController::class,
+    "transparencyShow",
+])->name("transparency.show");
+Route::get("/carrera/{slug}", [PublicController::class, "showCareer"])->name(
+    "career.show",
+);
+Route::get("/contenido/{slug}", [PublicController::class, "showContent"])->name(
+    "content.show",
+);
+Route::get("/educacion-continua/{slug}", [
+    PublicController::class,
+    "showAcademicSection",
+])->name("academic-section.show");
+Route::get("/academicos", [PublicController::class, "academicos"])->name(
+    "academicos",
+);
+Route::get("/about", function () {
+    return view("public.about");
+})->name("about");
+Route::get("/contact", function () {
+    return view("public.contact");
+})->name("contact");
+
+
+Route::get("/tramites", [PublicController::class, "tramites"])->name(
+    "tramites",
+);
+
+// Nuevas rutas para el menú dinámico
+Route::get("/campus", function () {
+    return view("public.campus");
+})->name("campus");
+Route::get('/campus/{slug}', [PublicController::class, 'showCampusItem'])->name('campus.item');
+Route::get("/visitar", function () {
+    return view("public.visitar");
+})->name("visitar");
+Route::get("/noticias", function () {
+    // Noticias normales paginadas
+    $news = \App\Models\News::where("status", "published")
+        ->orderBy("created_at", "desc")
+        ->paginate(10, ['*'], 'news_page');
+    // Eventos pasados (no paginados, solo se agregan al final de la lista de la página actual)
+    $eventNews = \App\Models\Event::where('status', 'published')
+        ->whereDate('date', '<', now()->startOfDay())
+        ->orderBy('date', 'desc')
+        ->get();
+    return view("public.news.index", ['news' => $news, 'eventNews' => $eventNews]);
+})->name("noticias");
+
+
+// Ruta pública para ver una noticia individual por slug
+Route::get('/noticias/{slug}', function($slug) {
+    $news = \App\Models\News::where('slug', $slug)->where('status', 'published')->firstOrFail();
+    return view('public.news.show', ['news' => $news]);
+})->name('noticias.show');
+
+// Ruta pública para Planta Docente
+Route::get("/planta-docente", [
+    PublicController::class,
+    "showPlantaDocente",
+])->name("planta-docente");
+
+// Ruta pública para Autoridades
+Route::get("/autoridades", [PublicController::class, "showAutoridades"])->name(
+    "autoridades",
+);
+
+// Ruta pública para el detalle de una autoridad individual por slug
+Route::get("/autoridades/{slug}", [
+    PublicController::class,
+    "showAutoridadDetail",
+])->name("autoridades.show");
+
+// Rutas públicas de eventos
+Route::get('/eventos', [PublicEventController::class, 'index'])->name('public.events.index');
+Route::get('/eventos/{id}', [PublicEventController::class, 'show'])->name('public.events.show');
+Route::get('/eventos/calendario', [PublicEventController::class, 'calendar'])->name('public.events.calendar');
+
+// Admin routes
+Route::prefix("admin")
+    ->middleware(["auth", "is_admin"])
+    ->group(function () {
+        Route::get("/dashboard", [AdminController::class, "dashboard"])->name(
+            "admin.dashboard",
+        );
+
+        // Contents management
+        Route::resource("contents", ContentController::class, [
+            "as" => "admin",
+        ]);
+        Route::get("/transparency", [ContentController::class, "index"])
+            ->defaults("category", "transparency")
+            ->name("admin.transparency.index");
+        Route::get("/tramites", [ContentController::class, "index"])
+            ->defaults("category", "tramites")
+            ->name("admin.tramites.index");
+        Route::get("/contents/rector", [
+            ContentController::class,
+            "rector",
+        ])->name("admin.contents.rector.index");
+
+        // News management (Gaceta del ISTS)
+        Route::get('/news', [\App\Http\Controllers\Admin\NewsController::class, 'index'])->name('admin.news.index');
+        Route::get('/news/create', [\App\Http\Controllers\Admin\NewsController::class, 'create'])->name('admin.news.create');
+        Route::post('/news', [\App\Http\Controllers\Admin\NewsController::class, 'store'])->name('admin.news.store');
+        Route::get('/news/{news}/edit', [\App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('admin.news.edit');
+        Route::put('/news/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'update'])->name('admin.news.update');
+        Route::delete('/news/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('admin.news.destroy');
+
+        // Q&A management
+        Route::resource("qas", QAController::class, ["as" => "admin"]);
+
+        // Updates management
+        Route::resource('updates', App\Http\Controllers\Admin\UpdateController::class, [
+            'as' => 'admin'
+        ]);
+
+        // Leadership management
+        Route::resource("leadership", LeadershipController::class, [
+            "as" => "admin",
+        ]);
+
+        // Teachers management
+        Route::resource("teachers", TeacherController::class, [
+            "as" => "admin",
+        ]);
+
+        // Timeline eliminado y reemplazado por gestión de noticias oficiales (news)
+
+        // Visit sections management (corregido)
+        Route::resource("visit-sections", \App\Http\Controllers\Admin\VisitSectionController::class, [
+            "as" => "admin",
+        ]);
+
+        // Campus items
+        Route::resource("campus-items", CampusItemController::class, [
+            "as" => "admin",
+        ]);
+        
+        // Campus item contents (nested resource)
+        Route::resource("campus-items.contents", \App\Http\Controllers\CampusItemContentController::class, [
+            "as" => "admin",
+            "except" => ["show"],
+        ]);
+
+        // Academic sections
+        Route::resource("academic-sections", AcademicSectionController::class, [
+            "as" => "admin",
+        ]);
+
+        // Careers
+        Route::resource("careers", CareerController::class, [
+            "as" => "admin",
+        ]);
+
+        // Autoridades management
+        Route::resource("autoridades", AutoridadController::class, [
+            "as" => "admin",
+            "parameters" => ["autoridades" => "autoridad"],
+        ]);
+
+        // Menu items management
+        Route::resource("menu-items", MenuItemController::class, [
+            "as" => "admin",
+        ]);
+
+        // Route for exporting inscriptions
+        Route::get("inscripciones/export", [
+            InscripcionAdminController::class,
+            "export",
+        ])->name("admin.inscripciones.export");
+
+        // Users management
+        Route::resource("users", UserController::class, ["as" => "admin"]);
+
+        // Settings management
+        Route::get("/settings", [SettingController::class, "index"])->name(
+            "admin.settings.index",
+        );
+        Route::post("/settings", [SettingController::class, "update"])->name(
+            "admin.settings.update",
+        );
+        Route::post('/settings/header-brand', [SettingController::class, 'updateHeaderBrand'])->name('admin.settings.header-brand');
+        Route::get("/settings/biblioteca", [
+            SettingController::class,
+            "biblioteca",
+        ])->name("admin.settings.biblioteca");
+        Route::post("/settings/biblioteca", [
+            SettingController::class,
+            "updateBiblioteca",
+        ])->name("admin.settings.updateBiblioteca");
+        Route::get("/settings/graduados", [
+            SettingController::class,
+            "graduados",
+        ])->name("admin.settings.graduados");
+        Route::post("/settings/graduados", [
+            SettingController::class,
+            "updateGraduados",
+        ])->name("admin.settings.updateGraduados");
+
+        // Chatbot management
+        Route::get("/chatbot", [ChatbotController::class, "index"])->name(
+            "admin.chatbot.index",
+        );
+        Route::get("/chatbot/{id}", [ChatbotController::class, "show"])->name(
+            "admin.chatbot.show",
+        );
+        Route::delete("/chatbot/{id}", [
+            ChatbotController::class,
+            "destroy",
+        ])->name("admin.chatbot.destroy");
+        Route::delete("/chatbot/clear", [
+            ChatbotController::class,
+            "clear",
+        ])->name("admin.chatbot.clear");
+
+        // Chatbot contacts management
+        Route::get('/chatbot-contactos', [\App\Http\Controllers\Admin\ChatbotContactController::class, 'index'])->name('admin.chatbot.contacts');
+        Route::get('/chatbot-contactos/export', [\App\Http\Controllers\Admin\ChatbotContactController::class, 'exportExcel'])->name('admin.chatbot.contacts.export');
+        Route::delete('/chatbot-contactos/destroy-all', [\App\Http\Controllers\Admin\ChatbotContactController::class, 'destroyAll'])->name('admin.chatbot.contacts.destroyAll');
+
+        // Profile management
+        Route::get("/profile", [ProfileController::class, "edit"])->name(
+            "admin.profile",
+        );
+        Route::put("/profile", [ProfileController::class, "update"])->name(
+            "admin.profile.update",
+        );
+
+        // Additional admin routes
+        Route::get("/createContent", [
+            AdminController::class,
+            "createContent",
+        ])->name("admin.createContent");
+        Route::get("/createNews", [AdminController::class, "createNews"])->name(
+            "admin.createNews",
+        );
+
+        // Carrusel (Hero Slides) management
+        Route::resource('hero-slides', HeroSlideController::class, ['as' => 'admin']);
+
+            // Social links management
+            Route::get('/social-links', [\App\Http\Controllers\Admin\SocialLinkController::class, 'index'])->name('admin.social_links.index');
+            Route::get('/social-links/create', [\App\Http\Controllers\Admin\SocialLinkController::class, 'create'])->name('admin.social_links.create');
+            Route::post('/social-links', [\App\Http\Controllers\Admin\SocialLinkController::class, 'store'])->name('admin.social_links.store');
+            Route::get('/social-links/{id}/edit', [\App\Http\Controllers\Admin\SocialLinkController::class, 'edit'])->name('admin.social_links.edit');
+            Route::put('/social-links/{id}', [\App\Http\Controllers\Admin\SocialLinkController::class, 'update'])->name('admin.social_links.update');
+            Route::post('/social-links/{id}/toggle', [\App\Http\Controllers\Admin\SocialLinkController::class, 'toggle'])->name('admin.social_links.toggle');
+
+        // Calendario Académico
+        Route::resource('academic-calendar', App\Http\Controllers\Admin\AcademicCalendarController::class, ['as' => 'admin']);
+
+        // Índice A-Z (Personas y Áreas/Servicios)
+        Route::get('/az-index', [\App\Http\Controllers\Admin\AZIndexController::class, 'index'])->name('admin.azindex.index');
+
+        // Chatbot settings management
+        Route::get('/chatbot-settings', [\App\Http\Controllers\Admin\ChatbotSettingController::class, 'edit'])->name('admin.chatbot-settings.edit');
+        Route::put('/chatbot-settings', [\App\Http\Controllers\Admin\ChatbotSettingController::class, 'update'])->name('admin.chatbot-settings.update');
+        Route::post('/qas/clear-history', [\App\Http\Controllers\QAController::class, 'clearHistory'])->name('admin.qas.clearHistory');
+
+        // PopUp/Banner destacado
+        Route::resource('popups', App\Http\Controllers\Admin\PopupController::class, [
+            'as' => 'admin'
+        ]);
+
+        Route::middleware(['auth', 'is_admin'])->prefix('admin/menu-items')->group(function () {
+            Route::post('{menuItem}/pdfs', [MenuItemPdfController::class, 'store'])->name('admin.menu-items.pdfs.store');
+            Route::delete('{menuItem}/pdfs/{pdf}', [MenuItemPdfController::class, 'destroy'])->name('admin.menu-items.pdfs.destroy');
+        });
+    });
+
+// ===== DEBUG ROUTES =====
+Route::get('/debug/hero-slides', function () {
+    $slides = \App\Models\HeroSlide::where('is_active', true)
+        ->whereNotNull('image_path')
+        ->where('image_path', '!=', '')
+        ->orderBy('sort_order')
+        ->get(['id', 'title', 'image_path', 'sort_order', 'is_active']);
+    
+    return response()->json([
+        'total' => $slides->count(),
+        'slides' => $slides->map(function ($slide) {
+            return [
+                'id' => $slide->id,
+                'title' => $slide->title,
+                'image_path' => $slide->image_path,
+                'image_url' => $slide->image_url,
+                'sort_order' => $slide->sort_order,
+                'is_active' => $slide->is_active,
+                'file_exists_in_storage' => \Illuminate\Support\Facades\Storage::disk('public')->exists($slide->image_path),
+                'file_size' => \Illuminate\Support\Facades\Storage::disk('public')->exists($slide->image_path) ? \Illuminate\Support\Facades\Storage::disk('public')->size($slide->image_path) : null,
+                'full_url' => url('/storage/' . $slide->image_path),
+            ];
+        })->all(),
+    ]);
+});
+
+// Auth routes (assuming using Laravel's default)
+
+require __DIR__ . "/auth.php";
+require __DIR__ . "/admin_about.php";
+require __DIR__ . "/admin_academics.php";
+require __DIR__.'/admin_events.php';
+
+// Rutas públicas agregadas para el footer
+Route::get('/carreras', function () {
+    return view('public.carreras');
+})->name('carreras');
+Route::get('/actualizaciones', function () {
+    return view('public.actualizaciones');
+})->name('actualizaciones');
+
+// Ruta pública para el calendario académico
+Route::get('/calendario', [PublicController::class, 'academicCalendar'])->name('public.academic_calendar');
+

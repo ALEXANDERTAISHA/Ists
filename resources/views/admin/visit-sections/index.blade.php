@@ -1,0 +1,69 @@
+@extends('layouts.admin')
+
+@section('title', 'Secciones de Visitar')
+
+@section('content')
+<div class="card" style="border-radius: 18px; box-shadow: 0 2px 16px rgba(0,158,96,0.10); margin-top: 2.5rem;">
+    <div class="card-body p-5">
+        <div class="mb-4 d-flex flex-column flex-md-row align-items-center justify-content-between" style="gap:1.2rem;">
+            <h1 class="fw-bold mb-0" style="font-size:2.1rem; color:#1a3c34; letter-spacing:-1px; display:flex;align-items:center;gap:0.5em;">
+                <i class="bi bi-building" style="font-size:1.8rem; color: var(--admin-primary);"></i> Secciones de Visitar
+            </h1>
+            <a href="{{ route('admin.visit-sections.create') }}" class="btn-new"><i class="bi bi-plus-lg"></i> Nueva Sección</a>
+        </div>
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">{{ session('success') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+        @endif
+        <div class="table-responsive">
+            <table class="table align-middle" style="border-radius: 12px; overflow: hidden;">
+                <thead style="background: linear-gradient(90deg,#009e60,#0e3e49 90%); color: #fff;">
+                    <tr>
+                        <th>Orden</th>
+                        <th>Título</th>
+                        <th>Slug</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($sections as $section)
+                        <tr style="background: #fff;">
+                            <td>{{ $section->sort_order }}</td>
+                            <td style="font-weight:600;">{{ $section->title }}</td>
+                            <td><code>{{ $section->slug }}</code></td>
+                            <td><small>{{ $section->email ?? 'N/A' }}</small></td>
+                            <td><small>{{ $section->phone ?? 'N/A' }}</small></td>
+                            <td>
+                                <span class="badge" style="background:{{ $section->is_active ? '#009e60' : '#f9d423' }};color:#fff; font-weight:600; border-radius:6px; padding:0.4em 1em; font-size:0.98em;">
+                                    {{ $section->is_active ? '✓ Activo' : '✗ Inactivo' }}
+                                </span>
+                            </td>
+                            <td style="display:flex; gap:0.5em;">
+                                    <a href="{{ route('visitar.section', $section->slug) }}" class="btn btn-view btn-sm" title="Ver en sitio público" target="_blank"><i class="bi bi-eye"></i></a>
+                                    <a href="{{ route('admin.visit-sections.edit', $section->id) }}" class="btn btn-edit btn-sm" title="Editar"><i class="bi bi-pencil-square"></i></a>
+                                <form action="{{ route('admin.visit-sections.destroy', $section->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar" onclick="return confirm('¿Está seguro de eliminar esta sección?')"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <p class="text-muted mb-0">No hay secciones registradas</p>
+                                <a href="{{ route('admin.visit-sections.create') }}" class="btn btn-sm btn-primary mt-2">Crear la primera sección</a>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            {{ $sections->links() }}
+        </div>
+    </div>
+</div>
+@endsection

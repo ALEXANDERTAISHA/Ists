@@ -1,0 +1,2415 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const socialWidget = document.getElementById('social-widget');
+    const chatbotWidget = document.getElementById('chatbot-widget');
+    const footer = document.querySelector('footer'); // Ajusta el selector si tu footer tiene otro tag o clase
+
+    function checkFooterVisibility() {
+        if (!footer) return;
+        const footerRect = footer.getBoundingClientRect();
+        // Si el footer está visible en la ventana
+        if (footerRect.top < window.innerHeight) {
+            if (socialWidget) socialWidget.style.display = 'none';
+            if (chatbotWidget) chatbotWidget.style.display = 'none';
+        } else {
+            if (socialWidget) socialWidget.style.display = '';
+            if (chatbotWidget) chatbotWidget.style.display = '';
+        }
+    }
+
+    window.addEventListener('scroll', checkFooterVisibility);
+    window.addEventListener('resize', checkFooterVisibility);
+    checkFooterVisibility();
+});
+</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="9HoWlywR5smoXh6CNn6XEr5T1TkzGpGlIxxPc0bx">
+    <title>ISTS Sucúa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="http://127.0.0.1:8000/css/harvard-style.css">
+    <link rel="stylesheet" href="http://127.0.0.1:8000/css/harvard-exact.css">
+    <link rel="stylesheet" href="http://127.0.0.1:8000/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+    .hero-section { margin-bottom: 0 !important; }
+</style>
+    <link rel="icon" type="image/png" href="http://127.0.0.1:8000/assets/images/logoists.png" sizes="32x32">
+</head>
+<body class="public-sticky-footer">
+    <div class="public-page-shell">
+    <style>
+    html, body {
+        overflow-x: hidden;
+    }
+
+    .header-public {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 3000;
+        background: linear-gradient(90deg, rgba(0, 168, 107, 0.92) 0%, rgba(30, 58, 138, 0.92) 100%);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .header-public .header-link {
+        border-radius: 8px;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .header-public .header-link:hover,
+    .header-public .header-link:focus-visible,
+    .header-public .header-link.active,
+    .header-public .dropdown.menu-open > .header-link {
+        background: rgba(255, 255, 255, 0.22);
+        color: #eff6ff !important;
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        font-size: 1.25rem;
+        cursor: pointer;
+    }
+
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: min(88vw, 360px);
+        height: 100vh;
+        background: #ffffff;
+        z-index: 1200;
+        box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
+        transition: right 0.25s ease;
+        overflow-y: auto;
+    }
+
+    .mobile-menu.active {
+        right: 0;
+    }
+
+    .mobile-menu__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 2;
+    }
+
+    .mobile-menu__close {
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        background: #f8fafc;
+        width: 34px;
+        height: 34px;
+        cursor: pointer;
+    }
+
+    .mobile-menu__list {
+        list-style: none;
+        margin: 0;
+        padding: 0.75rem 0.8rem 1.2rem;
+    }
+
+    .mobile-menu__item {
+        margin-bottom: 0.45rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .mobile-menu__item > a,
+    .mobile-menu__summary {
+        display: block;
+        padding: 0.85rem 0.9rem;
+        color: #0f172a;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .mobile-menu__summary {
+        cursor: pointer;
+        list-style: none;
+    }
+
+    .mobile-menu__children {
+        list-style: none;
+        margin: 0;
+        padding: 0.2rem 0.8rem 0.8rem;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    .mobile-menu__children li a {
+        display: block;
+        padding: 0.5rem 0.2rem;
+        color: #1e3a8a;
+        text-decoration: none;
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 992px) {
+        .header-public .header-navbar {
+            justify-content: space-between !important;
+            padding: 0.65rem 1rem !important;
+        }
+
+        .mobile-logo {
+            display: inline-flex !important;
+        }
+
+        .header-public .header-menu {
+            display: none !important;
+        }
+
+        .mobile-menu-toggle {
+            display: inline-flex;
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let lastScrollTop = window.scrollY;
+        let ticking = false;
+        const header = document.querySelector('.header-public');
+        function onScroll() {
+            let st = window.scrollY;
+            if (st > lastScrollTop && st > 30) {
+                header.style.transform = 'translateY(-100%)';
+            } else if (st < lastScrollTop) {
+                header.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = st;
+        }
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    onScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    });
+</script>
+
+
+<header class="header-public">
+          <nav class="header-navbar" style="width: 100%; background: transparent; box-shadow: none; display: flex; justify-content: center; align-items: center; padding: 0.75rem 0; position: relative;">
+          <a href="http://127.0.0.1:8000" class="mobile-logo" style="display:none; align-items:center;" aria-label="Inicio ISTS">
+                <img src="http://127.0.0.1:8000/assets/images/logoists.png" alt="Logo ISTS" style="height: 44px; vertical-align: middle;">
+          </a>
+        <ul class="header-menu" style="display: flex; flex-direction: row; align-items: center; gap: 2.5rem; list-style: none; margin: 0 auto; padding: 0; justify-content: center;">
+            <li style="margin-right: 2.5rem; display: flex; align-items: center;">
+                <a href="http://127.0.0.1:8000" style="display: flex; align-items: center;">
+                    <img src="http://127.0.0.1:8000/assets/images/logoists.png" alt="Logo ISTS" style="height: 56px; vertical-align: middle; margin-right: 1rem;">
+                </a>
+            </li>
+            <li class="dropdown" style="position: relative;">
+                <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">ACERCA</a>
+                <div class="dropdown-content academic-dropdown single-column">
+                    <div class="academic-dropdown-columns">
+                        <div class="academic-column">
+                            <ul>
+                                                                                                            <li>
+                                                                                            <a href="http://127.0.0.1:8000/autoridades">Autoridades</a>
+                                                                                    </li>
+                                                                                                                                                <li>
+                                                                                            <a href="http://127.0.0.1:8000/planta-docente">Planta Docente</a>
+                                                                                    </li>
+                                                                                                                                                <li>
+                                                                                            <a href="http://127.0.0.1:8000/contenido/mision-y-vision">Misi??n Y Visi??n</a>
+                                                                                    </li>
+                                                                                                                                                <li>
+                                                                                            <a href="http://127.0.0.1:8000/contenido/historia-sobre-el-ists">Historia Sobre el ISTS</a>
+                                                                                    </li>
+                                                                                                                                                <li>
+                                                                                            <a href="http://127.0.0.1:8000/contenido/organigrama">Organigrama</a>
+                                                                                    </li>
+                                                                                                                                                                                                                                                                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+                                                                                    <li class="dropdown" style="position: relative;">
+                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">CARRERAS</a>
+                        <div class="dropdown-content academic-dropdown single-column">
+                            <div class="academic-dropdown-columns">
+                                <div class="academic-column">
+                                    <ul>
+                                                                                    <li><a href="http://127.0.0.1:8000/carrera/agroecologia">Agroecología</a></li>
+                                                                                    <li><a href="http://127.0.0.1:8000/carrera/contabilidad-y-asesoria-tributaria">Contabilidad y Asesoría Tributaria</a></li>
+                                                                                    <li><a href="http://127.0.0.1:8000/carrera/desarrollo-software">Desarrollo de Software</a></li>
+                                                                                    <li><a href="http://127.0.0.1:8000/carrera/educacion-inicial">Educaciónn Inicial</a></li>
+                                                                            </ul>
+                                </div>
+                                                            </div>
+                        </div>
+                    </li>
+                                                                                                    <li class="dropdown" style="position: relative;">
+                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">CAMPUS</a>
+                        <div class="dropdown-content academic-dropdown single-column">
+                            <div class="academic-dropdown-columns">
+                                <div class="academic-column">
+                                    <ul>
+                                                                                    <li>
+                                                <a href="https://biblioteca.istsucua.edu.ec/" target="_blank" rel="noopener">BIBLIOTECA</a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="https://graduados.istsucua.edu.ec/login" target="_blank" rel="noopener">GRADUADOS</a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="http://siga.institutos.gob.ec:8080/siga-web/ariel.jsf" target="_blank" rel="noopener">SIGA</a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="https://siau-online.senescyt.gob.ec/" target="_blank" rel="noopener">SIAU</a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="http://181.211.10.244:8080/eva/?redirect=0" target="_blank" rel="noopener">EVA INSTITUCIONAL</a>
+                                            </li>
+                                                                            </ul>
+                                </div>
+                                                            </div>
+                        </div>
+                    </li>
+                                                                                <li class="dropdown" style="position: relative;">
+                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">TRANSPARENCIA</a>
+                        <div class="dropdown-content academic-dropdown single-column">
+                            <div class="academic-dropdown-columns">
+                                <div class="academic-column">
+                                    <ul>
+                                                                                    <li class="dropdown-item">
+                                                                                                <a href="http://127.0.0.1:8000/transparency/rendicion-de-cuentas" target="_self">Rendición de Cuentas</a>
+                                                                                                    <ul class="dropdown-submenu">
+                                                                                                                                                                                                                                                                                                                                                    </ul>
+                                                                                            </li>
+                                                                                    <li class="dropdown-item">
+                                                                                                <a href="http://127.0.0.1:8000/uploads/pdfs/69dff5d5e370b-ARTEPARAIMPRIMIR.pdf" target="_blank">Reglamentos</a>
+                                                                                            </li>
+                                                                            </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                                                                                                    <li class="dropdown" style="position: relative;">
+                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">VISITAR</a>
+                        <div class="dropdown-content academic-dropdown">
+                            <div class="academic-dropdown-columns">
+                                <div class="academic-column">
+                                    <ul>
+                                                                                    <li>
+                                                <a href="http://127.0.0.1:8000/visitar/secretaria-general">
+                                                    📋 Secretaria General
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="http://127.0.0.1:8000/visitar/centro-de-idiomas">
+                                                     Centro de Idiomas
+                                                </a>
+                                            </li>
+                                                                            </ul>
+                                </div>
+                                <div class="academic-column">
+                                    <ul>
+                                                                                    <li>
+                                                <a href="http://127.0.0.1:8000/visitar/talento-humano">
+                                                    👥 Talento Humano
+                                                </a>
+                                            </li>
+                                                                            </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                                                                                                                                    <li><a href="/noticias" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">NOTICIAS</a></li>
+                                                                                <li class="dropdown" style="position: relative;">
+                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">TR??MITES</a>
+                        <div class="dropdown-content academic-dropdown single-column">
+                            <div class="academic-dropdown-columns">
+                                <div class="academic-column">
+                                    <ul>
+                                                                                                                                <li class="dropdown-item">
+                                                                                                    <a href="http://127.0.0.1:8000/uploads/pdfs/697b7be47a6e7-Ficha_Socioeconomica_2025-II.pdf" target="_blank">Ficha Socioeconomica</a>
+                                                                                            </li>
+                                                                                                                                <li class="dropdown-item">
+                                                                                                    <a href="https://docs.google.com/document/d/1pGvyVFVl1MtCg7tdIah_xLJiUCR3th9c/edit?usp=sharing&amp;ouid=109463034568053938725&amp;rtpof=true&amp;sd=true" target="_blank">Formulario de Homologaci??n y Reingreso</a>
+                                                                                            </li>
+                                                                                                                                <li class="dropdown-item">
+                                                                                                    <a href="http://127.0.0.1:8000/uploads/pdfs/693f18be7d09f-Formulario_Matricula_2025-II.pdf" target="_blank">Formulario de Matricula</a>
+                                                                                            </li>
+                                                                            </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                                    </ul>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-label="Abrir menu">
+            <span>☰</span>
+        </button>
+    </nav>
+
+    <aside id="mobile-menu" class="mobile-menu" aria-label="Navegacion movil">
+        <div class="mobile-menu__header">
+            <strong style="color:#0f172a;">Menu</strong>
+            <button id="mobile-menu-close" class="mobile-menu__close" type="button" aria-label="Cerrar menu">×</button>
+        </div>
+
+        <ul class="mobile-menu__list">
+            <li class="mobile-menu__item"><a href="http://127.0.0.1:8000">Inicio</a></li>
+
+                            <li class="mobile-menu__item">
+                    <details>
+                        <summary class="mobile-menu__summary">ACERCA</summary>
+                        <ul class="mobile-menu__children">
+                                                                                                <li>
+                                                                                    <a href="http://127.0.0.1:8000/autoridades">Autoridades</a>
+                                                                            </li>
+                                                                                                                                <li>
+                                                                                    <a href="http://127.0.0.1:8000/planta-docente">Planta Docente</a>
+                                                                            </li>
+                                                                                                                                <li>
+                                                                                    <a href="http://127.0.0.1:8000/contenido/mision-y-vision">Misi??n Y Visi??n</a>
+                                                                            </li>
+                                                                                                                                <li>
+                                                                                    <a href="http://127.0.0.1:8000/contenido/historia-sobre-el-ists">Historia Sobre el ISTS</a>
+                                                                            </li>
+                                                                                                                                <li>
+                                                                                    <a href="http://127.0.0.1:8000/contenido/organigrama">Organigrama</a>
+                                                                            </li>
+                                                                                    </ul>
+                    </details>
+                </li>
+            
+                                                                <li class="mobile-menu__item">
+                        <details>
+                            <summary class="mobile-menu__summary">CARRERAS</summary>
+                            <ul class="mobile-menu__children">
+                                                                    <li><a href="http://127.0.0.1:8000/carrera/agroecologia">Agroecología</a></li>
+                                                                    <li><a href="http://127.0.0.1:8000/carrera/contabilidad-y-asesoria-tributaria">Contabilidad y Asesoría Tributaria</a></li>
+                                                                    <li><a href="http://127.0.0.1:8000/carrera/desarrollo-software">Desarrollo de Software</a></li>
+                                                                    <li><a href="http://127.0.0.1:8000/carrera/educacion-inicial">Educaciónn Inicial</a></li>
+                                                            </ul>
+                        </details>
+                    </li>
+                                                                                <li class="mobile-menu__item">
+                        <details>
+                            <summary class="mobile-menu__summary">CAMPUS</summary>
+                            <ul class="mobile-menu__children">
+                                                                    <li><a href="https://biblioteca.istsucua.edu.ec/" target="_blank" rel="noopener">BIBLIOTECA</a></li>
+                                                                    <li><a href="https://graduados.istsucua.edu.ec/login" target="_blank" rel="noopener">GRADUADOS</a></li>
+                                                                    <li><a href="http://siga.institutos.gob.ec:8080/siga-web/ariel.jsf" target="_blank" rel="noopener">SIGA</a></li>
+                                                                    <li><a href="https://siau-online.senescyt.gob.ec/" target="_blank" rel="noopener">SIAU</a></li>
+                                                                    <li><a href="http://181.211.10.244:8080/eva/?redirect=0" target="_blank" rel="noopener">EVA INSTITUCIONAL</a></li>
+                                                                                            </ul>
+                        </details>
+                    </li>
+                                                                                <li class="mobile-menu__item">
+                        <details>
+                            <summary class="mobile-menu__summary">TRANSPARENCIA</summary>
+                            <ul class="mobile-menu__children">
+                                                                                                        <li><a href="http://127.0.0.1:8000/transparency/rendicion-de-cuentas" target="_self">Rendición de Cuentas</a></li>
+                                                                                                        <li><a href="http://127.0.0.1:8000/uploads/pdfs/69dff5d5e370b-ARTEPARAIMPRIMIR.pdf" target="_blank">Reglamentos</a></li>
+                                                            </ul>
+                        </details>
+                    </li>
+                                                                                <li class="mobile-menu__item">
+                        <details>
+                            <summary class="mobile-menu__summary">VISITAR</summary>
+                            <ul class="mobile-menu__children">
+                                                                    <li><a href="http://127.0.0.1:8000/visitar/secretaria-general">📋 Secretaria General</a></li>
+                                                                    <li><a href="http://127.0.0.1:8000/visitar/centro-de-idiomas"> Centro de Idiomas</a></li>
+                                                                    <li><a href="http://127.0.0.1:8000/visitar/talento-humano">👥 Talento Humano</a></li>
+                                                            </ul>
+                        </details>
+                    </li>
+                                                                                                                                    <li class="mobile-menu__item"><a href="/noticias">NOTICIAS</a></li>
+                                                                                <li class="mobile-menu__item">
+                        <details>
+                            <summary class="mobile-menu__summary">TR??MITES</summary>
+                            <ul class="mobile-menu__children">
+                                                                                                                                                <li><a href="http://127.0.0.1:8000/uploads/pdfs/697b7be47a6e7-Ficha_Socioeconomica_2025-II.pdf" target="_blank">Ficha Socioeconomica</a></li>
+                                                                                                                                                                                    <li><a href="https://docs.google.com/document/d/1pGvyVFVl1MtCg7tdIah_xLJiUCR3th9c/edit?usp=sharing&amp;ouid=109463034568053938725&amp;rtpof=true&amp;sd=true" target="_blank">Formulario de Homologaci??n y Reingreso</a></li>
+                                                                                                                                                                                    <li><a href="http://127.0.0.1:8000/uploads/pdfs/693f18be7d09f-Formulario_Matricula_2025-II.pdf" target="_blank">Formulario de Matricula</a></li>
+                                                                                                </ul>
+                        </details>
+                    </li>
+                                    </ul>
+    </aside>
+</header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Cache de elementos
+        const headerPublic = document.querySelector('.header-public');
+        const desktopMedia = window.matchMedia('(min-width: 993px)');
+        const dropdownItems = document.querySelectorAll('.header-public .dropdown');
+        const dropdownToggles = document.querySelectorAll('.header-public .dropdown > .header-link[href="#"]');
+        const dropdownContents = document.querySelectorAll('.header-public .dropdown-content');
+
+        // Cerrar todos los menús abiertos
+        function closeAllMenus() {
+            document.querySelectorAll('.header-public .dropdown.menu-open').forEach(function (node) {
+                node.classList.remove('menu-open');
+            });
+        }
+
+        // En desktop mantenemos el menú abierto al pasar al submenú (anti-parpadeo)
+        if (desktopMedia.matches) {
+            dropdownItems.forEach(function (item) {
+                let closeTimer = null;
+
+                item.addEventListener('mouseenter', function () {
+                    if (!desktopMedia.matches) return;
+                    if (closeTimer) {
+                        clearTimeout(closeTimer);
+                        closeTimer = null;
+                    }
+                    closeAllMenus();
+                    item.classList.add('menu-open');
+                });
+
+                item.addEventListener('mouseleave', function () {
+                    if (!desktopMedia.matches) return;
+                    closeTimer = setTimeout(function () {
+                        item.classList.remove('menu-open');
+                    }, 180);
+                });
+
+                const content = item.querySelector('.dropdown-content');
+                if (content) {
+                    content.addEventListener('mouseenter', function () {
+                        if (closeTimer) {
+                            clearTimeout(closeTimer);
+                            closeTimer = null;
+                        }
+                    });
+                }
+            });
+        }
+
+        // Botones del menú (ACERCA, ACADÉMICOS, etc.)
+        dropdownToggles.forEach(function (toggle) {
+            toggle.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const parent = toggle.closest('.dropdown');
+                if (!parent) return;
+
+                const isOpen = parent.classList.contains('menu-open');
+                closeAllMenus();
+
+                if (!isOpen) {
+                    parent.classList.add('menu-open');
+                }
+            });
+        });
+
+        // Prevenir que clicks dentro del dropdown cierren el menú
+        dropdownContents.forEach(function (content) {
+            content.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // No cerrar el menú aquí, esperar a que se complete la navegación
+            });
+        });
+
+        // Links dentro del dropdown - permitir navegación
+        document.querySelectorAll('.header-public .dropdown-content a').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                // Permitir que la navegación ocurra naturalmente
+                // El menú se cerrará en el siguiente ciclo después de que la página se cargue
+                setTimeout(closeAllMenus, 300);
+            });
+        });
+
+        // Cerrar menú cuando haces click fuera del header
+        document.addEventListener('click', function (e) {
+            const isClickInsideHeader = headerPublic && headerPublic.contains(e.target);
+            if (!isClickInsideHeader) {
+                closeAllMenus();
+            }
+        });
+
+        // Cerrar menú al presionar Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeAllMenus();
+            }
+        });
+    });
+</script>
+
+    
+    
+    <main class="main-content public-page-main" style="padding-top: 120px;">
+            <!-- Main Content -->
+    <main id="main-content" class="main-content p-0 m-0">
+        <!-- Hero Section - Premium -->
+        <section class="hero-section p-0 m-0" style="position:relative; height:calc(100vh - 80px); min-height:560px; overflow:hidden;">
+                            <div id="heroCarousel" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="5500">
+                    <div class="carousel-inner h-100">
+                                                                                <div class="carousel-item active h-100">
+                                <img src="http://127.0.0.1:8000/storage/uploads/images/DMlC2i6iPP4NthM5ZFP1mEJ1LMMmtAIrMdFZYVr7.jpg" class="hero-slide-img" alt="Bienvenidos al ISTS"
+                                    onerror="this.src='http://127.0.0.1:8000/uploads/images/placeholder.jpg'">
+                                
+                                <div class="hero-overlay-gradient"></div>
+                                
+                                <div class="hero-caption-wrap">
+                                    <div class="hero-caption-inner">
+                                        <span class="hero-eyebrow">Instituto Superior Tecnológico Sucúa</span>
+                                                                                <h1 class="hero-main-title">Bienvenidos al ISTS</h1>
+                                                                                                                        <p class="hero-subtitle">Fortaleciendo La Educaci??n Superior En Morona Santiago</p>
+                                                                                <div class="hero-ctas">
+                                            <a href="http://127.0.0.1:8000/carreras" class="hero-btn-primary">
+                                                Ver carreras
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                                            </a>
+                                            <a href="http://127.0.0.1:8000/noticias" class="hero-btn-secondary">Noticias</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                                                                            <div class="carousel-item  h-100">
+                                <img src="http://127.0.0.1:8000/storage/uploads/images/liBNtAjvcpZY9M7W727C58UwIPPJF091KImMPX62.jpg" class="hero-slide-img" alt="Bienvenido al ISTSUCUA"
+                                    onerror="this.src='http://127.0.0.1:8000/uploads/images/placeholder.jpg'">
+                                
+                                <div class="hero-overlay-gradient"></div>
+                                
+                                <div class="hero-caption-wrap">
+                                    <div class="hero-caption-inner">
+                                        <span class="hero-eyebrow">Instituto Superior Tecnológico Sucúa</span>
+                                                                                <h1 class="hero-main-title">Bienvenido al ISTSUCUA</h1>
+                                                                                                                        <p class="hero-subtitle">Fortaleciendo La Educaci??n Superior En Morona Santiago</p>
+                                                                                <div class="hero-ctas">
+                                            <a href="http://127.0.0.1:8000/carreras" class="hero-btn-primary">
+                                                Ver carreras
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                                            </a>
+                                            <a href="http://127.0.0.1:8000/noticias" class="hero-btn-secondary">Noticias</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                                                                            <div class="carousel-item  h-100">
+                                <img src="http://127.0.0.1:8000/storage/uploads/images/qbUMOqd7Fb6nRsM7Os2lbtyDrTld9RescKreNuJx.jpg" class="hero-slide-img" alt="Bienvenidos al ISTSUCUA"
+                                    onerror="this.src='http://127.0.0.1:8000/uploads/images/placeholder.jpg'">
+                                
+                                <div class="hero-overlay-gradient"></div>
+                                
+                                <div class="hero-caption-wrap">
+                                    <div class="hero-caption-inner">
+                                        <span class="hero-eyebrow">Instituto Superior Tecnológico Sucúa</span>
+                                                                                <h1 class="hero-main-title">Bienvenidos al ISTSUCUA</h1>
+                                                                                                                        <p class="hero-subtitle">Fortaleciendo La Educaci??n Superior En Morona Santiago</p>
+                                                                                <div class="hero-ctas">
+                                            <a href="http://127.0.0.1:8000/carreras" class="hero-btn-primary">
+                                                Ver carreras
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                                            </a>
+                                            <a href="http://127.0.0.1:8000/noticias" class="hero-btn-secondary">Noticias</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                                        </div>
+
+                    
+                    <div class="hero-indicators">
+                                                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0"
+                                class="hero-indicator active"
+                                aria-label="Slide 1"></button>
+                                                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"
+                                class="hero-indicator "
+                                aria-label="Slide 2"></button>
+                                                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"
+                                class="hero-indicator "
+                                aria-label="Slide 3"></button>
+                                            </div>
+
+                    
+                    <button class="hero-arrow hero-arrow-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                    </button>
+                    <button class="hero-arrow hero-arrow-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                    </button>
+                </div>
+
+                
+                <div class="hero-scroll-hint">
+                    <span>Descubre más</span>
+                    <div class="hero-scroll-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                    </div>
+                </div>
+
+                
+                <div class="hero-stats-bar">
+                    <div class="hero-stat">
+                        <strong>+25</strong><span>años formando<br>profesionales</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>4</strong><span>carreras<br>acreditadas</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>100%</strong><span>compromiso<br>social</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>SNNA</strong><span>admisión<br>oficial</span>
+                    </div>
+                </div>
+                    </section>
+
+        <style>
+        /* ── Hero Premium ── */
+        .hero-slide-img {
+            position:absolute; inset:0;
+            width:100%; height:100%;
+            object-fit:cover; object-position:center;
+            display:block;
+            transform:scale(1.04);
+            transition:transform 8s ease;
+        }
+        .carousel-item.active .hero-slide-img { transform:scale(1); }
+
+        .hero-overlay-gradient {
+            position:absolute; inset:0;
+            background:
+                linear-gradient(to right, rgba(10,22,40,0.72) 0%, rgba(10,22,40,0.38) 55%, transparent 100%),
+                linear-gradient(to top, rgba(5,15,28,0.65) 0%, transparent 50%);
+            z-index:1;
+        }
+
+        .hero-caption-wrap {
+            position:absolute; inset:0; z-index:2;
+            display:flex; align-items:center;
+            padding: 0 0 100px;
+        }
+        .hero-caption-inner {
+            max-width:700px;
+            padding: 0 0 0 8%;
+        }
+        .hero-eyebrow {
+            display:inline-block;
+            font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+            color:rgba(255,255,255,0.65);
+            background:rgba(255,255,255,0.1);
+            border:1px solid rgba(255,255,255,0.18);
+            padding:0.3rem 1rem; border-radius:50px;
+            margin-bottom:1.2rem;
+            backdrop-filter:blur(6px);
+        }
+        .hero-main-title {
+            font-size:clamp(2.2rem, 5vw, 4rem);
+            font-weight:900;
+            color:#fff;
+            letter-spacing:-2.5px;
+            line-height:1.05;
+            margin:0 0 1rem;
+            text-shadow:0 2px 20px rgba(0,0,0,0.3);
+        }
+        .hero-subtitle {
+            font-size:clamp(1rem, 2vw, 1.3rem);
+            color:rgba(255,255,255,0.78);
+            line-height:1.55;
+            margin:0 0 2rem;
+            max-width:520px;
+        }
+        .hero-ctas { display:flex; gap:1rem; flex-wrap:wrap; }
+        .hero-btn-primary {
+            display:inline-flex; align-items:center; gap:0.55rem;
+            background:linear-gradient(135deg,#00796b,#1abc9c);
+            color:#fff !important; text-decoration:none !important;
+            font-size:0.92rem; font-weight:700;
+            padding:0.85rem 2rem; border-radius:50px;
+            box-shadow:0 8px 24px rgba(0,150,136,0.45);
+            transition:transform 0.28s ease, box-shadow 0.28s ease, gap 0.22s ease;
+        }
+        .hero-btn-primary:hover { transform:translateY(-3px); box-shadow:0 14px 36px rgba(0,150,136,0.55); gap:0.9rem; }
+        .hero-btn-secondary {
+            display:inline-flex; align-items:center;
+            background:rgba(255,255,255,0.12);
+            backdrop-filter:blur(8px);
+            border:1.5px solid rgba(255,255,255,0.3);
+            color:#fff !important; text-decoration:none !important;
+            font-size:0.92rem; font-weight:600;
+            padding:0.85rem 1.8rem; border-radius:50px;
+            transition:background 0.25s ease, border-color 0.25s ease;
+        }
+        .hero-btn-secondary:hover { background:rgba(255,255,255,0.22); border-color:rgba(255,255,255,0.5); }
+
+        /* Custom indicators */
+        .hero-indicators {
+            position:absolute; bottom:110px; left:8%; z-index:10;
+            display:flex; gap:0.5rem; align-items:center;
+        }
+        .hero-indicator {
+            width:28px; height:4px; border-radius:2px;
+            background:rgba(255,255,255,0.35); border:none;
+            padding:0; cursor:pointer;
+            transition:width 0.35s ease, background 0.35s ease;
+        }
+        .hero-indicator.active { width:52px; background:#1abc9c; }
+
+        /* Custom arrows */
+        .hero-arrow {
+            position:absolute; top:50%; transform:translateY(-50%); z-index:10;
+            width:48px; height:48px; border-radius:50%;
+            background:rgba(255,255,255,0.1); backdrop-filter:blur(8px);
+            border:1.5px solid rgba(255,255,255,0.2);
+            color:#fff; display:flex; align-items:center; justify-content:center;
+            transition:background 0.25s ease, transform 0.25s ease;
+            cursor:pointer;
+        }
+        .hero-arrow:hover { background:rgba(0,150,136,0.65); transform:translateY(-50%) scale(1.08); border-color:transparent; }
+        .hero-arrow-prev { left:2rem; }
+        .hero-arrow-next { right:2rem; }
+
+        /* Scroll hint */
+        .hero-scroll-hint {
+            position:absolute; bottom:36px; left:50%; transform:translateX(-50%); z-index:10;
+            display:flex; flex-direction:column; align-items:center; gap:0.3rem;
+            color:rgba(255,255,255,0.5); font-size:0.7rem; letter-spacing:2px; text-transform:uppercase;
+            animation:hero-bounce 2.2s ease-in-out infinite;
+        }
+        .hero-scroll-arrow { color:rgba(255,255,255,0.45); }
+        @keyframes hero-bounce {
+            0%,100%{ transform:translateX(-50%) translateY(0); }
+            50%{ transform:translateX(-50%) translateY(6px); }
+        }
+
+        /* Stats bar */
+        .hero-stats-bar {
+            position:absolute; bottom:0; left:0; right:0; z-index:10;
+            background:rgba(255,255,255,0.96);
+            backdrop-filter:blur(12px);
+            border-top:1px solid rgba(15,23,42,0.08);
+            display:flex; align-items:center; justify-content:center;
+            gap:0; height:72px;
+            box-shadow:0 -4px 20px rgba(15,23,42,0.1);
+        }
+        .hero-stat {
+            display:flex; align-items:center; gap:0.75rem;
+            padding:0 2.5rem;
+        }
+        .hero-stat strong {
+            font-size:1.65rem; font-weight:900; line-height:1;
+            background:linear-gradient(135deg,#00796b,#1abc9c);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .hero-stat span {
+            font-size:0.7rem; font-weight:600; color:#64748b;
+            letter-spacing:0.3px; line-height:1.3; text-transform:uppercase;
+        }
+        .hero-stat-divider {
+            width:1px; height:36px;
+            background:rgba(15,23,42,0.12);
+        }
+        @media(max-width:768px) {
+            .hero-caption-inner { padding:0 1.5rem; }
+            .hero-stat-divider:nth-child(6) { display:none; }
+            .hero-stat:last-child { display:none; }
+            .hero-stats-bar { padding:0; }
+            .hero-stat { padding:0 1.2rem; }
+            .hero-stat strong { font-size:1.3rem; }
+        }
+        </style>
+
+
+
+
+        <!-- Misión y Visión Section (reemplaza Enfoque) -->
+        <!-- Textos estáticos para Misión y Visión en el dashboard principal -->
+
+<style>
+/* ── Misión & Visión — Diseño Institucional Premium ── */
+.mvp-section {
+    position: relative;
+    background: #ffffff;
+    padding: 6rem 0 5.5rem;
+    overflow: hidden;
+}
+/* Fondo decorativo muy sutil */
+.mvp-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 55% 45% at 0% 0%,   rgba(0,150,136,0.055) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 55% at 100% 100%, rgba(59,130,246,0.045) 0%, transparent 65%);
+    pointer-events: none;
+}
+/* Línea superior decorativa */
+.mvp-section::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #00796b 0%, #1abc9c 50%, #3b82f6 100%);
+}
+
+.mvp-inner { position: relative; z-index: 1; }
+
+/* ── Header ── */
+.mvp-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+.mvp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #00796b;
+    background: rgba(0,150,136,0.08);
+    border: 1px solid rgba(0,150,136,0.2);
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.2rem;
+}
+.mvp-eyebrow svg { width: 13px; height: 13px; }
+.mvp-header h2 {
+    font-size: clamp(2rem, 3.8vw, 2.9rem);
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin: 0 0 0.9rem;
+}
+.mvp-header h2 .mvp-green  { color: #00796b; }
+.mvp-header h2 .mvp-blue   { color: #1d4ed8; }
+.mvp-header p {
+    color: #64748b;
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.65;
+}
+
+/* ── Cards row ── */
+.mvp-cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+@media (max-width: 768px) {
+    .mvp-cards-row { grid-template-columns: 1fr; }
+    .mvp-stats-row { grid-template-columns: repeat(2,1fr) !important; }
+}
+
+/* ── Card ── */
+.mvp-card {
+    position: relative;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2.6rem 2.4rem 2.4rem;
+    border: 1.5px solid rgba(15,23,42,0.08);
+    box-shadow: 0 4px 28px rgba(15,23,42,0.07), 0 1px 4px rgba(15,23,42,0.04);
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+                box-shadow 0.35s ease;
+}
+.mvp-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(15,23,42,0.12), 0 4px 12px rgba(15,23,42,0.06);
+}
+/* Left colored border */
+.mvp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px;
+    height: 100%;
+    border-radius: 24px 0 0 24px;
+    background: var(--mvp-accent);
+    transition: width 0.3s ease;
+}
+.mvp-card:hover::before { width: 7px; }
+/* Subtle top pattern */
+.mvp-card-pattern {
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: var(--mvp-accent-faint);
+    pointer-events: none;
+    transition: transform 0.4s ease;
+}
+.mvp-card:hover .mvp-card-pattern { transform: scale(1.2); }
+
+.mvp-card-mision { --mvp-accent: linear-gradient(180deg,#00796b,#1abc9c); --mvp-accent-faint: rgba(0,150,136,0.07); }
+.mvp-card-vision  { --mvp-accent: linear-gradient(180deg,#1d4ed8,#3b82f6); --mvp-accent-faint: rgba(59,130,246,0.07); }
+
+/* Icon */
+.mvp-icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.4rem;
+    position: relative; z-index: 1;
+    transition: transform 0.35s ease;
+}
+.mvp-card:hover .mvp-icon { transform: scale(1.08) rotate(-3deg); }
+.mvp-card-mision .mvp-icon {
+    background: linear-gradient(135deg, #00796b, #1abc9c);
+    box-shadow: 0 6px 20px rgba(0,150,136,0.3);
+}
+.mvp-card-vision .mvp-icon {
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    box-shadow: 0 6px 20px rgba(29,78,216,0.28);
+}
+.mvp-icon svg { width: 28px; height: 28px; color: #fff; }
+
+/* Tag pill */
+.mvp-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.85rem;
+    border-radius: 50px;
+    margin-bottom: 0.75rem;
+    position: relative; z-index: 1;
+}
+.mvp-card-mision .mvp-tag { background: rgba(0,150,136,0.10); color: #00796b; }
+.mvp-card-vision  .mvp-tag { background: rgba(29,78,216,0.10); color: #1d4ed8; }
+
+/* Number watermark */
+.mvp-num {
+    position: absolute;
+    bottom: 1rem; right: 1.6rem;
+    font-size: 6rem;
+    font-weight: 900;
+    color: rgba(15,23,42,0.035);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -6px;
+}
+
+.mvp-card h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.5px;
+    position: relative; z-index: 1;
+}
+.mvp-divider {
+    width: 36px; height: 3px;
+    border-radius: 2px;
+    margin: 0.6rem 0 1rem;
+    position: relative; z-index: 1;
+}
+.mvp-card-mision .mvp-divider { background: linear-gradient(90deg,#00796b,#1abc9c); }
+.mvp-card-vision  .mvp-divider { background: linear-gradient(90deg,#1d4ed8,#3b82f6); }
+
+.mvp-card p {
+    color: #475569;
+    font-size: 0.97rem;
+    line-height: 1.8;
+    margin: 0;
+    position: relative; z-index: 1;
+}
+
+/* ── Stats row ── */
+.mvp-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1.2rem;
+}
+.mvp-stat {
+    background: #f8fafd;
+    border: 1.5px solid rgba(15,23,42,0.07);
+    border-radius: 18px;
+    padding: 1.6rem 1rem;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.mvp-stat:hover {
+    background: #fff;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(15,23,42,0.09);
+    border-color: rgba(0,150,136,0.2);
+}
+.mvp-stat-num {
+    font-size: 2.1rem;
+    font-weight: 900;
+    background: linear-gradient(90deg,#00796b,#3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+}
+.mvp-stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+</style>
+
+<section class="mvp-section">
+    <div class="container mvp-inner">
+
+        
+        <div class="mvp-header">
+            <div class="mvp-eyebrow">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+                Identidad Institucional
+            </div>
+            <h2>Nuestra <span class="mvp-green">Misión</span> &amp; <span class="mvp-blue">Visión</span></h2>
+            <p>Los principios que guían nuestra labor educativa día a día, orientados a la excelencia y al servicio de la comunidad.</p>
+        </div>
+
+        
+        <div class="mvp-cards-row">
+
+            <div class="mvp-card mvp-card-mision">
+                <div class="mvp-card-pattern"></div>
+                <div class="mvp-num">01</div>
+                <div class="mvp-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                    </svg>
+                </div>
+                <span class="mvp-tag">Misión</span>
+                <h3>Nuestra Misión</h3>
+                <div class="mvp-divider"></div>
+                <p>Formar profesionales de calidad y excelencia, competentes y con pensamiento crítico, compromiso ético, valores y principios; garantizando el uso racional de los recursos naturales, para su inserción en el mundo laboral y social. Nuestra labor diaria se orienta a la formación integral de ciudadanos, fortaleciendo la investigación, el desarrollo, la innovación, la vinculación con la sociedad y la cultura ecológica, y promoviendo la mejora continua.</p>
+            </div>
+
+            <div class="mvp-card mvp-card-vision">
+                <div class="mvp-card-pattern"></div>
+                <div class="mvp-num">02</div>
+                <div class="mvp-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <span class="mvp-tag">Visión</span>
+                <h3>Nuestra Visión</h3>
+                <div class="mvp-divider"></div>
+                <p>Ser una Institución de Educación Superior modelo y líder en la provincia, generadora de conocimiento innovador con base en la investigación científica y aplicada; desarrollando capacidades productivas, con docentes comprometidos y de excelencia, y perfiles profesionales acordes con las carreras que oferta. Además, contar con una implementación tecnológica adecuada para garantizar la formación de profesionales proactivos y comprometidos con la construcción de una sociedad equitativa, libre de violencia y en equilibrio con el medio ambiente.</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Sección separada: Misión y Visión como bloque independiente bajo el hero -->
+
+        <!-- Últimas actualizaciones multimedia -->
+        
+        <!-- Academic Programs Section - Premium -->
+        <section class="hc-section">
+            <div class="hc-bg-deco" aria-hidden="true">
+                <div class="hc-deco-blob hc-deco-blob--1"></div>
+                <div class="hc-deco-blob hc-deco-blob--2"></div>
+            </div>
+            <div class="container" style="position:relative;z-index:1;">
+
+                
+                <div class="hc-header">
+                    <span class="hc-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+                        Oferta Académica
+                    </span>
+                    <h2 class="hc-title">¡Tenemos una <span class="hc-title-accent">carrera</span> para ti!</h2>
+                    <p class="hc-subtitle">Elige tu futuro entre nuestras carreras tecnológicas de alto impacto, diseñadas para el mundo que viene.</p>
+                </div>
+
+                
+                <div class="hc-grid">
+                    
+                                                                    <a href="http://127.0.0.1:8000/carrera/desarrollo-software" class="hc-card" style="--hc-grad:linear-gradient(145deg,#1e3a8a,#2563eb);--hc-glow:rgba(37,99,235,0.5);">
+                            
+                            <div class="hc-card-visual">
+                                                                    <img src="http://127.0.0.1:8000/storage/careers/cC68Bpo8o1Vh3DxYJi6ezo9S7ez6yyJFoMj32Y3h.png" alt="Desarrollo de Software" class="hc-card-img">
+                                                                <div class="hc-card-overlay" style="background:linear-gradient(145deg,#1e3a8a,#2563eb);"></div>
+                                <div class="hc-card-icon-wrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" width="52" height="52"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+                                </div>
+                                
+                                <span class="hc-card-tag" style="color:#93c5fd;background:rgba(37,99,235,0.25);">Tecnología</span>
+                            </div>
+
+                            
+                            <div class="hc-card-body">
+                                <h3 class="hc-card-title">Desarrollo de Software</h3>
+                                                                <div class="hc-card-cta">
+                                    <span class="hc-cta-text">Ver carrera</span>
+                                    <span class="hc-cta-arrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                                    </span>
+                                </div>
+                            </div>
+
+                            
+                            <div class="hc-card-glow-border"></div>
+                        </a>
+                                                                    <a href="http://127.0.0.1:8000/carrera/agroecologia" class="hc-card" style="--hc-grad:linear-gradient(145deg,#14532d,#16a34a);--hc-glow:rgba(22,163,74,0.5);">
+                            
+                            <div class="hc-card-visual">
+                                                                <div class="hc-card-overlay" style="background:linear-gradient(145deg,#14532d,#16a34a);"></div>
+                                <div class="hc-card-icon-wrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" width="52" height="52"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3C7.5 3 3 7.5 3 12c4.5 0 9-4.5 9-9zm0 0c4.5 0 9 4.5 9 9-4.5 0-9-4.5-9-9zm0 0v18"/></svg>
+                                </div>
+                                
+                                <span class="hc-card-tag" style="color:#86efac;background:rgba(22,163,74,0.25);">Agropecuaria</span>
+                            </div>
+
+                            
+                            <div class="hc-card-body">
+                                <h3 class="hc-card-title">Agroecología</h3>
+                                                                <div class="hc-card-cta">
+                                    <span class="hc-cta-text">Ver carrera</span>
+                                    <span class="hc-cta-arrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                                    </span>
+                                </div>
+                            </div>
+
+                            
+                            <div class="hc-card-glow-border"></div>
+                        </a>
+                                                                    <a href="http://127.0.0.1:8000/carrera/contabilidad-y-asesoria-tributaria" class="hc-card" style="--hc-grad:linear-gradient(145deg,#78350f,#d97706);--hc-glow:rgba(217,119,6,0.5);">
+                            
+                            <div class="hc-card-visual">
+                                                                    <img src="http://127.0.0.1:8000/storage/careers/vuNvLwhROv6YuuGUu4OdU9uhaTZVVlKgx4e0vgT0.jpg" alt="Contabilidad y Asesoría Tributaria" class="hc-card-img">
+                                                                <div class="hc-card-overlay" style="background:linear-gradient(145deg,#78350f,#d97706);"></div>
+                                <div class="hc-card-icon-wrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" width="52" height="52"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+                                </div>
+                                
+                                <span class="hc-card-tag" style="color:#fcd34d;background:rgba(217,119,6,0.25);">Empresarial</span>
+                            </div>
+
+                            
+                            <div class="hc-card-body">
+                                <h3 class="hc-card-title">Contabilidad y Asesoría Tributaria</h3>
+                                                                <div class="hc-card-cta">
+                                    <span class="hc-cta-text">Ver carrera</span>
+                                    <span class="hc-cta-arrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                                    </span>
+                                </div>
+                            </div>
+
+                            
+                            <div class="hc-card-glow-border"></div>
+                        </a>
+                                                                    <a href="http://127.0.0.1:8000/carrera/educacion-inicial" class="hc-card" style="--hc-grad:linear-gradient(145deg,#581c87,#9333ea);--hc-glow:rgba(147,51,234,0.5);">
+                            
+                            <div class="hc-card-visual">
+                                                                    <img src="http://127.0.0.1:8000/storage/careers/xG8zF8SK9INeq38NZjmLxj9wMix4dHfHRGdmMAAW.jpg" alt="Educaciónn Inicial" class="hc-card-img">
+                                                                <div class="hc-card-overlay" style="background:linear-gradient(145deg,#581c87,#9333ea);"></div>
+                                <div class="hc-card-icon-wrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" width="52" height="52"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+                                </div>
+                                
+                                <span class="hc-card-tag" style="color:#d8b4fe;background:rgba(147,51,234,0.25);">Educación</span>
+                            </div>
+
+                            
+                            <div class="hc-card-body">
+                                <h3 class="hc-card-title">Educaciónn Inicial</h3>
+                                                                <div class="hc-card-cta">
+                                    <span class="hc-cta-text">Ver carrera</span>
+                                    <span class="hc-cta-arrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                                    </span>
+                                </div>
+                            </div>
+
+                            
+                            <div class="hc-card-glow-border"></div>
+                        </a>
+                                    </div>
+
+            </div>
+        </section>
+
+        <style>
+        /* ── Careers Premium Section ── */
+        .hc-section {
+            position: relative;
+            padding: 5.5rem 0 5rem;
+            background: linear-gradient(160deg, #f8faff 0%, #eef6f4 50%, #f0f9ff 100%);
+            overflow: hidden;
+        }
+        .hc-bg-deco { position:absolute;inset:0;pointer-events:none;overflow:hidden; }
+        .hc-deco-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.45;
+        }
+        .hc-deco-blob--1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0,150,136,0.18), transparent 70%);
+            top: -120px; left: -100px;
+        }
+        .hc-deco-blob--2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(59,130,246,0.14), transparent 70%);
+            bottom: -80px; right: -80px;
+        }
+
+        /* Header */
+        .hc-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .hc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(90deg,rgba(0,150,136,0.12),rgba(59,130,246,0.10));
+            border: 1px solid rgba(0,150,136,0.25);
+            color: #00796b;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+        .hc-title {
+            font-size: clamp(2rem,4vw,3rem);
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -2px;
+            margin: 0 0 0.8rem;
+            line-height: 1.1;
+        }
+        .hc-title-accent {
+            background: linear-gradient(90deg,#00796b,#1abc9c,#3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hc-subtitle {
+            color: #475569;
+            font-size: 1.05rem;
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.65;
+        }
+
+        /* Grid */
+        .hc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.4rem;
+        }
+        @media (max-width: 1100px) { .hc-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px)  { .hc-grid { grid-template-columns: 1fr; } }
+
+        /* Card */
+        .hc-card {
+            position: relative;
+            border-radius: 22px;
+            overflow: hidden;
+            text-decoration: none !important;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(15,23,42,0.07);
+            box-shadow: 0 4px 24px rgba(15,23,42,0.08);
+            transition: transform 0.38s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow 0.38s cubic-bezier(0.22,1,0.36,1);
+            /* stagger via nth-child */
+        }
+        .hc-card:nth-child(1) { animation: hc-rise 0.7s 0.05s both; }
+        .hc-card:nth-child(2) { animation: hc-rise 0.7s 0.15s both; }
+        .hc-card:nth-child(3) { animation: hc-rise 0.7s 0.25s both; }
+        .hc-card:nth-child(4) { animation: hc-rise 0.7s 0.35s both; }
+        @keyframes hc-rise {
+            from { opacity:0; transform:translateY(28px) scale(0.97); }
+            to   { opacity:1; transform:translateY(0)    scale(1); }
+        }
+        .hc-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 28px 60px var(--hc-glow,rgba(0,0,0,0.2)), 0 4px 16px rgba(15,23,42,0.12);
+        }
+
+        /* Visual */
+        .hc-card-visual {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .hc-card-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+        }
+        .hc-card:hover .hc-card-img { transform: scale(1.08); }
+        .hc-card-overlay {
+            position: absolute;
+            inset: 0;
+            opacity: 0.82;
+            transition: opacity 0.4s ease;
+        }
+        /* When no image, overlay is full. With image, overlay is partial at bottom */
+        .hc-card-img ~ .hc-card-overlay {
+            opacity: 0;
+            background: var(--hc-grad) !important;
+        }
+        .hc-card:hover .hc-card-img ~ .hc-card-overlay { opacity: 0.72; }
+
+        /* Icon centered in visual */
+        .hc-card-icon-wrap {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.92);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .hc-card-icon-wrap svg { filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
+        /* When image exists, hide icon unless hovering */
+        .hc-card-img ~ .hc-card-overlay ~ .hc-card-icon-wrap { opacity: 0; transform: scale(0.8); }
+        .hc-card:hover .hc-card-icon-wrap { opacity: 1 !important; transform: scale(1) !important; }
+
+        /* Tag badge */
+        .hc-card-tag {
+            position: absolute;
+            top: 12px; left: 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 0.22rem 0.7rem;
+            border-radius: 50px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        /* Body */
+        .hc-card-body {
+            padding: 1.4rem 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 0.5rem;
+        }
+        .hc-card-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+        }
+        .hc-card-desc {
+            font-size: 0.845rem;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.55;
+            flex: 1;
+        }
+
+        /* CTA */
+        .hc-card-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.6rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid rgba(15,23,42,0.07);
+        }
+        .hc-cta-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #00796b;
+            letter-spacing: 0.2px;
+            transition: color 0.25s ease;
+        }
+        .hc-card:hover .hc-cta-text { color: #004d40; }
+        .hc-cta-arrow {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,#00796b,#1abc9c);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,150,136,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex-shrink: 0;
+        }
+        .hc-card:hover .hc-cta-arrow {
+            transform: translate(3px,-3px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,150,136,0.45);
+        }
+
+        /* Glow border */
+        .hc-card-glow-border {
+            position: absolute;
+            inset: -1px;
+            border-radius: 23px;
+            background: var(--hc-grad);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .hc-card:hover .hc-card-glow-border { opacity: 1; }
+        </style>
+        <!-- News Section - Premium -->
+        <section class="gac-section">
+            <div class="container" style="position:relative;z-index:1;">
+
+                
+                <div class="gac-header">
+                    <div class="gac-eyebrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/></svg>
+                        Noticias &amp; Eventos
+                    </div>
+                    <h2 class="gac-title"><span class="gac-accent">Noticias</span> del ISTS</h2>
+                    <p class="gac-subtitle">Noticias, eventos y comunicados oficiales de nuestra institución</p>
+                </div>
+
+                
+                                <div class="gac-layout">
+
+                    
+                    <a href="http://127.0.0.1:8000/noticias/-69e09a90a4b21" class="gac-featured">
+                        <div class="gac-featured-img-wrap">
+                                                                                        <img src="http://127.0.0.1:8000/storage/news/Yh3rrQ6hSEWf2iFifPoH7AaUqlQbN4shQAoSrTEj.jpg" alt="¡𝗔𝘁𝗲𝗻𝗰𝗶𝗼́𝗻 𝗯𝗲𝗻𝗲𝗳𝗶𝗰𝗶𝗮𝗿𝗶𝗼𝘀 𝗱𝗲 𝗹𝗮 𝗯𝗲𝗰𝗮" class="gac-featured-img">
+                                                        <div class="gac-featured-overlay"></div>
+                            <div class="gac-featured-bottom">
+                                <span class="gac-tag gac-tag--news">Noticias</span>
+                                                                <span class="gac-featured-date">16 abr. 2026</span>                                <h3 class="gac-featured-title">¡𝗔𝘁𝗲𝗻𝗰𝗶𝗼́𝗻 𝗯𝗲𝗻𝗲𝗳𝗶𝗰𝗶𝗮𝗿𝗶𝗼𝘀 𝗱𝗲 𝗹𝗮 𝗯𝗲𝗰𝗮</h3>
+                                <p class="gac-featured-excerpt">
+𝚂𝚒 𝚢𝚊 𝚏𝚞𝚒𝚜𝚝𝚎 𝚜𝚎𝚕𝚎𝚌𝚌𝚒𝚘𝚗𝚊𝚍𝚘 𝚎𝚗 𝚎𝚕 𝚙𝚛𝚘𝚐𝚛𝚊𝚖𝚊 𝙱𝚎𝚌𝚊𝚞𝚜𝚎 𝙷𝚎 𝙸𝚜 𝙽𝚒𝚌𝚎,
+¡𝗘𝘀 𝗺𝗼𝗺𝗲𝗻𝘁𝗼 𝗱𝗲 𝗹𝗲𝗴𝗮𝗹𝗶𝘇𝗮𝗿 𝘁𝘂 𝗯𝗲𝗰𝗮
+
+
+𝙰𝚌𝚎́𝚛𝚌𝚊𝚝𝚎 𝚊𝚕 𝙸𝚗𝚜𝚝𝚒𝚝𝚞𝚝𝚘 𝚂𝚞𝚙𝚎𝚛...</p>
+                                <span class="gac-featured-cta">
+                                    Leer nota completa
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    
+                    <div class="gac-side">
+                                                                        <a href="http://127.0.0.1:8000/noticias/-69e097abb9aa7" class="gac-card">
+                            <div class="gac-card-img-wrap">
+                                                                    <img src="http://127.0.0.1:8000/storage/news/B1TOrCFuOJ2i8ybxZHzOIpxPHOdHBgyeeDYEJ3oU.jpg" alt="𝗙𝗲𝗹𝗶𝘇 𝗗ɪ́𝗮 𝗱𝗲𝗹 𝗠𝗮𝗲𝘀𝘁𝗿𝗼" class="gac-card-img">
+                                                            </div>
+                            <div class="gac-card-body">
+                                <div class="gac-card-meta">
+                                    <span class="gac-tag gac-tag--news">Noticia</span>
+                                                                        <span class="gac-card-date">16 abr. 2026</span>                                </div>
+                                <h4 class="gac-card-title">𝗙𝗲𝗹𝗶𝘇 𝗗ɪ́𝗮 𝗱𝗲𝗹 𝗠𝗮𝗲𝘀𝘁𝗿𝗼</h4>
+                                <p class="gac-card-excerpt">
+𝖧𝗈𝗒 𝗋𝖾𝖼𝗈𝗇𝗈𝖼𝖾𝗆𝗈𝗌 𝗒 𝗁𝗈𝗆𝖾𝗇𝖺𝗃𝖾𝖺𝗆𝗈𝗌 𝖺 𝗊𝗎𝗂𝖾𝗇𝖾𝗌, 𝖼𝗈𝗇 𝗏𝗈𝖼𝖺𝖼𝗂𝗈́𝗇, 𝖽𝖾𝖽𝗂𝖼𝖺𝖼𝗂𝗈́𝗇 𝗒 𝖼𝗈𝗆𝗉𝗋𝗈𝗆𝗂𝗌𝗈, 𝖿𝗈𝗋𝗆𝖺...</p>
+                                <span class="gac-card-link">Leer más <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></span>
+                            </div>
+                        </a>
+                                                                        <a href="http://127.0.0.1:8000/eventos/1" class="gac-card">
+                            <div class="gac-card-img-wrap">
+                                                                    <img src="http://127.0.0.1:8000/storage/events/images/oeduhyq1GkvXK2ecTZRrNKTyS2zEs1Onivszp20X.jpg" alt="Feria Acad??mica ISTS 2025 II" class="gac-card-img">
+                                                            </div>
+                            <div class="gac-card-body">
+                                <div class="gac-card-meta">
+                                    <span class="gac-tag gac-tag--event">Evento</span>
+                                                                        <span class="gac-card-date">18 dic. 2025</span>                                </div>
+                                <h4 class="gac-card-title">Feria Acad??mica ISTS 2025 II</h4>
+                                <p class="gac-card-excerpt">¡Te invitamos a la Feria Académica ISTS 2025 - II! 
+El Instituto Superior Tecnológico Suc...</p>
+                                <span class="gac-card-link">Leer más <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></span>
+                            </div>
+                        </a>
+                                            </div>
+
+                </div>
+                
+                
+                <div class="gac-actions">
+                    <a href="http://127.0.0.1:8000/noticias" class="gac-btn-all">
+                        Ver todas las noticias
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <style>
+        /* ── Gaceta Section ── */
+        .gac-section {
+            position: relative;
+            background: linear-gradient(160deg,#f8faff 0%,#ffffff 50%,#f0fdf8 100%);
+            padding: 5.5rem 0 5rem;
+            overflow: hidden;
+        }
+        .gac-section::before {
+            content:'';
+            position:absolute;
+            top:-100px; right:-100px;
+            width:400px; height:400px;
+            background: radial-gradient(circle, rgba(0,150,136,0.07) 0%, transparent 70%);
+            pointer-events:none;
+        }
+
+        /* Header */
+        .gac-header { text-align:center; margin-bottom:3rem; }
+        .gac-eyebrow {
+            display:inline-flex; align-items:center; gap:0.45rem;
+            font-size:0.72rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+            color:#00796b;
+            background:rgba(0,150,136,0.08);
+            border:1px solid rgba(0,150,136,0.2);
+            padding:0.35rem 1rem; border-radius:50px; margin-bottom:1.1rem;
+        }
+        .gac-title {
+            font-size:clamp(2rem,3.8vw,2.9rem);
+            font-weight:900; color:#0f172a;
+            letter-spacing:-2px; line-height:1.1;
+            margin:0 0 0.8rem;
+        }
+        .gac-accent {
+            background:linear-gradient(90deg,#00796b,#1abc9c);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+        .gac-subtitle { color:#64748b; font-size:1rem; margin:0 auto; max-width:480px; line-height:1.6; }
+
+        /* Layout */
+        .gac-layout {
+            display:grid;
+            grid-template-columns: 1fr 400px;
+            gap:1.8rem;
+            align-items:start;
+        }
+        @media(max-width:900px) { .gac-layout { grid-template-columns:1fr; } }
+
+        /* Featured card */
+        .gac-featured {
+            display:block;
+            text-decoration:none !important;
+            border-radius:22px;
+            overflow:hidden;
+            position:relative;
+            box-shadow:0 8px 40px rgba(15,23,42,0.12);
+            transition:transform 0.38s cubic-bezier(0.22,1,0.36,1), box-shadow 0.38s ease;
+        }
+        .gac-featured:hover {
+            transform:translateY(-6px);
+            box-shadow:0 24px 60px rgba(0,150,136,0.18);
+        }
+        .gac-featured-img-wrap { position:relative; height:440px; }
+        .gac-featured-img {
+            width:100%; height:100%;
+            object-fit:cover; object-position:center;
+            display:block;
+            transition:transform 0.55s cubic-bezier(0.22,1,0.36,1);
+        }
+        .gac-featured:hover .gac-featured-img { transform:scale(1.05); }
+        .gac-featured-img-fallback {
+            width:100%; height:100%;
+            background:linear-gradient(135deg,#00796b,#1abc9c);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .gac-featured-overlay {
+            position:absolute; inset:0;
+            background:linear-gradient(to top, rgba(10,20,35,0.88) 0%, rgba(10,20,35,0.35) 55%, transparent 100%);
+        }
+        .gac-featured-bottom {
+            position:absolute; bottom:0; left:0; right:0;
+            padding:2rem 2rem 1.8rem;
+        }
+        .gac-featured-date {
+            display:block;
+            font-size:0.72rem; font-weight:600;
+            color:rgba(255,255,255,0.6);
+            letter-spacing:1px; text-transform:uppercase;
+            margin-bottom:0.5rem;
+        }
+        .gac-featured-title {
+            font-size:1.55rem; font-weight:800;
+            color:#fff; margin:0 0 0.6rem;
+            line-height:1.25; letter-spacing:-0.5px;
+        }
+        .gac-featured-excerpt {
+            color:rgba(255,255,255,0.72);
+            font-size:0.92rem; line-height:1.6;
+            margin:0 0 1.1rem;
+        }
+        .gac-featured-cta {
+            display:inline-flex; align-items:center; gap:0.4rem;
+            font-size:0.82rem; font-weight:700;
+            color:#1abc9c;
+            border-bottom:1px solid rgba(26,188,156,0.4);
+            padding-bottom:1px;
+            transition:color 0.2s ease, gap 0.2s ease;
+        }
+        .gac-featured:hover .gac-featured-cta { color:#fff; gap:0.7rem; }
+
+        /* Tags */
+        .gac-tag {
+            display:inline-block;
+            font-size:0.65rem; font-weight:700;
+            letter-spacing:1.5px; text-transform:uppercase;
+            padding:0.22rem 0.75rem; border-radius:50px;
+            margin-bottom:0.6rem;
+        }
+        .gac-tag--news  { background:rgba(0,150,136,0.18); color:#00796b; }
+        .gac-tag--event { background:rgba(37,99,235,0.15); color:#1d4ed8; }
+        /* On dark overlay */
+        .gac-featured-bottom .gac-tag--news  { background:rgba(26,188,156,0.25); color:#6ee7b7; }
+        .gac-featured-bottom .gac-tag--event { background:rgba(96,165,250,0.25); color:#93c5fd; }
+
+        /* Side column */
+        .gac-side {
+            display:flex; flex-direction:column; gap:1rem;
+        }
+
+        /* Side card */
+        .gac-card {
+            display:flex; gap:1rem;
+            text-decoration:none !important;
+            background:#fff;
+            border-radius:16px;
+            border:1.5px solid rgba(15,23,42,0.07);
+            box-shadow:0 2px 16px rgba(15,23,42,0.06);
+            overflow:hidden;
+            transition:transform 0.32s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow 0.32s ease, border-color 0.22s ease;
+        }
+        .gac-card:hover {
+            transform:translateY(-4px) translateX(3px);
+            box-shadow:0 12px 36px rgba(0,150,136,0.13);
+            border-color:rgba(0,150,136,0.2);
+        }
+        .gac-card-img-wrap {
+            width:110px; min-width:110px; height:110px;
+            flex-shrink:0; overflow:hidden;
+        }
+        .gac-card-img {
+            width:100%; height:100%;
+            object-fit:cover; object-position:center;
+            transition:transform 0.45s ease;
+        }
+        .gac-card:hover .gac-card-img { transform:scale(1.08); }
+        .gac-card-img-fallback {
+            width:100%; height:100%;
+            background:linear-gradient(135deg,rgba(0,150,136,0.12),rgba(59,130,246,0.10));
+        }
+        .gac-card-body {
+            padding:0.9rem 1rem 0.9rem 0;
+            display:flex; flex-direction:column; justify-content:center;
+            flex:1;
+        }
+        .gac-card-meta { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem; flex-wrap:wrap; }
+        .gac-card-date { font-size:0.68rem; color:#94a3b8; font-weight:500; }
+        .gac-card-title {
+            font-size:0.95rem; font-weight:700;
+            color:#0f172a; margin:0 0 0.35rem;
+            line-height:1.35; letter-spacing:-0.2px;
+        }
+        .gac-card-excerpt {
+            font-size:0.8rem; color:#64748b;
+            line-height:1.5; margin:0 0 0.5rem;
+        }
+        .gac-card-link {
+            display:inline-flex; align-items:center; gap:0.3rem;
+            font-size:0.78rem; font-weight:700; color:#00796b;
+            transition:gap 0.2s ease, color 0.2s ease;
+        }
+        .gac-card:hover .gac-card-link { gap:0.55rem; color:#004d40; }
+
+        /* CTA */
+        .gac-actions { display:flex; justify-content:center; margin-top:2.8rem; }
+        .gac-btn-all {
+            display:inline-flex; align-items:center; gap:0.6rem;
+            background:linear-gradient(135deg,#00796b,#1abc9c);
+            color:#fff !important;
+            font-size:0.92rem; font-weight:700;
+            padding:0.85rem 2.2rem;
+            border-radius:50px;
+            text-decoration:none !important;
+            box-shadow:0 6px 20px rgba(0,150,136,0.32);
+            transition:transform 0.28s ease, box-shadow 0.28s ease, gap 0.22s ease;
+        }
+        .gac-btn-all:hover {
+            transform:translateY(-3px);
+            box-shadow:0 14px 36px rgba(0,150,136,0.42);
+            gap:0.9rem;
+        }
+        </style>
+
+        <!-- Quick Links Section -->
+        <style>
+.ql-section {
+    background: linear-gradient(135deg, #f0fdf9 0%, #e8f5f2 50%, #f0f9ff 100%);
+    padding: 5rem 0 4.5rem;
+    position: relative;
+    overflow: hidden;
+}
+.ql-section::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: -80px;
+    width: 340px; height: 340px;
+    background: radial-gradient(circle, rgba(0,150,136,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.ql-section::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(52,152,219,0.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+.ql-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+}
+.ql-header .ql-label {
+    display: inline-block;
+    background: linear-gradient(90deg, #00796b, #1abc9c);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+}
+.ql-header h2 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -1.5px;
+    line-height: 1.15;
+    margin: 0 0 0.5rem;
+}
+.ql-header h2 span {
+    background: linear-gradient(90deg, #00796b, #1abc9c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.ql-header p {
+    color: #64748b;
+    font-size: 1.05rem;
+    margin: 0;
+}
+.ql-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+@media (max-width: 768px) {
+    .ql-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .ql-header h2 { font-size: 1.7rem; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .ql-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.ql-card {
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.2rem 2rem 2rem;
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    border: 1.5px solid rgba(0,150,136,0.10);
+    box-shadow: 0 4px 24px rgba(15,23,42,0.07), 0 1px 4px rgba(0,150,136,0.05);
+    transition: transform 0.32s cubic-bezier(0.22,1,0.36,1),
+                box-shadow 0.32s cubic-bezier(0.22,1,0.36,1),
+                border-color 0.22s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+.ql-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--ql-grad);
+    opacity: 0;
+    transition: opacity 0.32s ease;
+    border-radius: inherit;
+    z-index: 0;
+}
+.ql-card:hover::before { opacity: 1; }
+.ql-card:hover {
+    transform: translateY(-7px) scale(1.025);
+    box-shadow: 0 20px 50px rgba(0,150,136,0.16), 0 4px 12px rgba(15,23,42,0.10);
+    border-color: transparent;
+}
+.ql-card > * { position: relative; z-index: 1; }
+.ql-icon-wrap {
+    width: 62px; height: 62px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--ql-icon-bg);
+    transition: background 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+}
+.ql-card:hover .ql-icon-wrap {
+    background: rgba(255,255,255,0.22);
+    transform: scale(1.1) rotate(-4deg);
+}
+.ql-icon-wrap svg {
+    width: 30px; height: 30px;
+    color: var(--ql-icon-color);
+    transition: color 0.3s ease;
+}
+.ql-card:hover .ql-icon-wrap svg { color: #fff; }
+.ql-card-body { width: 100%; }
+.ql-card-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.35rem;
+    transition: color 0.3s ease;
+    line-height: 1.25;
+}
+.ql-card:hover .ql-card-title { color: #fff; }
+.ql-card-desc {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+.ql-card:hover .ql-card-desc { color: rgba(255,255,255,0.85); }
+.ql-card-arrow {
+    margin-top: auto;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--ql-icon-bg);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s ease, transform 0.3s ease;
+    align-self: flex-end;
+}
+.ql-card-arrow svg { width: 16px; height: 16px; color: var(--ql-icon-color); transition: color 0.3s; }
+.ql-card:hover .ql-card-arrow {
+    background: rgba(255,255,255,0.25);
+    transform: translate(3px, -3px);
+}
+.ql-card:hover .ql-card-arrow svg { color: #fff; }
+/* Decorative stripe at top */
+.ql-card-stripe {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--ql-stripe);
+    border-radius: 20px 20px 0 0;
+}
+</style>
+
+<section class="ql-section">
+    <div class="container">
+        <div class="ql-header">
+            <span class="ql-label">Acceso Directo</span>
+            <h2>Enlaces <span>Rápidos</span></h2>
+            <p>Accede de forma rápida a nuestros servicios y plataformas más utilizadas</p>
+        </div>
+
+        <div class="ql-grid">
+
+            
+            <a href="http://127.0.0.1:8000/eventos" class="ql-card"
+               style="--ql-grad: linear-gradient(135deg, #00796b 0%, #1abc9c 100%);
+                      --ql-icon-bg: rgba(0,150,136,0.10);
+                      --ql-icon-color: #00796b;
+                      --ql-stripe: linear-gradient(90deg, #00796b, #1abc9c);">
+                <div class="ql-card-stripe"></div>
+                <div class="ql-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"/>
+                    </svg>
+                </div>
+                <div class="ql-card-body">
+                    <div class="ql-card-title">Eventos</div>
+                    <p class="ql-card-desc">Conoce nuestras actividades académicas, culturales y deportivas programadas.</p>
+                </div>
+                <div class="ql-card-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                </div>
+            </a>
+
+            
+            <a href="http://127.0.0.1:8000/noticias" class="ql-card"
+               style="--ql-grad: linear-gradient(135deg, #1565c0 0%, #3498db 100%);
+                      --ql-icon-bg: rgba(21,101,192,0.10);
+                      --ql-icon-color: #1565c0;
+                      --ql-stripe: linear-gradient(90deg, #1565c0, #3498db);">
+                <div class="ql-card-stripe"></div>
+                <div class="ql-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"/>
+                    </svg>
+                </div>
+                <div class="ql-card-body">
+                    <div class="ql-card-title">Relaciones Públicas</div>
+                    <p class="ql-card-desc">Noticias, comunicados y toda la información institucional más reciente.</p>
+                </div>
+                <div class="ql-card-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                </div>
+            </a>
+
+            
+            <a href="https://egresados.istsucua.edu.ec" class="ql-card" target="_blank" rel="noopener"
+               style="--ql-grad: linear-gradient(135deg, #7b1fa2 0%, #ab47bc 100%);
+                      --ql-icon-bg: rgba(123,31,162,0.10);
+                      --ql-icon-color: #7b1fa2;
+                      --ql-stripe: linear-gradient(90deg, #7b1fa2, #ab47bc);">
+                <div class="ql-card-stripe"></div>
+                <div class="ql-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
+                    </svg>
+                </div>
+                <div class="ql-card-body">
+                    <div class="ql-card-title">Portal de Egresados</div>
+                    <p class="ql-card-desc">Accede al portal exclusivo para egresados y gestiona tu titulación y más.</p>
+                </div>
+                <div class="ql-card-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget" class="chatbot-widget">
+        <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Abrir Chatbot">
+            <img src="http://127.0.0.1:8000/assets/images/chatbot-avatar.gif" alt="Chatbot ISTS" class="chatbot-avatar"
+                style="width: 64px; height: 64px; object-fit: cover; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.12);">
+        </button>
+
+        <div id="chatbot-window" class="chatbot-window" style="display: none;">
+            <div class="chatbot-header" style="display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="margin:0;">Asistente Virtual ISTS</h3>
+                <div style="display: flex; gap: 8px;">
+                    <button id="chatbot-clear-history" title="Eliminar historial" style="background: none; border: none; color: #fff; font-size: 18px; cursor: pointer;">🗑️</button>
+                    <button id="chatbot-close" aria-label="Cerrar Chatbot">✕</button>
+                </div>
+            </div>
+
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="bot-message">
+                    <p>¡Hola! 👋 Soy el asistente virtual del ISTS. ¿En qué puedo ayudarte?</p>
+                </div>
+            </div>
+
+            <form id="chatbot-form" class="chatbot-form">
+                <input type="hidden" id="chat-session-id" value="">
+                <input type="hidden" name="_token" value="9HoWlywR5smoXh6CNn6XEr5T1TkzGpGlIxxPc0bx">                <input type="text" id="chatbot-input" name="message" placeholder="Escribe tu pregunta..."
+                    maxlength="500" required>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Redes sociales flotantes lado izquierdo -->
+    <div id="social-widget"
+         style="position:fixed; bottom:7.5rem; left:1.5rem; z-index:2147483646; display:flex; flex-direction:column; gap:12px; align-items:center;">
+                            <a href="https://www.facebook.com/share/14NqPxg6y5t/" target="_blank" rel="noopener" title="Facebook"
+               style="background:#1877f2; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+                <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0"/></svg>
+            </a>
+                    <a href="https://instagram.com/istsucua" target="_blank" rel="noopener" title="Instagram"
+               style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+                <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.242 1.308 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.242 1.246-3.608 1.308-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.242-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.425 3.678 1.406c-.98.98-1.274 2.092-1.333 3.373C2.013 8.332 2 8.741 2 12c0 3.259.013 3.668.072 4.948.059 1.281.353 2.393 1.333 3.373.98.98 2.092 1.274 3.373 1.333C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.353 3.373-1.333.98-.98 1.274-2.092 1.333-3.373.059-1.28.072-1.689.072-4.948 0-3.259-.013-3.668-.072-4.948-.059-1.281-.353-2.393-1.333-3.373-.98-.98-2.092-1.274-3.373-1.333C15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+                    <a href="https://www.tiktok.com/@ist_sucua" target="_blank" rel="noopener" title="Tiktok"
+               style="background:#000; border-radius:50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12);">
+                <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M12.004 2.003c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm3.993 10.993c-.001 1.657-1.346 3.002-3.003 3.002-1.657 0-3.002-1.345-3.002-3.002 0-1.657 1.345-3.002 3.002-3.002.553 0 1.07.151 1.513.414v1.13c-.293-.14-.617-.22-.963-.22-1.104 0-2 .896-2 2 0 1.104.896 2 2 2 1.104 0 2-.896 2-2v-5.002h1.45c.001 1.657 1.346 3.002 3.003 3.002v1.45c-1.657 0-3.002-1.345-3.002-3.002z"/></svg>
+            </a>
+        
+        <!-- Widget flotante de eventos, circular, animado y llamativo -->
+        <a href="http://127.0.0.1:8000/eventos" id="eventos-fab" title="Ver eventos ISTS"
+           style="background: linear-gradient(135deg, #10b981 60%, #f9d423 100%); box-shadow: 0 4px 16px rgba(16,185,129,0.18); border-radius: 50%; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; margin-top: 10px; position: relative; animation: pulse-eventos 1.5s infinite; transition: transform 0.2s;">
+            <span style="font-size:2.1rem; color:#fff; display:flex; align-items:center; justify-content:center;">
+                <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="16" fill="#10b981"/><path d="M10 14h12v8a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2v-8Zm12-2V9a2 2 0 0 0-2-2h-1V6a1 1 0 1 0-2 0v1h-2V6a1 1 0 1 0-2 0v1h-1a2 2 0 0 0-2 2v3h12Z" fill="#fff"/></svg>
+            </span>
+            <span style="position:absolute; bottom:-28px; left:50%; transform:translateX(-50%); background:#fff; color:#10b981; font-weight:700; font-size:0.98rem; border-radius:8px; padding:2px 12px; box-shadow:0 2px 8px rgba(16,185,129,0.10); white-space:nowrap;">EVENTOS</span>
+        </a>
+        <style>
+            @keyframes pulse-eventos {
+                0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.25); }
+                70% { box-shadow: 0 0 0 16px rgba(16,185,129,0.0); }
+                100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.25); }
+            }
+            #eventos-fab:hover {
+                transform: scale(1.08) rotate(-3deg);
+                box-shadow: 0 6px 24px rgba(249,212,35,0.18);
+            }
+        </style>
+    </div>
+        
+        </style>
+
+    </main>
+
+    <div class="public-page-footer">
+        <style>
+/* ── Footer Premium ── */
+.ftr {
+    background: #0c1a2e;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+.ftr-top-bar {
+    background: linear-gradient(90deg, #00796b 0%, #1abc9c 50%, #1565c0 100%);
+    height: 4px;
+}
+.ftr-main {
+    max-width: 1240px; margin: 0 auto;
+    padding: 3.5rem 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1.4fr;
+    gap: 2.5rem;
+}
+.ftr-brand-logo {
+    display:flex; align-items:center; gap:0.75rem;
+    margin-bottom:1rem;
+}
+.ftr-brand-icon {
+    width:44px; height:44px;
+    background: linear-gradient(135deg,#00796b,#1abc9c);
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+}
+.ftr-brand-icon svg { color:#fff; }
+.ftr-brand-name {
+    font-size:0.95rem; font-weight:800;
+    color:#fff; line-height:1.2; letter-spacing:-0.3px;
+}
+.ftr-brand-tagline {
+    font-size:0.82rem; color:rgba(255,255,255,0.45);
+    font-weight:500; letter-spacing:0.5px;
+}
+.ftr-brand-desc {
+    color:rgba(255,255,255,0.5); font-size:0.88rem;
+    line-height:1.75; margin: 0 0 1.5rem;
+}
+.ftr-socials {
+    display:flex; gap:0.6rem; flex-wrap:wrap;
+}
+.ftr-social-btn {
+    width:36px; height:36px; border-radius:10px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.1);
+    display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,0.55) !important;
+    text-decoration:none !important;
+    transition:background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+}
+.ftr-social-btn:hover {
+    background:rgba(0,150,136,0.25);
+    border-color:rgba(0,150,136,0.4);
+    color:#1abc9c !important;
+}
+
+.ftr-col-title {
+    font-size:0.72rem; font-weight:800;
+    letter-spacing:2.5px; text-transform:uppercase;
+    color:rgba(255,255,255,0.35);
+    margin:0 0 1.1rem; padding-bottom:0.65rem;
+    border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.ftr-links {
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-direction:column; gap:0.4rem;
+}
+.ftr-links a {
+    color:rgba(255,255,255,0.6) !important;
+    text-decoration:none !important;
+    font-size:0.9rem;
+    transition:color 0.2s ease, padding-left 0.2s ease;
+    display:inline-block;
+}
+.ftr-links a:hover { color:#1abc9c !important; padding-left:4px; }
+
+.ftr-contact-list {
+    display:flex; flex-direction:column; gap:0.9rem;
+}
+.ftr-contact-item {
+    display:flex; align-items:flex-start; gap:0.75rem;
+}
+.ftr-contact-ico {
+    width:30px; height:30px; border-radius:8px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    color:rgba(0,188,157,0.85);
+}
+.ftr-contact-text {
+    font-size:0.85rem; color:rgba(255,255,255,0.55);
+    line-height:1.5;
+}
+.ftr-contact-text strong {
+    display:block; font-size:0.72rem; font-weight:700;
+    letter-spacing:1px; text-transform:uppercase;
+    color:rgba(255,255,255,0.3); margin-bottom:0.15rem;
+}
+
+.ftr-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    max-width:1240px; margin:0 auto;
+    padding: 1.25rem 2rem;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:1rem; flex-wrap:wrap;
+}
+.ftr-copyright { font-size:0.8rem; color:rgba(255,255,255,0.28); }
+.ftr-dev { font-size:0.78rem; color:rgba(255,255,255,0.22); }
+.ftr-dev span { color:rgba(0,188,157,0.55); }
+
+@media(max-width:1024px) {
+    .ftr-main { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:640px) {
+    .ftr-main { grid-template-columns: 1fr; gap:2rem; padding-top:2.5rem; }
+    .ftr-bottom { flex-direction:column; text-align:center; gap:0.25rem; }
+}
+</style>
+
+<footer class="ftr">
+    <div class="ftr-top-bar"></div>
+
+    <div class="ftr-main">
+        
+        <div>
+            <div class="ftr-brand-logo">
+                <div class="ftr-brand-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="22" height="22">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3L2 9l10 6 10-6-10-6zM2 15l10 6 10-6M2 12l10 6 10-6"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="ftr-brand-name">ISTS Sucúa</div>
+                    <div class="ftr-brand-tagline">Instituto Superior Tecnológico</div>
+                </div>
+            </div>
+            <p class="ftr-brand-desc">
+                Formando profesionales de excelencia para el desarrollo tecnológico y social de la Amazonía ecuatoriana desde 1995.
+            </p>
+            <div class="ftr-socials">
+                <a href="#" class="ftr-social-btn" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3H13v6.95C18.05 21.45 22 17.19 22 12z"/></svg>
+                </a>
+                <a href="#" class="ftr-social-btn" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                </a>
+                <a href="#" class="ftr-social-btn" aria-label="YouTube">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M21.58 7.19a2.76 2.76 0 0 0-1.94-1.95C18.13 5 12 5 12 5s-6.13 0-7.64.24A2.76 2.76 0 0 0 2.42 7.19 29 29 0 0 0 2 12a29 29 0 0 0 .42 4.81 2.76 2.76 0 0 0 1.94 1.95C5.87 19 12 19 12 19s6.13 0 7.64-.24a2.76 2.76 0 0 0 1.94-1.95A29 29 0 0 0 22 12a29 29 0 0 0-.42-4.81zM10 15V9l6 3-6 3z"/></svg>
+                </a>
+                <a href="https://chat.whatsapp.com/DpBz7BKBL7sEPwXpJ1xnnb?mode=hqrc" class="ftr-social-btn" aria-label="WhatsApp" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.47 14.38c-.27-.13-1.58-.78-1.82-.87s-.42-.13-.6.13-.69.87-.85 1.05-.31.2-.58.07a7.28 7.28 0 0 1-2.14-1.32 8.07 8.07 0 0 1-1.49-1.84c-.15-.27 0-.41.12-.55l.39-.45a1.7 1.7 0 0 0 .26-.44.48.48 0 0 0 0-.46c-.07-.13-.6-1.44-.82-1.97-.21-.52-.43-.45-.6-.46h-.5a1 1 0 0 0-.72.34A3 3 0 0 0 8 10.5a5.17 5.17 0 0 0 1.09 2.75 11.82 11.82 0 0 0 4.53 4 6.18 6.18 0 0 0 2.07.54 2.82 2.82 0 0 0 1.76-.55 2.58 2.58 0 0 0 .86-1.72c.06-.43-.14-.67-.41-.8zM12 2A10 10 0 0 0 3.49 17.19L2 22l4.93-1.45A10 10 0 1 0 12 2z"/></svg>
+                </a>
+            </div>
+        </div>
+
+        
+        <div>
+            <p class="ftr-col-title">Institución</p>
+            <ul class="ftr-links">
+                <li><a href="http://127.0.0.1:8000/carreras">Carreras</a></li>
+                <li><a href="http://127.0.0.1:8000/eventos">Eventos</a></li>
+                <li><a href="http://127.0.0.1:8000/noticias">Noticias</a></li>
+                <li><a href="http://127.0.0.1:8000/calendario">Calendario Académico</a></li>
+                <li><a href="https://biblioteca.istsucua.edu.ec" target="_blank" rel="noopener">Biblioteca Digital</a></li>
+            </ul>
+        </div>
+
+        
+        <div>
+            <p class="ftr-col-title">Recursos</p>
+            <ul class="ftr-links">
+                <li><a href="https://chat.whatsapp.com/DpBz7BKBL7sEPwXpJ1xnnb?mode=hqrc" target="_blank" rel="noopener">Admisión SNNA</a></li>
+                <li><a href="http://127.0.0.1:8000/transparency/reglamentos">Reglamentos</a></li>
+                <li><a href="http://127.0.0.1:8000/campus">Campus Virtual</a></li>
+            </ul>
+            <div style="margin-top:1.5rem;">
+                            </div>
+        </div>
+
+        
+        <div>
+            <p class="ftr-col-title">Contacto</p>
+            <div class="ftr-contact-list">
+                <div class="ftr-contact-item">
+                    <div class="ftr-contact-ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
+                    </div>
+                    <div class="ftr-contact-text">
+                        <strong>Dirección</strong>
+                        Efrén Zúñiga - Luis Sangurima<br>Sucúa, Ecuador
+                    </div>
+                </div>
+                <div class="ftr-contact-item">
+                    <div class="ftr-contact-ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"/></svg>
+                    </div>
+                    <div class="ftr-contact-text">
+                        <strong>Teléfono</strong>
+                        (07) 274-0421
+                    </div>
+                </div>
+                <div class="ftr-contact-item">
+                    <div class="ftr-contact-ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+                    </div>
+                    <div class="ftr-contact-text">
+                        <strong>Correo</strong>
+                        secretaria@istsucua.edu.ec
+                    </div>
+                </div>
+                <div class="ftr-contact-item">
+                    <div class="ftr-contact-ico">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                    </div>
+                    <div class="ftr-contact-text">
+                        <strong>Horario</strong>
+                        Lun–Vie: 14:00 – 22:00
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div style="border-top:1px solid rgba(255,255,255,0.06);">
+        <div class="ftr-bottom">
+            <p class="ftr-copyright">
+                &copy; 2026 Instituto Superior Tecnológico Sucúa. Todos los derechos reservados.
+            </p>
+            <p class="ftr-dev">Desarrollado por <span>Favian Cumbanama</span></p>
+        </div>
+    </div>
+</footer>
+
+<button id="back-to-top" class="back-to-top" aria-label="Volver arriba">↑</button>
+
+<script src="http://127.0.0.1:8000/js/main.js"></script>
+    </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="http://127.0.0.1:8000/js/main.js"></script>
+    <script src="http://127.0.0.1:8000/js/chatbot.js?v=1776329503" defer></script>
+    <script src="http://127.0.0.1:8000/js/dropdowns.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var myCarousel = document.querySelector('#heroCarousel');
+        if (myCarousel) {
+            var carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 5000,
+                ride: 'carousel',
+                pause: false,
+                wrap: true
+            });
+            console.log('Bootstrap Carousel inicializado:', carousel);
+            // Forzar avance cada 5 segundos para depuración
+            setInterval(function() {
+                carousel.next();
+                console.log('Forzando avance de slide');
+            }, 5000);
+        } else {
+            console.log('Bootstrap Carousel: no encontrado en el DOM');
+        }
+    });
+    </script>
+    
+    <style>
+.social-floating {
+    position: fixed;
+    top: 50%;
+    right: 18px;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 8px 4px;
+    transition: background 0.2s;
+}
+.social-floating a img {
+    filter: grayscale(0.2) brightness(0.95);
+    transition: filter 0.2s, transform 0.2s;
+}
+.social-floating a:hover img {
+    filter: none;
+    transform: scale(1.12);
+}
+@media (max-width: 768px) {
+    .social-floating {
+        top: unset;
+        bottom: 80px;
+        right: 10px;
+        flex-direction: row;
+        border-radius: 12px;
+        padding: 6px 2px;
+    }
+}
+</style>
+</body>
+</html>
