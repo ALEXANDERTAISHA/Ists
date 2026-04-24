@@ -66,7 +66,7 @@ class AdminController extends Controller
         $totalViews = DB::table('site_stats')->where('id', 1)->value('total_visits');
         $qasCount = QA::count();
         $updatesActiveCount = Update::active()->count();
-        $tramitesCount = DB::table('contents')->where('category', 'tramites')->count();
+        $documentosCount = DB::table('contents')->where('category', 'documentos')->count();
         $stats = [
             'recent_contents' => DB::table('contents')->orderByDesc('created_at')->limit(5)->get()->map(fn($row) => (array) $row)->toArray(),
             'recent_news' => News::orderByDesc('published_at')->limit(5)->get()->map(fn($row) => $row->toArray())->toArray(),
@@ -85,7 +85,7 @@ class AdminController extends Controller
             "totalViews" => $totalViews,
             "qasCount" => $qasCount,
             "updatesActiveCount" => $updatesActiveCount,
-            "tramitesCount" => $tramitesCount,
+            "documentosCount" => $documentosCount,
             "stats" => $stats,
             "menuItems" => $menuItems,
             "allMenuParents" => $allMenuParents,

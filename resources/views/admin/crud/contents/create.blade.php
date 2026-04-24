@@ -38,7 +38,10 @@
                     <div class="user-dropdown">
                         <a href="{{ url('/admin/profile') }}">👤 Perfil</a>
                         <a href="{{ url('/auth/change-password') }}">🔒 Cambiar Contraseña</a>
-                        <a href="{{ url('/auth/logout') }}">🚪 Cerrar Sesión</a>
+                        <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                            @csrf
+                            <button type="submit" style="background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;text-align:left;width:100%;">🚪 Cerrar Sesión</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -89,12 +92,14 @@
                                     <select id="category" name="category" class="form-control" required>
                                         <option value="">Selecciona una categoría</option>
                                         <option value="transparency">Transparencia</option>
-                                        <option value="tramites">Trámites</option>
+                                        <option value="documentos">Documentos</option>
                                         <option value="carreras">Carreras</option>
                                         <option value="course">Cursos</option>
                                         <option value="noticias">Noticias</option>
                                         <option value="sobre-nosotros">Sobre Nosotros</option>
+                                        <option value="unidades">Unidades</option>
                                         <option value="investigacion">Investigación</option>
+                                        <option value="vinculacion">Vinculación</option>
                                         <option value="eventos">Eventos</option>
                                         <option value="servicios">Servicios</option>
                                     </select>
@@ -118,9 +123,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             function toggleFields() {
                 var cat = document.getElementById('category').value;
-                document.getElementById('description-group').style.display = (cat !== 'tramites') ? '' : 'none';
-                document.getElementById('content-group').style.display = (cat !== 'tramites') ? '' : 'none';
-                document.getElementById('image-group').style.display = (cat !== 'tramites') ? '' : 'none';
+                document.getElementById('description-group').style.display = (cat !== 'documentos') ? '' : 'none';
+                document.getElementById('content-group').style.display = (cat !== 'documentos') ? '' : 'none';
+                document.getElementById('image-group').style.display = (cat !== 'documentos') ? '' : 'none';
             }
             var catSelect = document.getElementById('category');
             if (catSelect) {

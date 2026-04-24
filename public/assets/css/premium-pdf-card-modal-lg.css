@@ -1,0 +1,13 @@
+/* Modal PDF más grande */
+#pdfModal {
+    max-width: 1200px;
+    width: 99vw;
+    max-height: 96vh;
+}
+#pdfModalViewer {
+    height: 85vh;
+}
+#pdfModalHeader {
+    font-size: 1.25em;
+    padding: 1.3em 2em 1em 2em;
+}

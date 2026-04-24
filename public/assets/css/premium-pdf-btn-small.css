@@ -1,0 +1,45 @@
+/* Ajuste de tamaño para los botones premium PDF */
+.premium-pdf-btn {
+    min-height: 70px;
+    padding: 0.7em 1em 0.7em 0.9em;
+    font-size: 0.98rem;
+    border-radius: 10px;
+}
+.premium-pdf-btn .pdf-icon {
+    font-size: 1.5em;
+    margin-right: 0.5em;
+}
+.premium-pdf-btn .pdf-label {
+    font-size: 0.82em;
+}
+.premium-pdf-btn .pdf-title {
+    font-size: 1em;
+    max-width: 10em;
+}
+.premium-pdf-btn .pdf-date {
+    font-size: 0.75em;
+}
+.premium-pdf-btn .pdf-badge {
+    font-size: 0.95em;
+    padding: 0.2em 0.8em;
+    margin-left: 0.7em;
+}
+.premium-pdf-btn .pdf-arrow {
+    font-size: 1.1em;
+}
+
+/* Forzar máximo 4 por fila en desktop */
+@media (min-width: 992px) {
+    .premium-pdf-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+    }
+    .premium-pdf-col {
+        flex: 0 0 24%;
+        max-width: 24%;
+        min-width: 220px;
+        margin-bottom: 0;
+        display: flex;
+    }
+}

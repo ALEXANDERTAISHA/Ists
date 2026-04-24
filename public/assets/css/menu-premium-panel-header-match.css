@@ -1,0 +1,12 @@
+/* Fondo premium para panel de menú igual al header principal (azul a verde aqua) */
+.menu-premium-panel {
+    background: linear-gradient(90deg, #48b1e2 0%, #3ed6b7 100%);
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(72,177,226,0.10);
+    border: 1.5px solid #3ed6b7;
+    padding: 1.2em 0.7em;
+    margin-bottom: 1.5em;
+}
+.menu-tree-row, .mobile-tree-link, .menu-tree-link {
+    background: transparent !important;
+}

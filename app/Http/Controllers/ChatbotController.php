@@ -14,7 +14,7 @@ class ChatbotController extends Controller
     private $knowledgeSources = [
         \App\Chatbot\Sources\AutoridadesSource::class,
         \App\Chatbot\Sources\DocentesSource::class,
-        \App\Chatbot\Sources\TramitesSource::class,
+        \App\Chatbot\Sources\DocumentosSource::class,
         // Puedes agregar más aquí
     ];
     /**

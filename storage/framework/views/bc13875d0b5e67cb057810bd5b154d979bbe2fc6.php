@@ -16,7 +16,7 @@
         <!-- Encabezado personalizado por sección -->
         <?php echo $__env->yieldContent('header'); ?>
         <!-- Contenido principal -->
-        <div class="max-w-7xl mx-auto px-4 public-page-main" style="margin-bottom:0; padding-top: 180px;">
+        <div class="max-w-7xl mx-auto px-4 public-page-main" style="margin-bottom:0; padding-top: 130px;">
             <?php echo $__env->yieldContent('content'); ?>
         </div>
         <div class="public-page-footer">

@@ -1,0 +1,54 @@
+/* Tarjetas PDF premium: más pequeñas y 4 exactas por fila */
+@media (min-width: 1200px) {
+    .premium-pdf-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    .premium-pdf-col {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        display: block;
+        margin-bottom: 0;
+    }
+    .premium-pdf-card {
+        min-height: 180px;
+        max-height: 210px;
+        padding: 0.7em 0.7em 0.7em 0.7em;
+        border-radius: 12px;
+    }
+    .premium-pdf-card .pdf-icon {
+        font-size: 1.3em;
+        padding: 0.35em 0.45em;
+        left: 0.7em;
+        top: 0.7em;
+    }
+    .premium-pdf-card .pdf-badge {
+        top: 0.7em;
+        right: 0.7em;
+        font-size: 0.85em;
+        padding: 0.18em 0.8em;
+    }
+    .premium-pdf-card .pdf-title {
+        font-size: 0.98em;
+        margin-top: 2em;
+        min-height: 1.5em;
+    }
+    .premium-pdf-card .pdf-desc {
+        font-size: 0.85em;
+        min-height: 1.2em;
+        margin-bottom: 0.3em;
+    }
+    .premium-pdf-card .pdf-date {
+        font-size: 0.75em;
+        margin-bottom: 0.3em;
+    }
+    .premium-pdf-card .pdf-btn {
+        font-size: 0.92em;
+        padding: 0.35em 0.8em 0.35em 0.8em;
+        border-radius: 6px;
+        margin-top: 0.1em;
+    }
+}

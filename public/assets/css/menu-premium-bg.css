@@ -1,0 +1,19 @@
+/* Fondo premium para el menú público (degradado sutil y textura suave) */
+.menu-premium-bg {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f7fa 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    /* textura sutil */
+    position: relative;
+    z-index: 0;
+}
+.menu-premium-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://www.transparenttextures.com/patterns/symphony.png');
+    opacity: 0.13;
+    z-index: 1;
+    pointer-events: none;
+}

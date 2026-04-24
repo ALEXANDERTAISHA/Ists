@@ -20,8 +20,8 @@ return new class extends Migration
             'CAMPUS' => 'CAMPUS',
             'TRANSPARENCIA' => 'TRANSPARENCIA',
             'NOTICIAS' => 'NOTICIAS',
-            'TRAMITES' => 'TRAMITES',
-            'TRMITES' => 'TRAMITES',
+            'DOCUMENTOS' => 'DOCUMENTOS',
+            'DOCS' => 'DOCUMENTOS',
             'VISITAR' => 'VISITAR',
         ];
 

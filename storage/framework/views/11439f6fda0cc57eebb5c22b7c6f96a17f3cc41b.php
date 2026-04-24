@@ -16,33 +16,39 @@
     html, body {
         overflow-x: hidden;
     }
+    :root {
+        --public-header-height: 64px;
     }
+
+    body.public-sticky-footer .public-page-main {
+        padding-top: var(--public-header-height) !important;
     }
 
     /* ── PREMIUM Header ── */
     .header-public {
-        position: relative;
+        position: fixed !important;
         top: 0;
         left: 0;
         right: 0;
-        min-height: 64px;
-        padding-top: 0.2rem;
-        padding-bottom: 0.2rem;
-        background: linear-gradient(90deg, #009688 0%, #1e7e8f 50%, #233d8c 100%);
-        box-shadow: 0 6px 24px rgba(15,23,42,0.12), inset 0 1px 1px rgba(255,255,255,0.2);
-    }
-    }
-    }
-    }
-    }
+        width: 100% !important;
+        min-height: var(--public-header-height);
+        height: var(--public-header-height);
+        padding-top: 0;
+        padding-bottom: 0;
+        background: linear-gradient(90deg, rgba(15, 23, 84, 0.98) 0%, rgba(8, 145, 178, 0.97) 44%, rgba(5, 150, 105, 0.97) 100%) !important;
+        box-shadow: 0 6px 24px rgba(15,23,42,0.14), inset 0 1px 1px rgba(255,255,255,0.18);
+        z-index: 1040;
+        display: flex;
+        align-items: center;
+        overflow: visible !important;
     }
 
     .header-public.scrolled {
-        background: rgba(255,255,255,0.01) !important;
-        backdrop-filter: none !important;
-        box-shadow: none !important;
+        background: linear-gradient(90deg, rgba(23, 37, 84, 0.96) 0%, rgba(14, 116, 144, 0.95) 44%, rgba(4, 120, 87, 0.95) 100%) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        box-shadow: 0 8px 28px rgba(15,23,42,0.13) !important;
         border-bottom: none !important;
-    }
     }
 
     .header-public::before {
@@ -53,6 +59,14 @@
         background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
         pointer-events: none;
         border-radius: 0 0 8px 8px;
+    }
+
+    .header-public .header-navbar {
+        width: calc(100% - var(--scrollbar-w, 0px)) !important;
+        max-width: calc(100% - var(--scrollbar-w, 0px)) !important;
+        margin-right: var(--scrollbar-w, 0px) !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
     }
 
     .header-public .header-link {
@@ -111,6 +125,9 @@
         color: #fff;
         font-size: 1.15rem;
         cursor: pointer;
+        position: relative;
+        z-index: 1050;
+        pointer-events: auto;
         transition: 
             background 0.3s ease,
             border-color 0.3s ease,
@@ -425,25 +442,56 @@
     .menu-tree-item.is-hover > .menu-tree-row,
     .menu-tree-item.is-open > .menu-tree-row {
         background: linear-gradient(135deg, rgba(14, 165, 164, 0.12), rgba(59, 130, 246, 0.1));
-        box-shadow: inset 0 0 0 1px rgba(14, 165, 164, 0.14);
+        box-shadow: none;
+        border: 0;
+        outline: none;
     }
 
     .menu-tree-link {
         flex: 1;
         display: block;
         color: #0b335c;
-        text-decoration: none;
+        text-decoration: none !important;
         font-weight: 600;
         font-size: 0.89rem;
         line-height: 1.28;
         padding: 0.28rem 0.32rem;
         border-radius: 8px;
-        transition: color 0.2s ease, transform 0.2s ease;
+        border: 0;
+        outline: none;
+        box-shadow: none;
+        background: transparent;
+        transition: color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
     }
 
-    .menu-tree-link:hover {
+    .header-public .academic-dropdown-columns ul li .menu-tree-link::before,
+    .header-public .academic-dropdown-columns ul li .menu-tree-link::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    .header-public .academic-column a.menu-tree-link,
+    .header-public .academic-column a.menu-tree-link:hover,
+    .header-public .academic-column a.menu-tree-link:focus,
+    .header-public .academic-column a.menu-tree-link:focus-visible,
+    .header-public .academic-column a.menu-tree-link:active {
+        text-decoration: none !important;
+        border-bottom: 0 !important;
+        background-image: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .menu-tree-link:hover,
+    .menu-tree-link:focus,
+    .menu-tree-link:focus-visible,
+    .menu-tree-link:active {
         color: #0ea5a2;
-        transform: translateX(2px);
+        text-decoration: none !important;
+        outline: none;
+        box-shadow: none;
+        background: transparent;
+        transform: none;
     }
 
     .menu-tree-toggle {
@@ -590,6 +638,10 @@
     }
 
     @media (max-width: 992px) {
+        :root {
+            --public-header-height: 62px;
+        }
+
         .header-public {
             right: 0 !important;
             width: 100% !important;
@@ -597,11 +649,18 @@
 
         .header-public .header-navbar {
             justify-content: space-between !important;
-            padding: 0.7rem 1.1rem !important;
+            padding: 0.3rem 1rem !important;
+            width: calc(100% - var(--scrollbar-w, 0px)) !important;
+            max-width: calc(100% - var(--scrollbar-w, 0px)) !important;
+            margin-right: var(--scrollbar-w, 0px) !important;
         }
 
         .mobile-logo {
             display: inline-flex !important;
+        }
+
+        .desktop-logo {
+            display: none !important;
         }
 
         .header-public .header-menu {
@@ -610,6 +669,10 @@
 
         .mobile-menu-toggle {
             display: inline-flex;
+        }
+
+        .header-public .dropdown-content {
+            display: none !important;
         }
     }
 </style>
@@ -620,7 +683,6 @@
         div.style.cssText = 'width:100px;height:100px;overflow:scroll;position:absolute;top:-9999px;visibility:hidden';
         document.documentElement.appendChild(div);
         var scrollbarW = div.offsetWidth - div.clientWidth;
-        document.documentElement.appendChild(div);
         document.documentElement.style.setProperty('--scrollbar-w', scrollbarW + 'px');
         document.documentElement.removeChild(div);
     })();
@@ -635,6 +697,11 @@
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
+            }
+            if (window.matchMedia('(max-width: 992px)').matches) {
+                header.style.transform = 'translateY(0)';
+                lastScrollTop = st;
+                return;
             }
             if (st > lastScrollTop && st > 30) {
                 header.style.transform = 'translateY(-100%)';
@@ -659,8 +726,20 @@
 <header class="header-public">
     <?php
         $allCareers = \App\Models\Career::where('is_active', true)->orderBy('name')->get();
-        $tramites = \Illuminate\Support\Facades\DB::table('contents')->where('category', 'tramites')->where('status', 'published')->orderBy('title')->get();
-        $menuItems = \App\Models\MenuItem::whereNull('parent_id')->where('is_active', true)->with('childrenRecursive')->orderBy('order')->get();
+        $documentos = \Illuminate\Support\Facades\DB::table('contents')->where('category', 'documentos')->where('status', 'published')->orderBy('title')->get();
+        $menuItems = \App\Models\MenuItem::whereNull('parent_id')->where('is_active', true)->with(['pdfs', 'childrenRecursive'])->orderBy('order')->get();
+        $careerMenuLinks = \App\Models\MenuItem::where('is_active', true)
+            ->whereNotNull('career_id')
+            ->whereNotNull('url')
+            ->with('career:id,slug')
+            ->get()
+            ->filter(function ($menuItem) {
+                $url = trim((string) $menuItem->url);
+                return $url !== '' && $url !== '#' && $menuItem->career;
+            })
+            ->mapWithKeys(function ($menuItem) {
+                return [$menuItem->career->slug => $menuItem->url];
+            });
         $contentModel = new \App\Models\Content();
         $aboutContents = $contentModel->getByCategory('about');
         $acercaMenuItem = $menuItems->first(function ($menuItem) {
@@ -685,16 +764,16 @@
         $transparencyContents = $transparencyContents ?? [];
         $headerLogoUrl = !empty($headerLogoPath) ? asset(ltrim($headerLogoPath, '/')) : asset('assets/images/logoists.png');
     ?>
-    <nav class="header-navbar" style="width: 100%; background: transparent; box-shadow: none; display: flex; justify-content: center; align-items: center; padding: 0.48rem 0; position: relative;">
+    <nav class="header-navbar" style="width: 100%; height:100%; background: transparent; box-shadow: none; display: flex; justify-content: center; align-items: center; padding: 0.18rem 0; position: relative;">
         <a href="<?php echo e(url('/')); ?>" class="mobile-logo" style="display:none; align-items:center;" aria-label="Inicio ISTS">
-              <img src="<?php echo e($headerLogoUrl); ?>" alt="Logo ISTS" style="height: 64px; width: 90px; min-width:90px; min-height:64px; max-width:90px; max-height:64px; object-fit:contain; margin-left: 32px; margin-right: 8px;">
+              <img src="<?php echo e($headerLogoUrl); ?>" alt="Logo ISTS" style="height: 56px; width: 96px; min-width:96px; min-height:56px; max-width:96px; max-height:56px; object-fit:contain; margin-left: 18px; margin-right: 8px;">
         </a>
-                <li style="margin-right: 1.6rem; display: flex; align-items: center; list-style:none;">
+                <div class="desktop-logo" style="margin-right: 1.6rem; display: flex; align-items: center; list-style:none;">
                         <a href="<?php echo e(url('/')); ?>" style="display: flex; align-items: center;">
-                            <img src="<?php echo e($headerLogoUrl); ?>" alt="Logo ISTS" style="height: 120px; width: 170px; min-width:170px; min-height:120px; max-width:170px; max-height:120px; object-fit:contain; margin-left: 32px; margin-right: 8px;">
+                            <img src="<?php echo e($headerLogoUrl); ?>" alt="Logo ISTS" style="height: 64px; width: 138px; min-width:138px; min-height:64px; max-width:138px; max-height:64px; object-fit:contain; margin-left: 28px; margin-right: 8px;">
                         </a>
-                </li>
-        <ul class="header-menu" style="display: flex; flex-direction: row; align-items: center; gap: 1.1rem; list-style: none; margin: 0; padding: 0; justify-content: flex-start; max-width: 1400px; width: 100%;">
+                </div>
+        <ul class="header-menu" style="display: flex; flex-direction: row; align-items: center; gap: 0.86rem; list-style: none; margin: 0; padding: 0; justify-content: flex-start; max-width: 1400px; width: 100%;">
             <li class="dropdown" style="position: relative;">
                 <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 0.96rem; letter-spacing: 0.32px; padding: 0.42rem 1rem; transition: background 0.2s, color 0.2s;"><?php echo e($acercaMenuItem->title ?? 'ACERCA'); ?></a>
                 <div class="dropdown-content academic-dropdown single-column">
@@ -734,7 +813,7 @@
                     $displayTitle = match ($titleKey) {
                         'CARRERAS' => 'CARRERAS',
                         'CAMPUS' => 'SERVICIOS',
-                        'TRAMITES' => 'TRÁMITES',
+                        'DOCUMENTOS' => 'DOCUMENTOS',
                         default => $item->title,
                     };
                 ?>
@@ -842,6 +921,9 @@
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
                                     <ul>
+                                        <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0): ?>
+                                            <?php echo $__env->make('public.partials.menu.desktop_nodes', ['nodes' => $item->childrenRecursive], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                        <?php else: ?>
                                         <?php $__currentLoopData = $transparencyContents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $parent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li class="menu-tree-item<?php echo e(!empty($parent['children']) ? ' has-children' : ''); ?>">
                                                 <?php
@@ -888,35 +970,40 @@
                                                 <?php endif; ?>
                                             </li>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </li>
-                <?php elseif($titleKey === 'TRAMITES'): ?>
+                <?php elseif($titleKey === 'DOCUMENTOS'): ?>
                     <li class="dropdown" style="position: relative;">
                         <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
                         <div class="dropdown-content academic-dropdown single-column">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
                                     <ul>
-                                        <?php $__currentLoopData = $tramites; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tramite): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0): ?>
+                                            <?php echo $__env->make('public.partials.menu.desktop_nodes', ['nodes' => $item->childrenRecursive], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                        <?php else: ?>
+                                        <?php $__currentLoopData = $documentos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documento): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <?php
-                                                $url = $tramite->url ?? null;
-                                                $file = $tramite->file_url ?? null;
+                                                $url = $documento->url ?? null;
+                                                $file = $documento->file_url ?? null;
                                                 $isExternalUrl = $url && filter_var($url, FILTER_VALIDATE_URL);
                                                 $isFile = $file && !$isExternalUrl;
                                             ?>
                                             <li class="dropdown-item">
                                                 <?php if($isExternalUrl): ?>
-                                                    <a href="<?php echo e($url); ?>" target="_blank"><?php echo e($tramite->title); ?></a>
+                                                    <a href="<?php echo e($url); ?>" target="_blank"><?php echo e($documento->title); ?></a>
                                                 <?php elseif($isFile): ?>
-                                                    <a href="<?php echo e(asset($file)); ?>" target="_blank"><?php echo e($tramite->title); ?></a>
+                                                    <a href="<?php echo e(asset($file)); ?>" target="_blank"><?php echo e($documento->title); ?></a>
                                                 <?php else: ?>
-                                                    <span><?php echo e($tramite->title); ?></span>
+                                                    <span><?php echo e($documento->title); ?></span>
                                                 <?php endif; ?>
                                             </li>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                             </div>
@@ -985,7 +1072,7 @@
                     $displayTitle = match ($titleKey) {
                         'CARRERAS' => 'CARRERAS',
                         'CAMPUS' => 'SERVICIOS',
-                        'TRAMITES' => 'TRÁMITES',
+                        'DOCUMENTOS' => 'DOCUMENTOS',
                         default => $item->title,
                     };
                 ?>
@@ -997,17 +1084,25 @@
                             <summary class="mobile-menu__summary"><?php echo e($displayTitle); ?></summary>
                             <ul class="mobile-menu__children">
                                 <li style="font-weight:bold; padding:8px 0; color:#0b335c;">Carreras Presenciales Destacadas</li>
-                                <li><a href="<?php echo e(route('career.show', 'desarrollo-software')); ?>">Desarrollo de Software</a></li>
-                                <li><a href="<?php echo e(route('career.show', 'contabilidad-y-asesoria-tributaria')); ?>">Contabilidad y Asesoria Tributaria</a></li>
-                                <li><a href="<?php echo e(route('career.show', 'agroecologia')); ?>">Agroecologia</a></li>
+                                <?php $__currentLoopData = ['desarrollo-software' => 'Desarrollo de Software', 'contabilidad-y-asesoria-tributaria' => 'Contabilidad y Asesoria Tributaria', 'agroecologia' => 'Agroecologia']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $slug => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php
+                                        $careerUrl = $careerMenuLinks[$slug] ?? null;
+                                        $careerHref = $careerUrl ? url($careerUrl) : route('career.show', $slug);
+                                    ?>
+                                    <li><a href="<?php echo e($careerHref); ?>"><?php echo e($label); ?></a></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <li style="font-weight:bold; padding:8px 0; margin-top:8px; color:#0b335c;">Todas las Carreras Presenciales</li>
                                 <?php
                                     $presencialesMostradas = [];
                                 ?>
                                 <?php $__currentLoopData = $carrerasPresenciales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $career): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php if(!in_array($career->id, $presencialesMostradas)): ?>
+                                        <?php
+                                            $careerUrl = $careerMenuLinks[$career->slug] ?? null;
+                                            $careerHref = $careerUrl ? url($careerUrl) : route('career.show', $career->slug);
+                                        ?>
                                         <li>
-                                            <a href="<?php echo e(route('career.show', $career->slug)); ?>"><?php echo e($career->name); ?></a>
+                                            <a href="<?php echo e($careerHref); ?>"><?php echo e($career->name); ?></a>
                                         </li>
                                         <?php $presencialesMostradas[] = $career->id; ?>
                                     <?php endif; ?>
@@ -1018,8 +1113,12 @@
                                 ?>
                                 <?php $__currentLoopData = $carrerasDuales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $career): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php if(!in_array($career->id, $dualesMostradas)): ?>
+                                        <?php
+                                            $careerUrl = $careerMenuLinks[$career->slug] ?? null;
+                                            $careerHref = $careerUrl ? url($careerUrl) : route('career.show', $career->slug);
+                                        ?>
                                         <li>
-                                            <a href="<?php echo e(route('career.show', $career->slug)); ?>"><?php echo e($career->name); ?></a>
+                                            <a href="<?php echo e($careerHref); ?>"><?php echo e($career->name); ?></a>
                                         </li>
                                         <?php $dualesMostradas[] = $career->id; ?>
                                     <?php endif; ?>
@@ -1061,6 +1160,9 @@
                         <details>
                             <summary class="mobile-menu__summary"><?php echo e($displayTitle); ?></summary>
                             <ul class="mobile-menu__children">
+                                <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0): ?>
+                                    <?php echo $__env->make('public.partials.menu.mobile_nodes', ['nodes' => $item->childrenRecursive], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                <?php else: ?>
                                 <?php $__currentLoopData = $transparencyContents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $parent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php
                                         $url = isset($parent['file_url']) && filter_var($parent['file_url'], FILTER_VALIDATE_URL)
@@ -1092,27 +1194,32 @@
                                         <li><a href="<?php echo e($url); ?>" target="<?php echo e((isset($parent['file_url']) && $parent['file_url']) ? '_blank' : '_self'); ?>"><?php echo e($parent['title']); ?></a></li>
                                     <?php endif; ?>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                             </ul>
                         </details>
                     </li>
-                <?php elseif($titleKey === 'TRAMITES'): ?>
+                <?php elseif($titleKey === 'DOCUMENTOS'): ?>
                     <li class="mobile-menu__item">
                         <details>
                             <summary class="mobile-menu__summary"><?php echo e($displayTitle); ?></summary>
                             <ul class="mobile-menu__children">
-                                <?php $__currentLoopData = $tramites; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tramite): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0): ?>
+                                    <?php echo $__env->make('public.partials.menu.mobile_nodes', ['nodes' => $item->childrenRecursive], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                <?php else: ?>
+                                <?php $__currentLoopData = $documentos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documento): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php
-                                        $url = $tramite->url ?? null;
-                                        $file = $tramite->file_url ?? null;
+                                        $url = $documento->url ?? null;
+                                        $file = $documento->file_url ?? null;
                                         $isExternalUrl = $url && filter_var($url, FILTER_VALIDATE_URL);
                                         $isFile = $file && !$isExternalUrl;
                                     ?>
                                     <?php if($isExternalUrl): ?>
-                                        <li><a href="<?php echo e($url); ?>" target="_blank"><?php echo e($tramite->title); ?></a></li>
+                                        <li><a href="<?php echo e($url); ?>" target="_blank"><?php echo e($documento->title); ?></a></li>
                                     <?php elseif($isFile): ?>
-                                        <li><a href="<?php echo e(asset($file)); ?>" target="_blank"><?php echo e($tramite->title); ?></a></li>
+                                        <li><a href="<?php echo e(asset($file)); ?>" target="_blank"><?php echo e($documento->title); ?></a></li>
                                     <?php endif; ?>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                             </ul>
                         </details>
                     </li>
@@ -1136,6 +1243,86 @@
 </header>
 
 <script>
+    (function () {
+        function setupPublicMobileMenu() {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const menu = document.getElementById('mobile-menu');
+            const close = document.getElementById('mobile-menu-close');
+            const header = document.querySelector('.header-public');
+
+            if (!toggle || !menu || toggle.dataset.publicMenuBound === '1') {
+                return;
+            }
+
+            toggle.dataset.publicMenuBound = '1';
+
+            function openMenu(event) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                if (header) {
+                    header.style.transform = 'translateY(0)';
+                }
+                menu.classList.add('active');
+                toggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                menu.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+
+            closeMenu();
+
+            toggle.addEventListener('click', openMenu);
+
+            if (close) {
+                close.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    closeMenu();
+                });
+            }
+
+            menu.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', closeMenu);
+            });
+
+            menu.querySelectorAll('summary').forEach(function (summary) {
+                summary.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!menu.classList.contains('active')) {
+                    return;
+                }
+
+                if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                    closeMenu();
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    closeMenu();
+                }
+            });
+
+            window.addEventListener('pageshow', closeMenu);
+            window.addEventListener('pagehide', closeMenu);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupPublicMobileMenu);
+        } else {
+            setupPublicMobileMenu();
+        }
+    })();
+
     document.addEventListener('DOMContentLoaded', function () {
         // Cache de elementos
         const headerPublic = document.querySelector('.header-public');

@@ -21,4 +21,31 @@ class Autoridad extends Model
         "pdf_path",
         "orden",
     ];
+
+    protected $appends = [
+        "foto_url",
+    ];
+
+    public function getFotoUrlAttribute(): ?string
+    {
+        if (empty($this->foto_path)) {
+            return null;
+        }
+
+        $path = ltrim((string) $this->foto_path, "/");
+
+        if (filter_var($path, FILTER_VALIDATE_URL)) {
+            return $path;
+        }
+
+        if (str_starts_with($path, "uploads/") || str_starts_with($path, "storage/")) {
+            return asset($path);
+        }
+
+        if (file_exists(public_path("uploads/images/" . $path))) {
+            return asset("uploads/images/" . $path);
+        }
+
+        return asset("storage/uploads/images/" . $path);
+    }
 }

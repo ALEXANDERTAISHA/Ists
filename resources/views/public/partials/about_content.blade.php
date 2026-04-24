@@ -80,7 +80,10 @@
                                                     $src = $imgPath;
                                                 }
                                                 // Legacy public uploads or assets (e.g. /uploads/... or uploads/...) -> asset(ltrim(path))
-                                                elseif (preg_match('/^\/?(uploads|assets)\//i', $imgPath)) {
+                                                elseif (preg_match('/^\/?uploads\//i', $imgPath) && file_exists(public_path(ltrim($imgPath, '/')))) {
+                                                    $src = asset(ltrim($imgPath, '/'));
+                                                }
+                                                elseif (preg_match('/^\/?assets\//i', $imgPath)) {
                                                     $src = asset(ltrim($imgPath, '/'));
                                                 }
                                                 // Already references storage/... -> use asset(path)
@@ -108,7 +111,9 @@
                             if (!empty($image_url)) {
                                 if (preg_match('/^https?:\/\//i', $image_url)) {
                                     $imgSrc = $image_url;
-                                } elseif (preg_match('/^\/?(uploads|assets)\//i', $image_url)) {
+                                } elseif (preg_match('/^\/?uploads\//i', $image_url) && file_exists(public_path(ltrim($image_url, '/')))) {
+                                    $imgSrc = asset(ltrim($image_url, '/'));
+                                } elseif (preg_match('/^\/?assets\//i', $image_url)) {
                                     $imgSrc = asset(ltrim($image_url, '/'));
                                 } elseif (preg_match('/^storage\//i', $image_url)) {
                                     $imgSrc = asset($image_url);

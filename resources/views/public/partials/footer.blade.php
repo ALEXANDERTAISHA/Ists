@@ -114,12 +114,50 @@
 .ftr-dev { font-size:0.78rem; color:rgba(255,255,255,0.22); }
 .ftr-dev span { color:rgba(0,188,157,0.55); }
 
+.back-to-top {
+    position: fixed !important;
+    right: 1rem;
+    bottom: 1rem;
+    width: 44px;
+    height: 44px;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f766e, #1565c0);
+    color: #fff;
+    box-shadow: 0 12px 26px rgba(8, 18, 32, 0.24);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.22s ease, visibility 0.22s ease, transform 0.22s ease;
+    z-index: 1090;
+    line-height: 1;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
 @media(max-width:1024px) {
     .ftr-main { grid-template-columns: 1fr 1fr; }
 }
 @media(max-width:640px) {
     .ftr-main { grid-template-columns: 1fr; gap:2rem; padding-top:2.5rem; }
     .ftr-bottom { flex-direction:column; text-align:center; gap:0.25rem; }
+    .back-to-top {
+        right: 0.85rem;
+        bottom: 0.85rem;
+        width: 40px;
+        height: 40px;
+    }
 }
 </style>
 

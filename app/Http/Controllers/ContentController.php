@@ -101,8 +101,8 @@ class ContentController extends Controller
                 $appendChildren($paginatedParents, 0);
 
                 $title = "Gestión de Contenidos - ISTS Admin";
-                if ($category === "tramites") {
-                    $title = "Gestión de Trámites - ISTS Admin";
+                if ($category === "documentos") {
+                    $title = "Gestión de Documentos - ISTS Admin";
                 } elseif ($category === "transparency") {
                     $title = "Gestión de Transparencia - ISTS Admin";
                 }
@@ -127,7 +127,7 @@ class ContentController extends Controller
                 } else {
                     // Si es la lista general de contenidos, excluir las categorías especiales
                     $query
-                        ->whereNotIn("category", ["transparency", "tramites"])
+                        ->whereNotIn("category", ["transparency", "documentos"])
                         ->whereNull("parent_id");
                 }
 
@@ -152,8 +152,8 @@ class ContentController extends Controller
                 );
 
                 $title = "Gestión de Contenidos - ISTS Admin";
-                if ($category === "tramites") {
-                    $title = "Gestión de Trámites - ISTS Admin";
+                if ($category === "documentos") {
+                    $title = "Gestión de Documentos - ISTS Admin";
                 }
 
                 return view("admin.crud.contents.list", [
@@ -176,7 +176,7 @@ class ContentController extends Controller
     {
         $category = $request->query("category");
         $parents = [];
-        if ($category === "transparency" || $category === "tramites") {
+        if ($category === "transparency" || $category === "documentos") {
             $parents = $this->contentModel->getByCategoryAndParent($category);
         }
 
@@ -249,6 +249,28 @@ class ContentController extends Controller
 
             \Illuminate\Support\Facades\DB::table("contents")->insert($data);
 
+            // Automatización: crear submenú en menu_items si es un documento
+            if ($data["category"] === "documentos") {
+                // Buscar el menú principal "DOCUMENTOS"
+                $parentMenu = \App\Models\MenuItem::whereRaw('upper(title) = ?', ['DOCUMENTOS'])->first();
+                if ($parentMenu) {
+                    // Crear submenú con el título del documento y url pública
+                    $url = '/documentos'; // URL base
+                    // Si el contenido tiene slug, se puede usar para una URL más específica
+                    if (!empty($data['slug'])) {
+                        $url = '/documentos/' . $data['slug'];
+                    }
+                    \App\Models\MenuItem::create([
+                        'title' => $data['title'],
+                        'url' => $url,
+                        'parent_id' => $parentMenu->id,
+                        'order' => 99, // al final, o puedes calcular el siguiente
+                        'is_active' => 1,
+                        'category' => 'documentos',
+                    ]);
+                }
+            }
+
             $route = "admin." . ($data["category"] === "transparency" ? "transparency.index" : "contents.index");
             return redirect()->route($route)->with("success", "Contenido creado exitosamente.");
         } catch (\Exception $e) {
@@ -272,7 +294,7 @@ class ContentController extends Controller
         $parents = [];
         if (
             $item["category"] === "transparency" ||
-            $item["category"] === "tramites"
+            $item["category"] === "documentos"
         ) {
             $parents = $this->contentModel->getByCategoryAndParent(
                 $item["category"],
@@ -283,7 +305,7 @@ class ContentController extends Controller
         if (
             !$item["parent_id"] &&
             ($item["category"] === "transparency" ||
-                $item["category"] === "tramites")
+                $item["category"] === "documentos")
         ) {
             $children = \Illuminate\Support\Facades\DB::table("contents")
                 ->where("parent_id", $item["id"])
@@ -491,8 +513,8 @@ class ContentController extends Controller
             $route = "admin.contents.index";
             if ($category === "transparency") {
                 $route = "admin.transparency.index";
-            } elseif ($category === "tramites") {
-                $route = "admin.tramites.index";
+            } elseif ($category === "documentos") {
+                $route = "admin.documentos.index";
             } elseif ($category === "news") {
                 $route = "admin.news.index";
             }

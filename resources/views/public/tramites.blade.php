@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trámites - ISTS Sucúa</title>
+    <title>Documentos - ISTS Sucúa</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/harvard-style.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logoists.png') }}" sizes="32x32">
@@ -23,50 +23,50 @@
         <section class="focus-section">
             <div class="container">
                 <div class="focus-header">
-                    <h1>Trámites Disponibles</h1>
-                    <p>Encuentra información y guías sobre los trámites institucionales.</p>
+                    <h1>Documentos Disponibles</h1>
+                    <p>Encuentra información y guías sobre los documentos institucionales.</p>
                 </div>
 
                 <div class="focus-grid">
-                    @if (isset($tramites) && !empty($tramites))
-                        @foreach ($tramites as $tramite)
+                    @if (isset($documentos) && !empty($documentos))
+                        @foreach ($documentos as $documento)
                             <div class="focus-card">
-                                @if (!empty($tramite['image_url']))
+                                @if (!empty($documento['image_url']))
                                     <div class="focus-image">
-                                        <img src="{{ asset(htmlspecialchars($tramite['image_url'])) }}" alt="{{ htmlspecialchars($tramite['title']) }}">
+                                        <img src="{{ asset(htmlspecialchars($documento['image_url'])) }}" alt="{{ htmlspecialchars($documento['title']) }}">
                                     </div>
                                 @endif
                                 <div class="focus-content">
                                     @php
-                                        $url = $tramite['url'] ?? null;
-                                        $file = $tramite['file_url'] ?? null;
+                                        $url = $documento['url'] ?? null;
+                                        $file = $documento['file_url'] ?? null;
                                         $isExternalUrl = $url && filter_var($url, FILTER_VALIDATE_URL);
                                         $isFile = $file && !$isExternalUrl;
                                     @endphp
                                     @if ($isExternalUrl)
                                         <h3>
-                                            <a href="{{ $url }}" target="_blank" class="text-primary underline">{{ htmlspecialchars($tramite['title']) }}</a>
+                                            <a href="{{ $url }}" target="_blank" class="text-primary underline">{{ htmlspecialchars($documento['title']) }}</a>
                                         </h3>
                                     @elseif ($isFile)
                                         <h3>
-                                            <a href="{{ asset($file) }}" target="_blank" class="text-primary underline">{{ htmlspecialchars($tramite['title']) }}</a>
+                                            <a href="{{ asset($file) }}" target="_blank" class="text-primary underline">{{ htmlspecialchars($documento['title']) }}</a>
                                         </h3>
                                     @else
-                                        <h3>{{ htmlspecialchars($tramite['title']) }}</h3>
+                                        <h3>{{ htmlspecialchars($documento['title']) }}</h3>
                                     @endif
-                                    <p>{{ htmlspecialchars($tramite['description'] ?? '') }}</p>
+                                    <p>{{ htmlspecialchars($documento['description'] ?? '') }}</p>
                                     <div class="focus-actions">
                                         @if ($isExternalUrl)
-                                            <a href="{{ $url }}" target="_blank" class="btn btn-outline">Ir al trámite</a>
+                                            <a href="{{ $url }}" target="_blank" class="btn btn-outline">Ir al documento</a>
                                         @elseif ($isFile)
-                                            <a href="{{ asset($file) }}" target="_blank" class="btn btn-outline">Ir al trámite</a>
+                                            <a href="{{ asset($file) }}" target="_blank" class="btn btn-outline">Ir al documento</a>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     @else
-                        <p>No hay trámites disponibles en este momento.</p>
+                        <p>No hay documentos disponibles en este momento.</p>
                     @endif
                 </div>
             </div>

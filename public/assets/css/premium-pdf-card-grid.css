@@ -1,0 +1,31 @@
+/* Fuerza 4 columnas exactas en desktop, sin importar el espacio */
+@media (min-width: 1200px) {
+    .premium-pdf-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+    }
+    .premium-pdf-col {
+        flex: unset !important;
+        max-width: unset !important;
+        min-width: 0 !important;
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+    }
+}
+@media (max-width: 1200px) and (min-width: 993px) {
+    .premium-pdf-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 992px) and (min-width: 601px) {
+    .premium-pdf-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .premium-pdf-row {
+        grid-template-columns: 1fr;
+    }
+}

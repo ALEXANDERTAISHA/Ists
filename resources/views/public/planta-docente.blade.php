@@ -11,39 +11,40 @@
     <style>
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 32px;
-            margin-top: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 270px));
+            gap: 1.25rem;
+            justify-content: center;
+            margin-top: 1.6rem;
         }
         .team-member-card {
             background: linear-gradient(135deg, #f8fafc 60%, #e0f7fa 100%);
-            border-radius: 18px;
-            box-shadow: 0 6px 24px rgba(16, 36, 58, 0.13), 0 1.5px 6px #0ea5a233;
-            padding: 1.5rem 1.1rem 1.1rem 1.1rem;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(16, 36, 58, 0.11), 0 1.5px 6px #0ea5a222;
+            padding: 1rem 0.85rem 0.9rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
             position: relative;
-            min-height: 340px;
-            border: 2px solid #e0f2f1;
-            max-width: 320px;
+            min-height: 285px;
+            border: 1.5px solid #e0f2f1;
+            max-width: 270px;
             margin: 0 auto;
         }
         .team-member-card:hover {
-            transform: translateY(-6px) scale(1.035);
-            box-shadow: 0 12px 32px rgba(14, 165, 162, 0.18), 0 2px 8px #0ea5a233;
+            transform: translateY(-4px) scale(1.015);
+            box-shadow: 0 10px 26px rgba(14, 165, 162, 0.15), 0 2px 8px #0ea5a222;
             border-color: #0ea5a2;
         }
         .team-member-img {
             width: 100%;
-            max-width: 260px;
-            height: 260px;
+            max-width: 205px;
+            height: 205px;
             object-fit: cover;
             border-radius: 12px;
             box-shadow: 0 2px 12px #0ea5a233;
             border: 3px solid #fff;
-            margin-bottom: 1.1rem;
+            margin-bottom: 0.75rem;
             background: #e0f2f1;
             display: block;
         }
@@ -57,7 +58,7 @@
             justify-content: flex-end;
         }
         .team-member-info h3 {
-            font-size: 1.13rem;
+            font-size: 0.98rem;
             font-weight: 700;
             color: #0b3a66;
             margin-bottom: 0.35rem;
@@ -67,12 +68,29 @@
             color: #0ea5a2;
             font-weight: 600;
             margin-bottom: 0.15rem;
-            font-size: 0.98rem;
+            font-size: 0.86rem;
         }
         .team-member-info .department {
             color: #64748b;
-            font-size: 0.93rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.82rem;
+            margin-bottom: 0.35rem;
+        }
+        .team-member-card .pdf-pro-link {
+            min-height: 36px;
+            padding: 0.44rem 0.68rem 0.44rem 0.52rem;
+            font-size: 0.82rem;
+            gap: 0.46rem;
+            margin-top: 0.45rem !important;
+        }
+        .team-member-card .pdf-pro-link::before {
+            min-width: 36px;
+            height: 21px;
+            font-size: 0.62rem;
+        }
+        .team-member-card .pdf-pro-link::after {
+            width: 20px;
+            height: 20px;
+            font-size: 0.82rem;
         }
         .pdf-pro-link {
             display: inline-flex;
@@ -194,8 +212,89 @@
         .pdf-pro-link-premium:hover .pdf-arrow {
             transform: translateX(7px);
         }
-        .pdf-pro-link-premium, .pdf-pro-link {
-            all: unset;
+        .pdf-preview-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            background: rgba(8, 18, 32, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1300;
+        }
+        .pdf-preview-modal.is-open {
+            display: flex;
+        }
+        .pdf-preview-dialog {
+            width: min(980px, 96vw);
+            height: min(780px, 88vh);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #0f172a;
+            box-shadow: 0 26px 60px rgba(2, 8, 23, 0.38);
+            border: 1px solid rgba(255,255,255,0.18);
+            display: flex;
+            flex-direction: column;
+        }
+        .pdf-preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.78rem 0.95rem;
+            background: linear-gradient(135deg, #0f766e, #1565c0);
+            color: #fff;
+        }
+        .pdf-preview-title {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+        .pdf-preview-close {
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.14);
+            color: #fff;
+            font-size: 1.35rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .pdf-preview-frame {
+            flex: 1 1 auto;
+            width: 100%;
+            border: 0;
+            background: #fff;
+        }
+        @media (max-width: 640px) {
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 240px));
+                gap: 1rem;
+            }
+            .team-member-card {
+                max-width: 240px;
+                min-height: 250px;
+                padding: 0.85rem 0.7rem;
+            }
+            .team-member-img {
+                max-width: 170px;
+                height: 170px;
+            }
+            .pdf-preview-modal {
+                padding: 0.6rem;
+            }
+            .pdf-preview-dialog {
+                width: 100%;
+                height: 86vh;
+                border-radius: 12px;
+            }
         }
     </style>
 </head>
@@ -227,9 +326,9 @@
                                     <p class="position">{{ $teacher->title }}</p>
                                     <p class="department">{{ $teacher->department }}</p>
                                     @if($teacher->pdf_path)
-                                        <a href="{{ asset('storage/' . $teacher->pdf_path) }}" target="_blank" class="pdf-pro-link" style="margin-top:10px;">
+                                        <button type="button" class="pdf-pro-link js-open-teacher-pdf" style="margin-top:10px;" data-pdf-url="{{ asset('storage/' . $teacher->pdf_path) }}" data-teacher-name="{{ $teacher->name }}">
                                             Ver Currículum
-                                        </a>
+                                        </button>
                                     @endif
                                 </div>
                             </div>
@@ -241,6 +340,69 @@
             </div>
         </section>
     </main>
+
+    <div id="teacherPdfPreview" class="pdf-preview-modal" aria-hidden="true">
+        <div class="pdf-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="teacherPdfPreviewTitle">
+            <div class="pdf-preview-header">
+                <p id="teacherPdfPreviewTitle" class="pdf-preview-title">Vista previa de hoja de vida</p>
+                <button type="button" class="pdf-preview-close" aria-label="Cerrar vista previa">&times;</button>
+            </div>
+            <iframe id="teacherPdfFrame" class="pdf-preview-frame" title="Vista previa de hoja de vida"></iframe>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('teacherPdfPreview');
+            const frame = document.getElementById('teacherPdfFrame');
+            const title = document.getElementById('teacherPdfPreviewTitle');
+            const closeButton = modal ? modal.querySelector('.pdf-preview-close') : null;
+
+            if (!modal || !frame || !title) {
+                return;
+            }
+
+            function closePreview() {
+                modal.classList.remove('is-open');
+                modal.setAttribute('aria-hidden', 'true');
+                frame.removeAttribute('src');
+                document.body.style.overflow = '';
+            }
+
+            document.querySelectorAll('.js-open-teacher-pdf').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const pdfUrl = button.dataset.pdfUrl;
+                    const teacherName = button.dataset.teacherName || 'docente';
+
+                    if (!pdfUrl) {
+                        return;
+                    }
+
+                    title.textContent = 'Hoja de vida - ' + teacherName;
+                    frame.setAttribute('src', pdfUrl + '#toolbar=1&navpanes=0&view=FitH');
+                    modal.classList.add('is-open');
+                    modal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            if (closeButton) {
+                closeButton.addEventListener('click', closePreview);
+            }
+
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    closePreview();
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+                    closePreview();
+                }
+            });
+        });
+    </script>
 
     @include('public.partials.footer')
 

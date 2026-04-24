@@ -25,7 +25,7 @@ class VisitSectionsSeeder extends Seeder
                     'Atención a estudiantes y público en general',
                     'Coordinación de procesos administrativos',
                     'Gestión de archivo institucional',
-                    'Apoyo a la comunidad educativa en trámites administrativos',
+                    'Apoyo a la comunidad educativa en documentos administrativos',
                 ]),
                 'schedule' => 'Lunes a Viernes, 08:00 - 17:00',
                 'location' => 'Edificio Administrativo, Planta Baja',

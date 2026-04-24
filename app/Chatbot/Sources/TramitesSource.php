@@ -3,7 +3,7 @@ namespace App\Chatbot\Sources;
 
 use Illuminate\Support\Facades\DB;
 
-class TramitesSource
+class DocumentosSource
 {
     // Palabras clave asociadas a esta fuente
     protected $keywords = [
@@ -24,14 +24,14 @@ class TramitesSource
     public function getResponse($message)
     {
         try {
-            $tramites = DB::table('contents')
-                ->where('category', 'tramites')
+            $documentos = DB::table('contents')
+                ->where('category', 'documentos')
                 ->where('status', 'published')
                 ->orderBy('created_at', 'desc')
                 ->get();
-            if ($tramites->count()) {
-                $respuesta = "Información sobre trámites y procesos:\n";
-                foreach ($tramites as $t) {
+            if ($documentos->count()) {
+                $respuesta = "Información sobre documentos y procesos:\n";
+                foreach ($documentos as $t) {
                     $nombre = $t->title ?? $t->nombre ?? '(Sin título)';
                     $descripcion = $t->description ?? $t->descripcion ?? '';
                     $respuesta .= "- {$nombre}: {$descripcion}\n";
@@ -39,7 +39,7 @@ class TramitesSource
                 return $respuesta;
             }
         } catch (\Throwable $e) {
-            // Log::error('Error al consultar trámites para el chatbot: ' . $e->getMessage());
+            // Log::error('Error al consultar documentos para el chatbot: ' . $e->getMessage());
         }
         return "Gracias por tu mensaje. No he encontrado una respuesta exacta, pero puedes consultar nuestras carreras, noticias, actualizaciones o contactar a un asesor para más información.";
     }

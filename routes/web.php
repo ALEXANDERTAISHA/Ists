@@ -95,9 +95,13 @@ Route::get("/contact", function () {
 })->name("contact");
 
 
-Route::get("/tramites", [PublicController::class, "tramites"])->name(
-    "tramites",
+Route::get("/documentos", [PublicController::class, "documentos"])->name(
+    "documentos",
 );
+
+// Ruta premium: ver diseños de menú/submenú
+use App\Http\Controllers\PublicMenuDesignController;
+Route::get('/menu-designs/{id}', [PublicMenuDesignController::class, 'show'])->name('public.menu-designs.show');
 
 // Nuevas rutas para el menú dinámico
 Route::get("/campus", function () {
@@ -164,9 +168,9 @@ Route::prefix("admin")
         Route::get("/transparency", [ContentController::class, "index"])
             ->defaults("category", "transparency")
             ->name("admin.transparency.index");
-        Route::get("/tramites", [ContentController::class, "index"])
-            ->defaults("category", "tramites")
-            ->name("admin.tramites.index");
+        Route::get("/documentos", [ContentController::class, "index"])
+            ->defaults("category", "documentos")
+            ->name("admin.documentos.index");
         Route::get("/contents/rector", [
             ContentController::class,
             "rector",
@@ -339,6 +343,12 @@ Route::prefix("admin")
         Route::middleware(['auth', 'is_admin'])->prefix('admin/menu-items')->group(function () {
             Route::post('{menuItem}/pdfs', [MenuItemPdfController::class, 'store'])->name('admin.menu-items.pdfs.store');
             Route::delete('{menuItem}/pdfs/{pdf}', [MenuItemPdfController::class, 'destroy'])->name('admin.menu-items.pdfs.destroy');
+
+            // Rutas para agregar y editar diseño (varios PDFs)
+            Route::get('{menuItem}/designs/create', [\App\Http\Controllers\MenuItemDesignController::class, 'create'])->name('admin.menu-items.designs.create');
+            Route::post('{menuItem}/designs', [\App\Http\Controllers\MenuItemDesignController::class, 'store'])->name('admin.menu-items.designs.store');
+            Route::get('{menuItem}/designs/{pdf}/edit', [\App\Http\Controllers\MenuItemDesignController::class, 'edit'])->name('admin.menu-items.designs.edit');
+            Route::put('{menuItem}/designs/{pdf}', [\App\Http\Controllers\MenuItemDesignController::class, 'update'])->name('admin.menu-items.designs.update');
         });
     });
 

@@ -193,7 +193,7 @@
         </script>
     <?php endif; ?>
 
-    <main class="main-content public-page-main" style="padding-top: 120px;">
+    <main class="main-content public-page-main">
         <?php echo $__env->yieldContent('content'); ?>
     </main>
 

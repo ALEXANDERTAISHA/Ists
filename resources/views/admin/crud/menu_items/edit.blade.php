@@ -14,9 +14,20 @@
                 <a href="{{ route('admin.menu-items.index') }}" class="btn" style="background:#e2e8f0; color:#0f172a; font-weight:700; border-radius:10px;">Volver</a>
             </div>
 
+            @if ($errors->any())
+                <div class="alert alert-danger" style="font-weight:700; color:#b91c1c; background:#fee2e2; border:1.5px solid #ef4444; border-radius:10px; margin-bottom:1.2rem;">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('admin.menu-items.update', $item) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
                         <label for="title" class="form-label" style="font-weight:700;">Título</label>
@@ -25,7 +36,7 @@
 
                     <div class="col-12 col-md-6">
                         <label for="system_key" class="form-label" style="font-weight:700;">Clave del sistema (opcional)</label>
-                        <input type="text" name="system_key" id="system_key" class="form-control" value="{{ old('system_key', $item->system_key) }}" placeholder="Ej: TRAMITES">
+                        <input type="text" name="system_key" id="system_key" class="form-control" value="{{ old('system_key', $item->system_key) }}" placeholder="Ej: DOCUMENTOS">
                     </div>
 
                     <div class="col-12 col-md-6">
@@ -85,50 +96,52 @@
                     </div>
                 </div>
 
-                <hr class="my-4">
-                <div class="col-12">
-                    <h5 style="font-weight:800; color:#0f172a;">Información clave: Documentos PDF</h5>
-                    <form action="{{ route('admin.menu-items.pdfs.store', $item->id) }}" method="POST" enctype="multipart/form-data" class="row g-2 align-items-end mb-3">
-                        @csrf
-                        <div class="col-md-5">
-                            <label for="pdf_title" class="form-label mb-0">Título del PDF</label>
-                            <input type="text" name="title" id="pdf_title" class="form-control" required placeholder="Ej: Reglamento, Horario, etc.">
-                        </div>
-                        <div class="col-md-5">
-                            <label for="pdf_file_multi" class="form-label mb-0">Archivo PDF</label>
-                            <input type="file" name="pdf_file" id="pdf_file_multi" class="form-control" accept="application/pdf" required>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary w-100">Agregar PDF</button>
-                        </div>
-                    </form>
-                    @if($item->pdfs && $item->pdfs->count())
-                        <ul class="list-group">
-                            @foreach($item->pdfs as $pdf)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <a href="{{ asset('storage/' . ltrim($pdf->pdf_path, '/')) }}" target="_blank" style="color:#0ea5a8; text-decoration:underline; font-weight:600;">
-                                            {{ $pdf->title }}
-                                        </a>
-                                    </div>
-                                    <form action="{{ route('admin.menu-items.pdfs.destroy', [$item->id, $pdf->id]) }}" method="POST" onsubmit="return confirm('¿Eliminar este PDF?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                    </form>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <div class="text-muted">No hay documentos PDF cargados para este menú.</div>
-                    @endif
-                </div>
-
                 <div class="admin-action-buttons mt-4">
                     <a href="{{ route('admin.menu-items.index') }}" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>
             </form>
+
+            <hr class="my-4">
+
+            <div class="col-12">
+                <h5 style="font-weight:800; color:#0f172a;">Información clave: Documentos PDF</h5>
+                <form action="{{ route('admin.menu-items.pdfs.store', $item->id) }}" method="POST" enctype="multipart/form-data" class="row g-2 align-items-end mb-3">
+                    @csrf
+                    <div class="col-md-5">
+                        <label for="pdf_title" class="form-label mb-0">Título del PDF</label>
+                        <input type="text" name="title" id="pdf_title" class="form-control" required placeholder="Ej: Reglamento, Horario, etc.">
+                    </div>
+                    <div class="col-md-5">
+                        <label for="pdf_file_multi" class="form-label mb-0">Archivo PDF</label>
+                        <input type="file" name="pdf_file" id="pdf_file_multi" class="form-control" accept="application/pdf" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Agregar PDF</button>
+                    </div>
+                </form>
+
+                @if($item->pdfs && $item->pdfs->count())
+                    <ul class="list-group">
+                        @foreach($item->pdfs as $pdf)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <a href="{{ asset('storage/' . ltrim($pdf->pdf_path, '/')) }}" target="_blank" style="color:#0ea5a8; text-decoration:underline; font-weight:600;">
+                                        {{ $pdf->title }}
+                                    </a>
+                                </div>
+                                <form action="{{ route('admin.menu-items.pdfs.destroy', [$item->id, $pdf->id]) }}" method="POST" onsubmit="return confirm('¿Eliminar este PDF?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                </form>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="text-muted">No hay documentos PDF cargados para este menú.</div>
+                @endif
+            </div>
         </div>
     </div>
 </div>

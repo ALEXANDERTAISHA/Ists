@@ -1,0 +1,2 @@
+<li><a href="<?php echo e(route('admin.chatbot.contacts')); ?>" class="<?php echo e(request()->is('admin/chatbot-contactos') ? 'active':''); ?>">📇 Contactos Chatbot</a></li>
+<?php /**PATH C:\workspace\ists\resources\views\admin\partials\chatbot_contacts_nav.blade.php ENDPATH**/ ?>

@@ -177,10 +177,10 @@
                     <p>Gestionar documentos de transparencia institucional</p>
                 </a>
 
-                <a href="{{ route('admin.tramites.index') }}" class="action-card">
+                <a href="{{ route('admin.documentos.index') }}" class="action-card">
                     <div class="action-icon"><i class="bi bi-folder2-open"></i></div>
                     <h3>Documentos</h3>
-                    <p>{{ $tramitesCount ?? 0 }} documentos</p>
+                    <p>{{ $documentosCount ?? 0 }} documentos</p>
                 </a>
 
                 <a href="{{ route('admin.social_links.index') }}" class="action-card" style="background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border: 2px solid #00bcd4;">

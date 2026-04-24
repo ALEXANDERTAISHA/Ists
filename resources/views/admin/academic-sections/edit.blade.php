@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="description" class="form-label">Descripción Corta</label>
+                            <label for="description" class="form-label">Resumen</label>
                             <textarea class="form-control @error('description') is-invalid @enderror" 
                                       id="description" 
                                       name="description" 

@@ -1,0 +1,22 @@
+/* Premium PDF Button Style - Horizontal Layout Fix */
+@media (min-width: 992px) {
+    .premium-pdf-btn {
+        flex-direction: row;
+        align-items: center;
+        min-height: 110px;
+    }
+    .premium-pdf-btn > span {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.premium-pdf-btn .pdf-title {
+    max-width: 16em;
+}
+
+.premium-pdf-btn .pdf-desc {
+    white-space: normal;
+    max-width: 15em;
+}

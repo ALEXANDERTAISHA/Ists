@@ -22,7 +22,7 @@ class MenuItemsSeeder extends Seeder
         \App\Models\MenuItem::create(['title' => 'TRANSPARENCIA', 'url' => '#', 'order' => 3]);
         \App\Models\MenuItem::create(['title' => 'VISITAR', 'url' => '/visitar', 'order' => 4]);
         \App\Models\MenuItem::create(['title' => 'ACERCA', 'url' => '/acerca', 'order' => 5]);
-        \App\Models\MenuItem::create(['title' => 'TRÁMITES', 'url' => '#', 'order' => 6]);
+        \App\Models\MenuItem::create(['title' => 'DOCUMENTOS', 'url' => '#', 'order' => 6]);
         \App\Models\MenuItem::create(['title' => 'NOTICIAS', 'url' => '/noticias', 'order' => 7]);
 
         // Subitems para CAMPUS

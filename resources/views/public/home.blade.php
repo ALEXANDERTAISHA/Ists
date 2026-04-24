@@ -4,8 +4,6 @@
 
 @push('styles')
 <style>
-    /* En la home, el hero arranca desde arriba del todo (header es fixed encima) */
-    .public-page-main { padding-top: 0 !important; }
     .hero-section { margin-bottom: 0 !important; }
 </style>
 @endpush
@@ -13,7 +11,7 @@
 @section('content')
     @php $heroGlassMode = config('app.hero_glass_mode', 'light'); @endphp
     <!-- Hero Section - Premium -->
-    <section class="hero-section p-0 m-0" style="position:relative; height:100vh; min-height:500px; overflow:hidden; margin-top:0; margin-bottom:0;">
+    <section class="hero-section p-0 m-0" style="position:relative; min-height:calc(100vh - var(--public-header-height, 88px)); height:calc(100vh - var(--public-header-height, 88px)); overflow:hidden; margin-top:0; margin-bottom:0;">
         @if (isset($heroSlides) && $heroSlides->count() > 0)
             <div id="heroCarousel" class="carousel slide" style="position:absolute; inset:0; width:100%; height:100%;" data-bs-ride="carousel" data-bs-interval="5500">
                 <div class="carousel-inner" style="width:100%; height:100%;">
@@ -748,8 +746,7 @@
                 </div>
 
                 @php
-                    $featuredItem = $gacetaList->first();
-                    $restItems    = $gacetaList->skip(1)->take(2);
+                    $gacetaItems = $gacetaList->take(4);
                     $getGacetaImg = function ($n) {
                         if(is_array($n->images) && count($n->images) > 0)
                             return asset('storage/' . ltrim($n->images[0], '/'));
@@ -774,7 +771,36 @@
                     };
                 @endphp
 
-                @if($featuredItem)
+                @if($gacetaItems->count())
+                <div class="gac-layout">
+                    @foreach($gacetaItems as $n)
+                        @php
+                            $cardImg = $getGacetaImg($n);
+                            $cardDate = $getGacetaDate($n);
+                        @endphp
+                        <a href="{{ $getGacetaUrl($n) }}" class="gac-card">
+                            <div class="gac-card-img-wrap">
+                                @if($cardImg)
+                                    <img src="{{ $cardImg }}" alt="{{ $n->title }}" class="gac-card-img">
+                                @else
+                                    <div class="gac-card-img-fallback"></div>
+                                @endif
+                            </div>
+                            <div class="gac-card-body">
+                                <div class="gac-card-meta">
+                                    <span class="gac-tag {{ $getGacetaTagClass($n) }}">{{ $getGacetaTag($n) }}</span>
+                                    @if($cardDate)<span class="gac-card-date">{{ $cardDate }}</span>@endif
+                                </div>
+                                <h3 class="gac-card-title">{{ $n->title }}</h3>
+                                <p class="gac-card-excerpt">{{ \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($n->summary)), 105) }}</p>
+                                <span class="gac-card-link">Leer mÃ¡s <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg></span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+                @endif
+
+                @if(false)
                 <div class="gac-layout">
 
                     {{-- Featured card --}}
@@ -886,11 +912,12 @@
         /* Layout */
         .gac-layout {
             display:grid;
-            grid-template-columns: 1fr 360px;
-            gap:1.4rem;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap:1.15rem;
             align-items:stretch;
         }
-        @media(max-width:900px) { .gac-layout { grid-template-columns:1fr; } }
+        @media(max-width:1100px) { .gac-layout { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
+        @media(max-width:640px) { .gac-layout { grid-template-columns:1fr; } }
 
         /* Featured card */
         .gac-featured {
@@ -1008,7 +1035,8 @@
 
         /* Side card */
         .gac-card {
-            display:flex; gap:1rem;
+            display:flex;
+            flex-direction:column;
             text-decoration:none !important;
             background:rgba(255,255,255,0.92);
             border-radius:18px;
@@ -1018,7 +1046,7 @@
             transition:transform 0.32s cubic-bezier(0.22,1,0.36,1),
                         box-shadow 0.32s ease, border-color 0.22s ease;
             height:100%;
-            min-height:0;
+            min-height:430px;
         }
         .gac-card:hover {
             transform:translateY(-4px) translateX(3px);
@@ -1026,7 +1054,9 @@
             border-color:rgba(0,150,136,0.2);
         }
         .gac-card-img-wrap {
-            width:110px; min-width:110px; height:110px;
+            width:100%;
+            min-width:0;
+            height:190px;
             flex-shrink:0; overflow:hidden;
             display:flex;
             align-items:center;
@@ -1035,7 +1065,8 @@
             background:
                 radial-gradient(circle at top, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.8) 28%, transparent 60%),
                 linear-gradient(180deg, #f8fafc 0%, #edf4fb 100%);
-            border-right:1px solid rgba(15,23,42,0.06);
+            border-right:none;
+            border-bottom:1px solid rgba(15,23,42,0.06);
         }
         .gac-card-img {
             width:100%; height:100%;
@@ -1050,9 +1081,10 @@
             background:linear-gradient(135deg,rgba(0,150,136,0.12),rgba(59,130,246,0.10));
         }
         .gac-card-body {
-            padding:0.75rem 0.9rem 0.75rem 0;
-            display:flex; flex-direction:column; justify-content:center;
+            padding:1rem 1rem 1.1rem;
+            display:flex; flex-direction:column; justify-content:flex-start;
             flex:1;
+            min-height:0;
         }
         .gac-card-meta { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem; flex-wrap:wrap; }
         .gac-card-date { font-size:0.68rem; color:#94a3b8; font-weight:500; }
@@ -1074,6 +1106,7 @@
             overflow:hidden;
         }
         .gac-card-link {
+            margin-top:auto;
             display:inline-flex; align-items:center; gap:0.3rem;
             font-size:0.78rem; font-weight:700; color:#00796b;
             transition:gap 0.2s ease, color 0.2s ease;

@@ -142,7 +142,16 @@ class MenuItemController extends Controller
     public function update(Request $request, $id)
     {
         $item = MenuItem::findOrFail($id);
+
         $validated = $this->validatedData($request);
+        // Si no se envía el checkbox, poner is_active en false
+        if (!$request->has('is_active')) {
+            $validated['is_active'] = false;
+        }
+        // Si no se envía career_id, ponerlo en null
+        if (!$request->has('career_id') || empty($validated['career_id'])) {
+            $validated['career_id'] = null;
+        }
 
         if (!empty($validated['parent_id'])) {
             $item->load('childrenRecursive');

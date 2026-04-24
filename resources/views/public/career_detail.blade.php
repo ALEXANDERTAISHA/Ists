@@ -169,7 +169,7 @@
     }
 
     .career-hero {
-        margin-top: 78px;
+        margin-top: 0;
         min-height: 250px;
         position: relative;
         background: linear-gradient(135deg, #0b335c 0%, #0e4c7f 55%, #0ea5a2 100%);
@@ -527,22 +527,100 @@
     }
 
     @media (max-width: 768px) {
+        .career-detail-page {
+            padding-bottom: 1.6rem;
+        }
+
         .career-hero {
-            min-height: 290px;
+            min-height: 260px;
+            background-position: center top;
         }
 
         .career-hero-content {
-            padding: 2.9rem 0 2.4rem;
+            padding: 2.25rem 1rem 2rem;
+        }
+
+        .career-main-grid {
+            margin-top: 0.8rem;
+            gap: 0.8rem;
+        }
+
+        .career-main-col {
+            gap: 0.8rem;
         }
 
         .career-panel {
-            border-radius: 16px;
-            padding: 1rem;
+            border-radius: 14px;
+            padding: 0.9rem;
+            box-shadow: 0 8px 18px rgba(10, 30, 58, 0.08);
         }
 
         .career-panel-body,
         .career-panel-body--reverse {
             grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        .career-panel-body--reverse .career-copy {
+            order: 1;
+        }
+
+        .career-panel-body--reverse .career-image-card {
+            order: 2;
+        }
+
+        .career-copy {
+            font-size: 0.92rem;
+            line-height: 1.58;
+            overflow-wrap: anywhere;
+        }
+
+        .career-image-card {
+            max-height: none;
+            height: auto;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+        }
+
+        .career-side-card {
+            border-radius: 14px;
+            padding: 0.9rem;
+        }
+
+        .career-pdf-cta {
+            grid-template-columns: auto minmax(0, 1fr) auto;
+        }
+
+        .career-pdf-cta__arrow {
+            display: none;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .career-hero {
+            min-height: 238px;
+        }
+
+        .career-hero-content h1 {
+            font-size: 1.75rem;
+        }
+
+        .career-hero-content p {
+            font-size: 0.92rem;
+        }
+
+        .career-panel,
+        .career-side-card {
+            padding: 0.78rem;
+            border-radius: 12px;
+        }
+
+        .career-panel-head h2 {
+            font-size: 1.08rem;
+        }
+
+        .career-image-card {
+            aspect-ratio: 4 / 3;
         }
     }
 </style>

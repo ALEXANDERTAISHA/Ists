@@ -752,24 +752,21 @@ CREATE TABLE `menu_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `menu_items`
---
 
 INSERT INTO `menu_items` (`id`, `title`, `url`, `parent_id`, `order`, `is_active`, `created_at`, `updated_at`) VALUES
 (1, 'ACADEMICOS', '#', NULL, 1, 1, '2025-12-10 23:36:57', '2026-01-21 14:17:01'),
 (2, 'CAMPUS', '/campus', NULL, 2, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
 (3, 'TRANSPARENCIA', '#', NULL, 3, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
 (4, 'VISITAR', '/visitar', NULL, 4, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(5, 'ACERCA', '/acerca', NULL, 5, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(6, 'NOTICIAS', '/noticias', NULL, 6, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(7, 'TRÁMITES', '#', NULL, 7, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(8, 'Instalaciones', '/campus/instalaciones', 2, 1, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(9, 'Servicios', '/campus/servicios', 2, 2, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(10, 'Visitar ISTS', '/visitar', 4, 1, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(11, 'Sobre el ISTS', '/acerca', 5, 1, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57'),
-(12, 'Todas las Noticias', '/noticias', 6, 1, 1, '2025-12-10 23:36:57', '2025-12-10 23:36:57');
-
--- --------------------------------------------------------
+INSERT INTO `contents` (`id`, `parent_id`, `title`, `slug`, `url`, `is_external`, `description`, `content`, `category`, `status`, `created_by`, `image_url`, `file_url`, `views`, `featured`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Autoridades', 'autoridades', NULL, 0, '', '<p>conozca nuestras autoridades</p>\r\n<p> </p>', 'about', 'published', 1, 'uploads/images/6983b3806c613-RECTOR.jpg', 'https://drive.google.com/drive/folders/1MNsYBaQO5GtiiAXOChfHkJQVzlFhC0FF', 0, 0, NULL, NULL),
+(2, NULL, 'Planta Docente', 'planta-docente', NULL, 0, NULL, '<p>Conozca a los docentes de Nuestra Institucion</p>', 'about', 'published', 1, NULL, NULL, 0, 0, NULL, NULL),
+/* Lines omitted for brevity */
+(6, NULL, 'Formulario de Matricula', 'formulario-de-matricula', NULL, 0, '', '', 'documentos', 'published', NULL, NULL, '/uploads/pdfs/693f18be7d09f-Formulario_Matricula_2025-II.pdf', 0, 0, NULL, NULL),
+/* Lines omitted for brevity */
+(28, NULL, 'Ficha Socioeconomica', 'ficha-socioeconomica', NULL, 0, '', '', 'documentos', 'published', NULL, NULL, '/uploads/pdfs/697b7be47a6e7-Ficha_Socioeconomica_2025-II.pdf', 0, 0, NULL, NULL),
+/* Lines omitted for brevity */
+(63, NULL, 'Formulario de Homologación y Reingreso', 'formulario-de-homologacion-y-reingreso', 'https://docs.google.com/document/d/1pGvyVFVl1MtCg7tdIah_xLJiUCR3th9c/edit?usp=sharing&ouid=109463034568053938725&rtpof=true&sd=true', 0, NULL, NULL, 'documentos', 'published', NULL, NULL, NULL, 0, 0, NULL, NULL),
 
 --
 -- Estructura de tabla para la tabla `migrations`

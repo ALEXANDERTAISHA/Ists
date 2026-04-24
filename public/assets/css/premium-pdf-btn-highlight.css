@@ -1,0 +1,58 @@
+/* Premium PDF Button - Destacado PDF */
+.premium-pdf-btn {
+    background: linear-gradient(90deg, #b31217 0%, #e52d27 100%);
+    border: 2.5px solid #fff;
+    box-shadow: 0 4px 18px rgba(229,45,39,0.18), 0 1.5px 0 #fff inset;
+    color: #fff;
+    position: relative;
+    overflow: visible;
+    transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+}
+.premium-pdf-btn:hover {
+    background: linear-gradient(90deg, #a10d13 0%, #c62828 100%);
+    border-color: #ffe0e0;
+    box-shadow: 0 6px 24px rgba(229,45,39,0.28), 0 2px 0 #ffe0e0 inset;
+}
+.premium-pdf-btn .pdf-icon {
+    background: #fff;
+    color: #e52d27;
+    border-radius: 50%;
+    padding: 0.35em 0.45em;
+    font-size: 1.7em;
+    margin-right: 0.7em;
+    box-shadow: 0 2px 8px rgba(229,45,39,0.10);
+    border: 2px solid #e52d27;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.premium-pdf-btn .pdf-badge {
+    background: #fff;
+    color: #e52d27;
+    border: 2px solid #e52d27;
+    font-weight: 900;
+    border-radius: 50px;
+    padding: 0.2em 1.2em;
+    font-size: 1.05em;
+    margin-left: 1em;
+    margin-right: 0.5em;
+    letter-spacing: 0.12em;
+    box-shadow: 0 1px 4px rgba(229,45,39,0.10);
+    text-shadow: 0 1px 0 #fff;
+}
+.premium-pdf-btn .pdf-label {
+    color: #ffe0e0;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    font-size: 0.9em;
+    text-shadow: 0 1px 2px #b31217;
+}
+.premium-pdf-btn .pdf-title {
+    color: #fff;
+    font-weight: 800;
+    text-shadow: 0 1px 2px #b31217;
+}
+.premium-pdf-btn .pdf-arrow {
+    color: #fff;
+    text-shadow: 0 1px 2px #b31217;
+}

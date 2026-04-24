@@ -193,7 +193,7 @@
         </script>
     @endif
 
-    <main class="main-content public-page-main" style="padding-top: 120px;">
+    <main class="main-content public-page-main">
         @yield('content')
     </main>
 

@@ -36,7 +36,7 @@
                     <small class="form-text text-muted">Define el orden de aparición (menor número = más arriba)</small>
                 </div>
                 <div class="col-12">
-                    <label for="description" class="form-label">Descripción Corta</label>
+                    <label for="description" class="form-label">Resumen</label>
                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="2">{{ old('description') }}</textarea>
                     @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     <small class="form-text text-muted">Breve descripción que aparecerá en el menú</small>

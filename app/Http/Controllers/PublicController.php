@@ -132,7 +132,7 @@ class PublicController extends Controller
         // --- GACETA: Unificar noticias y eventos pasados como noticias ---
         $news = \App\Models\News::where('status', 'published')
             ->orderBy('published_at', 'desc')
-            ->take(3)
+            ->take(4)
             ->get()
             ->map(function($item) {
                 $item->is_event = false;
@@ -143,7 +143,7 @@ class PublicController extends Controller
         $pastEvents = \App\Models\Event::where('status', 'published')
             ->whereDate('date', '<', now())
             ->orderBy('date', 'desc')
-            ->take(3)
+            ->take(4)
             ->get()
             ->map(function($item) {
                 $item->is_event = true;
@@ -155,7 +155,7 @@ class PublicController extends Controller
             });
 
         // Unir y ordenar por fecha (desc)
-        $gacetaList = $news->concat($pastEvents)->sortByDesc('date_for_sort')->take(3)->values();
+        $gacetaList = $news->concat($pastEvents)->sortByDesc('date_for_sort')->take(4)->values();
 
         return view(
             "public.home",
@@ -303,10 +303,10 @@ class PublicController extends Controller
         ]);
     }
 
-    public function tramites()
+    public function documentos()
     {
-        $tramites = DB::table("contents")
-            ->where("category", "tramites")
+        $documentos = DB::table("contents")
+            ->where("category", "documentos")
             ->where("status", "published")
             ->orderBy("created_at", "desc")
             ->get()
@@ -315,7 +315,7 @@ class PublicController extends Controller
             })
             ->toArray();
 
-        return view("public.tramites", compact("tramites"));
+        return view("public.tramites", ["documentos" => $documentos]);
     }
 
     public function showCareer($slug)

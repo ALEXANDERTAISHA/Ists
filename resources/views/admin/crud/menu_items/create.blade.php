@@ -24,8 +24,8 @@
 
                     <div class="col-12 col-md-6">
                         <label for="system_key" class="form-label" style="font-weight:700;">Clave del sistema (opcional)</label>
-                        <input type="text" name="system_key" id="system_key" class="form-control" value="{{ old('system_key') }}" placeholder="Ej: TRAMITES">
-                        <small style="color:#94a3b8;">Recomendado para claves especiales como ACERCA, ACADEMICOS, TRAMITES.</small>
+                        <input type="text" name="system_key" id="system_key" class="form-control" value="{{ old('system_key') }}" placeholder="Ej: DOCUMENTOS">
+                        <small style="color:#94a3b8;">Recomendado para claves especiales como ACERCA, ACADEMICOS, DOCUMENTOS.</small>
                     </div>
 
                     <div class="col-12 col-md-6">

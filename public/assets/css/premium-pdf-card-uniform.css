@@ -1,0 +1,33 @@
+/* Uniforme: todas las tarjetas igual altura y 4 por fila exacto */
+.premium-pdf-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: flex-start;
+}
+.premium-pdf-col {
+    flex: 0 0 24%;
+    max-width: 24%;
+    min-width: 220px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+.premium-pdf-card {
+    width: 100%;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+@media (max-width: 1200px) {
+    .premium-pdf-col { flex-basis: 32%; max-width: 32%; }
+}
+@media (max-width: 992px) {
+    .premium-pdf-col { flex-basis: 48%; max-width: 48%; }
+}
+@media (max-width: 600px) {
+    .premium-pdf-col { flex-basis: 100%; max-width: 100%; }
+}

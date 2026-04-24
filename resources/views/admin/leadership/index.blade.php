@@ -39,7 +39,10 @@
                     <div class="user-dropdown">
                         <a href="{{ url('/admin/profile') }}">👤 Perfil</a>
                         <a href="{{ url('/auth/change-password') }}">🔒 Cambiar Contraseña</a>
-                        <a href="{{ url('/auth/logout') }}">🚪 Cerrar Sesión</a>
+                        <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                            @csrf
+                            <button type="submit" style="background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;text-align:left;width:100%;">🚪 Cerrar Sesión</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -46,6 +46,9 @@
                 </div>
 
                 <h3 class="upd-card-title"><?php echo e($videoUpdate->title ?? 'Último video institucional'); ?></h3>
+                <?php if(!empty($videoUpdate->description)): ?>
+                    <p class="upd-card-desc"><?php echo e(\Illuminate\Support\Str::limit(strip_tags(html_entity_decode($videoUpdate->description)), 135)); ?></p>
+                <?php endif; ?>
 
                 <div class="upd-media-box upd-media-box--video">
                     <?php if(!empty($videoUpdate->video_url)): ?>
@@ -82,6 +85,9 @@
                 </div>
 
                 <h3 class="upd-card-title"><?php echo e($imageUpdate->title ?? 'Última fotografía institucional'); ?></h3>
+                <?php if(!empty($imageUpdate->description)): ?>
+                    <p class="upd-card-desc"><?php echo e(\Illuminate\Support\Str::limit(strip_tags(html_entity_decode($imageUpdate->description)), 135)); ?></p>
+                <?php endif; ?>
 
                 <div class="upd-media-box upd-media-box--image">
                     <?php if(!empty($imageUpdate->image_path)): ?>
@@ -112,8 +118,21 @@
 <style>
 .upd-section {
     position: relative;
-    background: linear-gradient(170deg, #f6fbff 0%, #f3fbf8 60%, #f8f6ff 100%);
-    padding: 3.9rem 0 4.1rem;
+    background:
+        radial-gradient(circle at 12% 8%, rgba(20,184,166,.14), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(59,130,246,.13), transparent 32%),
+        linear-gradient(170deg, #f6fbff 0%, #f3fbf8 58%, #f8f6ff 100%);
+    padding: 4.4rem 0 4.6rem;
+    overflow: hidden;
+}
+
+.upd-section::before {
+    content: "";
+    position: absolute;
+    inset: 1.2rem;
+    border: 1px solid rgba(148,163,184,.18);
+    border-radius: 34px;
+    pointer-events: none;
 }
 
 .upd-container {
@@ -157,22 +176,22 @@
 .upd-grid-two {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.4rem;
+    gap: 1.65rem;
+    align-items: stretch;
 }
 
 .upd-show-card {
     background:
-        linear-gradient(160deg, rgba(255,255,255,.95) 0%, rgba(247,250,255,.92) 100%);
-    border: 1px solid #d7e3f2;
-    border-radius: 26px;
+        linear-gradient(160deg, rgba(255,255,255,.96) 0%, rgba(248,250,252,.92) 100%);
+    border: 1px solid rgba(148,163,184,.28);
+    border-radius: 28px;
     box-shadow:
-        0 14px 36px rgba(15,23,42,.10),
+        0 18px 46px rgba(15,23,42,.11),
         inset 0 1px 0 rgba(255,255,255,.85);
-    padding: 1.2rem;
+    padding: 1.25rem;
     position: relative;
     overflow: hidden;
     height: auto;
-    max-height: 680px;
     backdrop-filter: blur(8px);
     display: flex;
     flex-direction: column;
@@ -317,16 +336,16 @@
 
 .upd-card-top {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .85rem;
-    margin-bottom: .9rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: .9rem;
+    margin-bottom: 1rem;
 }
 
 .upd-icon-box {
-    width: 78px;
-    height: 78px;
-    border-radius: 24px;
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
     display: grid;
     place-items: center;
     color: #fff;
@@ -365,9 +384,9 @@
 }
 
 .upd-card-title {
-    margin: 0 0 .9rem;
-    font-size: clamp(1.45rem, 2.3vw, 1.85rem);
-    line-height: 1.15;
+    margin: 0 0 .45rem;
+    font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+    line-height: 1.18;
     letter-spacing: -.8px;
     color: #0f172a;
     font-weight: 900;
@@ -377,27 +396,46 @@
     overflow: hidden;
 }
 
+.upd-card-desc {
+    margin: 0 0 1rem;
+    color: #64748b;
+    font-size: .92rem;
+    line-height: 1.62;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .upd-media-box {
     width: 100%;
-    height: clamp(230px, 26vw, 320px);
-    max-height: 340px;
-    border-radius: 18px;
+    height: clamp(360px, 36vw, 520px);
+    border-radius: 22px;
     overflow: hidden;
-    border: 1px solid #dbe5f2;
+    border: 1px solid rgba(148,163,184,.34);
     background:
-        linear-gradient(145deg, #edf2f8 0%, #e2e8f0 100%);
+        linear-gradient(145deg, #f8fafc 0%, #edf2f8 100%);
     flex-shrink: 0;
     display: grid;
     place-items: center;
-    padding: .35rem;
+    padding: .65rem;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.88),
+        0 12px 28px rgba(15,23,42,.08);
 }
 
 .upd-media-box--video {
-    aspect-ratio: 16 / 9;
+    height: clamp(430px, 42vw, 620px);
+    background:
+        radial-gradient(circle at 50% 0%, rgba(20,184,166,.16), transparent 38%),
+        linear-gradient(145deg, #08111f 0%, #111827 100%);
 }
 
 .upd-media-box--image {
-    aspect-ratio: 4 / 3;
+    height: clamp(430px, 42vw, 620px);
+    background:
+        radial-gradient(circle at 50% 0%, rgba(59,130,246,.15), transparent 38%),
+        linear-gradient(145deg, #f8fafc 0%, #e8eef8 100%);
 }
 
 .upd-media-box iframe,
@@ -408,8 +446,22 @@
     display: block;
     border: 0;
     object-fit: contain;
-    border-radius: 14px;
-    background: #0f172a;
+    border-radius: 16px;
+}
+
+.upd-media-box iframe,
+.upd-media-box video {
+    background: #020617;
+}
+
+.upd-media-box--video iframe,
+.upd-media-box--video video {
+    object-position: center center;
+}
+
+.upd-media-box img {
+    background: transparent;
+    object-position: center center;
 }
 
 .upd-empty {
@@ -423,7 +475,9 @@
 }
 
 .upd-meta-row {
-    margin-top: .9rem;
+    margin-top: 1rem;
+    padding-top: .85rem;
+    border-top: 1px solid rgba(148,163,184,.22);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -445,10 +499,6 @@
     .upd-grid-two {
         grid-template-columns: 1fr;
     }
-
-    .upd-show-card {
-        max-height: 760px;
-    }
 }
 
 @media (max-width: 640px) {
@@ -461,10 +511,22 @@
         -webkit-line-clamp: 2;
     }
 
+    .upd-card-top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
     .upd-media-box {
-        height: clamp(190px, 56vw, 255px);
-        max-height: 255px;
+        height: clamp(280px, 72vw, 430px);
         padding: .3rem;
+    }
+
+    .upd-media-box--video {
+        height: clamp(360px, 92vw, 520px);
+    }
+
+    .upd-media-box--image {
+        height: clamp(360px, 92vw, 520px);
     }
 }
 </style>

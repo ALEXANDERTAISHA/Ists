@@ -56,14 +56,16 @@
                         <span class="badge" style="background:#e2e8f0; color:#334155; font-weight:700;">{{ $items->count() }} principales</span>
                     </div>
 
-                    @forelse($items as $item)
-                        @include('admin.crud.menu_items.partials.tree_node', ['item' => $item, 'level' => 0])
-                    @empty
+                    @if($items->count())
+                        @foreach($items as $item)
+                            @include('admin.crud.menu_items.partials.tree_node', ['item' => $item, 'level' => 0])
+                        @endforeach
+                    @else
                         <div class="text-center py-5" style="color:#64748b;">
                             <i class="bi bi-menu-button-wide" style="font-size:2rem;"></i>
-                            <p class="mt-2 mb-0">No hay elementos de menú registrados todavía.</p>
+                            <p class="mt-2 mb-0">No hay menús principales creados.</p>
                         </div>
-                    @endforelse
+                    @endif
                 </div>
             </div>
         </div>

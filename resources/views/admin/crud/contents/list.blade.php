@@ -86,7 +86,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Eliminar</button>
                                     </form>
-                                    @if($node['category'] !== 'tramites')
+                                    @if($node['category'] !== 'documentos')
                                         <a href="{{ route('admin.contents.create', ['parent_id' => $node['id']]) }}" class="btn btn-secondary btn-sm"><i class="bi bi-plus"></i> Agregar Subtítulo</a>
                                     @endif
                                 </td>

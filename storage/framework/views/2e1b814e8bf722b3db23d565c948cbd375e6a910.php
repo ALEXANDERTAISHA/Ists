@@ -19,6 +19,7 @@
         $children = $children ?? [];
         $isTransparency = $category === 'transparency' || !empty($children);
         $isRendicion = $slug === 'rendicion-de-cuentas';
+        $isOrganigrama = $slug === 'organigrama';
 
         $contentFile = $contentData['file_url'] ?? $contentData['url'] ?? null;
         if (!empty($contentFile)) {
@@ -37,8 +38,14 @@
         if (!empty($imgPath)) {
             if (filter_var($imgPath, FILTER_VALIDATE_URL)) {
                 $imgSrc = $imgPath;
-            } elseif (strpos($imgPath, '/uploads') === 0 || strpos($imgPath, 'uploads/') === 0) {
+            } elseif (strpos($imgPath, '/uploads') === 0 && file_exists(public_path(ltrim($imgPath, '/')))) {
                 $imgSrc = asset(ltrim($imgPath, '/'));
+            } elseif (strpos($imgPath, 'uploads/') === 0 && file_exists(public_path($imgPath))) {
+                $imgSrc = asset($imgPath);
+            } elseif (strpos($imgPath, '/assets') === 0 || strpos($imgPath, 'assets/') === 0) {
+                $imgSrc = asset(ltrim($imgPath, '/'));
+            } elseif (strpos($imgPath, 'storage/') === 0) {
+                $imgSrc = asset($imgPath);
             } else {
                 $imgSrc = asset('storage/' . ltrim($imgPath, '/'));
             }
@@ -56,22 +63,16 @@
     <section class="about-content">
         <div class="container">
             <?php if(!$isTransparency): ?>
-                <div class="content-intro-grid">
+                <div class="content-intro-grid<?php echo e($isOrganigrama ? ' content-intro-grid--organigrama' : ''); ?>">
                     <div class="content-image-box">
                         <img src="<?php echo e($imgSrc); ?>" alt="<?php echo e($contentData['title'] ?? 'Imagen de contenido'); ?>">
-                        <div style="font-size:0.95em;color:#b71c1c;margin-top:0.5em;word-break:break-all;">
-                            <strong>Ruta generada:</strong> <?php echo e($imgSrc); ?><br>
-                            <?php
-                                $realPath = public_path(str_replace(asset(''), '', $imgSrc));
-                            ?>
-                            <strong>Archivo existe:</strong> <?php echo e(file_exists($realPath) ? 'Sí' : 'No'); ?>
+                    </div>
+                    <?php if(!$isOrganigrama || !empty(trim(strip_tags($contentData['content'] ?? '')))): ?>
+                        <div class="content-text-box">
+                            <?php echo $contentData['content'] ?? ''; ?>
 
                         </div>
-                    </div>
-                    <div class="content-text-box">
-                        <?php echo $contentData['content'] ?? ''; ?>
-
-                    </div>
+                    <?php endif; ?>
                 </div>
 
                 <?php if($contentFileLink): ?>
@@ -171,6 +172,34 @@
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             padding: 1.5rem;
+        }
+
+        .content-intro-grid--organigrama {
+            display: grid;
+            grid-template-columns: 1fr;
+            justify-items: center;
+            gap: 1.25rem;
+        }
+
+        .content-intro-grid--organigrama .content-image-box {
+            width: min(860px, 100%);
+            max-width: 860px;
+            flex-basis: auto;
+            padding: 1.15rem;
+            background: #ffffff;
+            border: 1px solid rgba(14, 165, 162, 0.14);
+            box-shadow: 0 16px 38px rgba(15, 23, 42, 0.12);
+        }
+
+        .content-intro-grid--organigrama .content-image-box img {
+            width: 100%;
+            max-height: none;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .content-intro-grid--organigrama .content-text-box {
+            width: min(980px, 100%);
         }
 
         .content-file-download {

@@ -30,7 +30,12 @@
                 <div class="user-dropdown">
                     <a href="{{ url('/admin/profile') }}"><i class="bi bi-person-circle"></i> Perfil</a>
                     <a href="{{ url('/auth/change-password') }}"><i class="bi bi-key"></i> Cambiar Contraseña</a>
-                    <a href="{{ url('/logout') }}"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a>
+                    <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                        @csrf
+                        <button type="submit" style="background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;text-align:left;width:100%;">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

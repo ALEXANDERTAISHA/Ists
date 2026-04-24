@@ -41,7 +41,10 @@
                     <div class="user-dropdown">
                         <a href="{{ url('/admin/profile') }}">👤 Perfil</a>
                         <a href="{{ url('/auth/change-password') }}">🔒 Cambiar Contraseña</a>
-                        <a href="{{ url('/auth/logout') }}">🚪 Cerrar Sesión</a>
+                        <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                            @csrf
+                            <button type="submit" style="background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;text-align:left;width:100%;">🚪 Cerrar Sesión</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -73,7 +76,7 @@
                 <form action="{{ route('admin.contents.update', $item['id']) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    @if($item['category'] === 'tramites')
+                    @if($item['category'] === 'documentos')
                         <div class="form-group">
                             <label for="title">Título</label>
                             <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $item['title']) }}" required>
@@ -107,7 +110,7 @@
                             @endif
                         </div>
                     @endif
-                    @if($item['category'] !== 'tramites')
+                    @if($item['category'] !== 'documentos')
                         <div class="form-group">
                             <label for="file_url">Archivo PDF o Enlace externo</label>
                             <input type="file" name="file_url_upload" id="file_url_upload" class="form-control" accept="application/pdf">

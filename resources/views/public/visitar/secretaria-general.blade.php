@@ -27,7 +27,7 @@
                     <li>Atención a estudiantes y público en general</li>
                     <li>Coordinación de procesos administrativos</li>
                     <li>Gestión de archivo institucional</li>
-                    <li>Apoyo a la comunidad educativa en trámites administrativos</li>
+                    <li>Apoyo a la comunidad educativa en documentos administrativos</li>
                 </ul>
 
                 <h3 class="section-subtitle">Información de Contacto</h3>

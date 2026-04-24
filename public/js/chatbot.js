@@ -590,6 +590,10 @@ function displaySearchResults(data) {
  * Menú móvil
  */
 function initMobileMenu() {
+    if (document.querySelector(".header-public")) {
+        return;
+    }
+
     const mobileToggle = document.getElementById("mobile-menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
     const mobileClose = document.getElementById("mobile-menu-close");

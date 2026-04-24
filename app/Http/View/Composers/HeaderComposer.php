@@ -65,8 +65,8 @@ class HeaderComposer
             })
             ->toArray();
 
-        $tramites = DB::table("contents")
-            ->where("category", "tramites")
+        $documentos = DB::table("contents")
+            ->where("category", "documentos")
             ->whereNull("parent_id")
             ->where("status", "published")
             ->orderBy("created_at", "desc")
@@ -87,7 +87,7 @@ class HeaderComposer
                 "carrerasDestacadas",
                 "courses",
                 "transparencyContents",
-                "tramites",
+                "documentos",
                 "headerLogoPath",
             ),
         );
