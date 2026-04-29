@@ -37,7 +37,7 @@
             @endphp
 
             @if($hasCustomUrl)
-                <a href="{{ $nodeHref }}" class="menu-tree-link">{{ $node->title }}</a>
+                <a href="{{ $nodeHref }}" class="menu-tree-link" @if($isServicios) target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" @endif>{{ $node->title }}</a>
             @elseif($hasChildren && !(Str::lower(trim($node->title)) === 'reglamento'))
                 @if($level === 0)
                     @if($shouldOpenFolderView)
@@ -80,7 +80,7 @@
                     <li class="menu-tree-item menu-tree-level-{{ $level + 1 }}">
                         <div class="menu-tree-row">
                             @if($childHasCustomUrl)
-                                <a href="{{ $childHref }}" class="menu-tree-link">{{ $child->title }}</a>
+                                <a href="{{ $childHref }}" class="menu-tree-link" @if($isServicios) target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" @endif>{{ $child->title }}</a>
                             @elseif($child->career && $child->career->slug)
                                 <a href="{{ route('career.show', $child->career->slug) }}" class="menu-tree-link">{{ $child->title }}</a>
                             @elseif($child->pdf_file)
@@ -105,7 +105,7 @@
             <li class="menu-tree-item menu-tree-level-{{ $level + 1 }}">
                 <div class="menu-tree-row">
                     @if($hasCustomUrl)
-                        <a href="{{ $nodeHref }}" class="menu-tree-link">{{ $node->career->name }}</a>
+                        <a href="{{ $nodeHref }}" class="menu-tree-link" @if($isServicios) target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" @endif>{{ $node->career->name }}</a>
                     @elseif($node->career && $node->career->slug)
                         <a href="{{ route('career.show', $node->career->slug) }}" class="menu-tree-link">{{ $node->career->name }}</a>
                     @else

@@ -90,5 +90,10 @@ function toggleMenuNode(nodeId) {
         }
     }
 }
+
+function confirmDeleteMenuItem(title) {
+    const label = title ? ` "${title}"` : '';
+    return window.confirm(`¿Seguro que deseas eliminar${label}? También se eliminarán sus submenús.`);
+}
 </script>
 @endpush

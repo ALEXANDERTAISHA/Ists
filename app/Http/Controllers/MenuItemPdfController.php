@@ -12,7 +12,7 @@ class MenuItemPdfController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'pdf_file' => 'required|file|mimes:pdf|max:20480',
+            'pdf_file' => 'required|file|mimes:pdf,doc,docx',
         ]);
 
         $menuItem = MenuItem::findOrFail($menuItemId);
@@ -23,13 +23,26 @@ class MenuItemPdfController extends Controller
             'pdf_path' => $pdfPath,
         ]);
 
-        return back()->with('success', 'PDF agregado correctamente.');
+        return back()->with('success', 'Documento agregado correctamente.');
+    }
+
+    public function update(Request $request, $menuItemId, $pdfId)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        $pdf = MenuItemPdf::where('menu_item_id', $menuItemId)->findOrFail($pdfId);
+        $pdf->title = $request->title;
+        $pdf->save();
+
+        return back()->with('success', 'Nombre del documento actualizado correctamente.');
     }
 
     public function destroy($menuItemId, $pdfId)
     {
         $pdf = MenuItemPdf::where('menu_item_id', $menuItemId)->findOrFail($pdfId);
         $pdf->delete();
-        return back()->with('success', 'PDF eliminado correctamente.');
+        return back()->with('success', 'Documento eliminado correctamente.');
     }
 }

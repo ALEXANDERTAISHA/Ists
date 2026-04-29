@@ -342,6 +342,7 @@ Route::prefix("admin")
 
         Route::middleware(['auth', 'is_admin'])->prefix('admin/menu-items')->group(function () {
             Route::post('{menuItem}/pdfs', [MenuItemPdfController::class, 'store'])->name('admin.menu-items.pdfs.store');
+            Route::put('{menuItem}/pdfs/{pdf}', [MenuItemPdfController::class, 'update'])->name('admin.menu-items.pdfs.update');
             Route::delete('{menuItem}/pdfs/{pdf}', [MenuItemPdfController::class, 'destroy'])->name('admin.menu-items.pdfs.destroy');
 
             // Rutas para agregar y editar diseño (varios PDFs)
@@ -395,4 +396,8 @@ Route::get('/actualizaciones', function () {
 
 // Ruta pública para el calendario académico
 Route::get('/calendario', [PublicController::class, 'academicCalendar'])->name('public.academic_calendar');
+
+Route::middleware('auth')->get('/auth/change-password', function () {
+    return redirect()->to(route('admin.profile') . '#password-section');
+});
 

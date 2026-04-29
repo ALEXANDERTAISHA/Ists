@@ -35,7 +35,7 @@
             @if($item->url)
                 <a href="{{ $item->url }}" class="btn btn-sm" style="background:#f1f5f9; color:#0ea5a8; font-weight:700; border-radius:8px;" target="_blank">Abrir enlace</a>
             @endif
-            <form action="{{ route('admin.menu-items.destroy', $item) }}" method="POST" onsubmit="return confirm('¿Eliminar este menú y sus submenús?');">
+            <form action="{{ route('admin.menu-items.destroy', $item) }}" method="POST" onsubmit="return confirmDeleteMenuItem(@js($item->title));">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm" style="background:#fee2e2; color:#b91c1c; font-weight:700; border-radius:8px;">Eliminar</button>
@@ -69,3 +69,5 @@
         @endif
     </div>
 </div>
+
+

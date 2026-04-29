@@ -78,14 +78,14 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label for="pdf_file" class="form-label" style="font-weight:700;">Archivo PDF (opcional)</label>
+                        <label for="pdf_file" class="form-label" style="font-weight:700;">Archivo del documento (opcional)</label>
                         @if($item->pdf_file)
                             <div class="mb-2">
-                                <a href="{{ asset($item->pdf_file) }}" target="_blank" style="color:#0ea5a8; text-decoration:underline;">Ver PDF actual</a>
+                                <a href="{{ asset($item->pdf_file) }}" target="_blank" style="color:#0ea5a8; text-decoration:underline;">Ver documento actual</a>
                                 <span style="color:#64748b; font-size:0.9em;">(Si subes uno nuevo, reemplazará el actual)</span>
                             </div>
                         @endif
-                        <input type="file" name="pdf_file" id="pdf_file" class="form-control" accept="application/pdf">
+                        <input type="file" name="pdf_file" id="pdf_file" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                         <small style="color:#94a3b8;">Puedes adjuntar o reemplazar el archivo PDF para este menú.</small>
                     </div>
 
@@ -110,31 +110,41 @@
                     @csrf
                     <div class="col-md-5">
                         <label for="pdf_title" class="form-label mb-0">Título del PDF</label>
-                        <input type="text" name="title" id="pdf_title" class="form-control" required placeholder="Ej: Reglamento, Horario, etc.">
+                        <input type="text" name="title" id="pdf_title" class="form-control" required placeholder="Ej: Reglamento, Horario, Oficio, etc.">
                     </div>
                     <div class="col-md-5">
-                        <label for="pdf_file_multi" class="form-label mb-0">Archivo PDF</label>
-                        <input type="file" name="pdf_file" id="pdf_file_multi" class="form-control" accept="application/pdf" required>
+                        <label for="pdf_file_multi" class="form-label mb-0">Archivo del documento</label>
+                        <input type="file" name="pdf_file" id="pdf_file_multi" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
                     </div>
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">Agregar PDF</button>
+                        <button type="submit" class="btn btn-primary w-100">Agregar documento</button>
                     </div>
                 </form>
 
                 @if($item->pdfs && $item->pdfs->count())
                     <ul class="list-group">
                         @foreach($item->pdfs as $pdf)
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <a href="{{ asset('storage/' . ltrim($pdf->pdf_path, '/')) }}" target="_blank" style="color:#0ea5a8; text-decoration:underline; font-weight:600;">
-                                        {{ $pdf->title }}
-                                    </a>
+                            <li class="list-group-item">
+                                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center" style="gap:0.8rem;">
+                                    <div style="min-width:0; flex:1;">
+                                        <a href="{{ asset('storage/' . ltrim($pdf->pdf_path, '/')) }}" target="_blank" style="color:#0ea5a8; text-decoration:underline; font-weight:600;">
+                                            Ver documento actual
+                                        </a>
+                                    </div>
+                                    <div class="d-flex flex-wrap" style="gap:0.5rem;">
+                                        <form action="{{ route('admin.menu-items.pdfs.update', [$item->id, $pdf->id]) }}" method="POST" class="d-flex flex-wrap align-items-center" style="gap:0.5rem;">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="text" name="title" class="form-control form-control-sm" value="{{ $pdf->title }}" required style="min-width:260px;">
+                                            <button type="submit" class="btn btn-sm btn-primary">Guardar nombre</button>
+                                        </form>
+                                        <form action="{{ route('admin.menu-items.pdfs.destroy', [$item->id, $pdf->id]) }}" method="POST" onsubmit="return confirm('¿Eliminar este PDF?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <form action="{{ route('admin.menu-items.pdfs.destroy', [$item->id, $pdf->id]) }}" method="POST" onsubmit="return confirm('¿Eliminar este PDF?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                </form>
                             </li>
                         @endforeach
                     </ul>
@@ -146,3 +156,5 @@
     </div>
 </div>
 @endsection
+
+

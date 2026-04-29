@@ -41,7 +41,7 @@
         @endif
         <li class="mobile-tree-item mobile-tree-level-{{ $level }}">
             @if($hasCustomUrl)
-                <a href="{{ $nodeHref }}" class="mobile-tree-link">{{ $node->career->name }}</a>
+                <a href="{{ $nodeHref }}" class="mobile-tree-link" @if($isServicios) target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" @endif>{{ $node->career->name }}</a>
             @else
                 <a href="{{ route('career.show', $node->career->slug) }}" class="mobile-tree-link">{{ $node->career->name }}</a>
             @endif
@@ -53,7 +53,7 @@
             <details class="mobile-tree-details">
                 <summary class="mobile-menu__summary mobile-tree-summary">
                     @if($hasCustomUrl)
-                        <a href="{{ $nodeHref }}" class="mobile-tree-link" style="display:inline;">{{ $node->title }}</a>
+                        <a href="{{ $nodeHref }}" class="mobile-tree-link" style="display:inline;" @if($isServicios) target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" @endif>{{ $node->title }}</a>
                     @elseif($node->career && trim($node->title) === trim($node->career->name))
                         <a href="{{ route('career.show', $node->career->slug) }}" class="mobile-tree-link" style="display:inline;">{{ $node->title }}</a>
                     @elseif($shouldOpenFolderView || $node->hasOwnDesignPresentation())
@@ -74,7 +74,7 @@
     @elseif(!$node->career)
         <li class="mobile-tree-item mobile-tree-level-{{ $level }}">
             @if($hasCustomUrl)
-                <a href="{{ $nodeHref }}" class="mobile-tree-link">{{ $node->title }}</a>
+                <a href="{{ $nodeHref }}" class="mobile-tree-link" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;">{{ $node->title }}</a>
             @elseif($node->pdf_file)
                 <a href="{{ asset($node->pdf_file) }}" class="mobile-tree-link" target="_blank" rel="noopener">{{ $node->title }}</a>
             @elseif($node->hasOwnDesignPresentation())
@@ -86,7 +86,7 @@
     @elseif($node->career && trim($node->title) === trim($node->career->name))
         <li class="mobile-tree-item mobile-tree-level-{{ $level }}">
             @if($hasCustomUrl)
-                <a href="{{ $nodeHref }}" class="mobile-tree-link">{{ $node->title }}</a>
+                <a href="{{ $nodeHref }}" class="mobile-tree-link" @if($isServicios) target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" @endif>{{ $node->title }}</a>
             @else
                 <a href="{{ route('career.show', $node->career->slug) }}" class="mobile-tree-link">{{ $node->title }}</a>
             @endif

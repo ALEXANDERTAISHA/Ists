@@ -119,15 +119,49 @@
             min-width: 0;
         }
 
+        .premium-main-desc-row.no-main-image {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .premium-main-desc-row.no-main-image .main-desc-text,
+        .premium-main-desc-row.no-main-image .main-desc-content {
+            width: 100%;
+        }
+
         .main-desc-content {
             color: #334155;
             font-size: 1.04rem;
             font-weight: 500;
             line-height: 1.72;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .main-desc-content :last-child {
             margin-bottom: 0;
+        }
+
+        .premium-secondary-desc-content p,
+        .premium-secondary-desc-content div,
+        .premium-secondary-desc-content li,
+        .premium-secondary-desc-content span {
+            max-width: 100% !important;
+            width: auto !important;
+            text-align: justify !important;
+            text-justify: inter-word !important;
+            white-space: normal !important;
+        }
+
+        .premium-main-desc-row.no-main-image .main-desc-content,
+        .premium-main-desc-row.no-main-image .main-desc-content p,
+        .premium-main-desc-row.no-main-image .main-desc-content div,
+        .premium-main-desc-row.no-main-image .main-desc-content li,
+        .premium-main-desc-row.no-main-image .main-desc-content span {
+            text-align: justify !important;
+            text-justify: inter-word !important;
+            white-space: normal !important;
+            max-width: 100% !important;
+            width: auto !important;
         }
 
         .main-desc-block + .main-desc-block {
@@ -164,6 +198,10 @@
             font-size: 1rem;
             font-weight: 500;
             line-height: 1.72;
+            text-align: justify;
+            text-justify: inter-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .premium-secondary-desc-content :last-child {
@@ -288,12 +326,23 @@
             box-shadow: 0 20px 50px rgba(127, 29, 29, 0.08);
         }
 
+        .premium-pdf-card.is-word {
+            background:
+                linear-gradient(180deg, rgba(239, 246, 255, 0.97) 0%, rgba(255, 255, 255, 0.98) 28%, rgba(239, 246, 255, 0.96) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            box-shadow: 0 20px 50px rgba(30, 64, 175, 0.08);
+        }
+
         .premium-pdf-card::before {
             content: "";
             position: absolute;
             inset: 0 0 auto 0;
             height: 4px;
             background: linear-gradient(90deg, #dc2626, #f87171 48%, #fca5a5);
+        }
+
+        .premium-pdf-card.is-word::before {
+            background: linear-gradient(90deg, #2563eb, #3b82f6 48%, #93c5fd);
         }
 
         .pdf-card-top {
@@ -331,6 +380,17 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
+        .pdf-badge.word {
+            background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+            box-shadow: 0 10px 22px rgba(59, 130, 246, 0.18);
+        }
+
+        .pdf-icon.word {
+            color: #1d4ed8;
+            background: linear-gradient(180deg, rgba(219, 234, 254, 0.96), rgba(239, 246, 255, 0.98));
+            border-color: rgba(96, 165, 250, 0.28);
+        }
+
         .pdf-title {
             color: #111827;
             font-size: 1.22rem;
@@ -356,6 +416,10 @@
             text-transform: uppercase;
         }
 
+        .premium-pdf-card.is-word .pdf-date {
+            color: #1d4ed8;
+        }
+
         .pdf-btn {
             display: inline-flex;
             align-items: center;
@@ -375,6 +439,11 @@
             overflow: hidden;
             box-shadow: 0 16px 34px rgba(217, 119, 119, 0.2);
             transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease, background 0.22s ease;
+        }
+
+        .pdf-btn.word {
+            background: linear-gradient(90deg, #2563eb, #3b82f6 52%, #60a5fa);
+            box-shadow: 0 16px 34px rgba(59, 130, 246, 0.2);
         }
 
         .pdf-btn::before {
@@ -400,6 +469,11 @@
             transform: translateY(-2px) scale(1.01);
             filter: saturate(1.08);
             box-shadow: 0 24px 46px rgba(217, 119, 119, 0.28);
+        }
+
+        .pdf-btn.word:hover {
+            background: linear-gradient(90deg, #1d4ed8, #2563eb 52%, #60a5fa);
+            box-shadow: 0 24px 46px rgba(59, 130, 246, 0.28);
         }
 
         .pdf-btn:hover::before {
@@ -476,6 +550,99 @@
             flex: 1;
             border: 0;
             background: #f8fafc;
+        }
+
+        #wordModalViewer {
+            display: none;
+            flex: 1;
+            overflow: auto;
+            background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+            padding: 1.4rem;
+        }
+
+        #wordModalViewer.active {
+            display: block;
+        }
+
+        .word-preview-shell {
+            max-width: 860px;
+            margin: 0 auto;
+            border-radius: 8px;
+            background: #fff;
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+            padding: clamp(1.2rem, 3vw, 2rem);
+        }
+
+        .word-preview-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.9rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .word-preview-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            color: #1d4ed8;
+            background: rgba(219, 234, 254, 0.92);
+            border: 1px solid rgba(96, 165, 250, 0.28);
+            border-radius: 999px;
+            padding: 0.45rem 0.82rem;
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .word-preview-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .word-preview-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 0.72rem 1rem;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 14px 30px rgba(59, 130, 246, 0.18);
+        }
+
+        .word-preview-link:hover {
+            color: #fff;
+        }
+
+        .word-preview-content {
+            color: #334155;
+            font-size: 1rem;
+            line-height: 1.75;
+        }
+
+        .word-preview-content p,
+        .word-preview-content li {
+            margin-bottom: 0.95rem;
+        }
+
+        .word-preview-empty {
+            color: #475569;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            border-radius: 8px;
+            background: rgba(239, 246, 255, 0.9);
+            border: 1px dashed rgba(59, 130, 246, 0.28);
+            padding: 1rem 1.1rem;
         }
 
         @media (max-width: 992px) {
@@ -555,7 +722,7 @@
         </section>
 
         @if(isset($mainDesign) && ($mainDesign->main_description || $mainDesign->main_image_path))
-            <section class="premium-main-desc-row">
+            <section class="premium-main-desc-row{{ $mainDesign->main_image_path ? '' : ' no-main-image' }}">
                 @if($mainDesign->main_description)
                     <div class="main-desc-text">
                         <div class="main-desc-content">
@@ -615,18 +782,26 @@
 
                 <div class="premium-pdf-row">
                     @foreach($pdfs as $pdf)
+                        @php
+                            $documentPath = ltrim($pdf->pdf_path, '/');
+                            $documentUrl = asset('storage/' . $documentPath);
+                            $documentExtension = \Illuminate\Support\Str::lower(pathinfo($documentPath, PATHINFO_EXTENSION));
+                            $isWordDocument = in_array($documentExtension, ['doc', 'docx'], true);
+                            $documentTypeLabel = $isWordDocument ? strtoupper($documentExtension) : 'PDF';
+                            $previewMode = $documentExtension === 'docx' ? 'docx' : ($documentExtension === 'doc' ? 'doc' : 'pdf');
+                        @endphp
                         <div class="premium-pdf-col">
-                            <div class="premium-pdf-card" tabindex="0" role="button" data-pdf-title="{{ $pdf->title }}" data-pdf-url="{{ asset('storage/' . ltrim($pdf->pdf_path, '/')) }}">
+                            <div class="premium-pdf-card{{ $isWordDocument ? ' is-word' : '' }}" tabindex="0" role="button" data-pdf-title="{{ $pdf->title }}" data-pdf-url="{{ $documentUrl }}" data-preview-mode="{{ $previewMode }}" data-file-extension="{{ $documentExtension }}">
                                 <div class="pdf-card-top">
-                                    <span class="pdf-badge">PDF</span>
-                                    <span class="pdf-icon"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>
+                                    <span class="pdf-badge{{ $isWordDocument ? ' word' : '' }}">{{ $documentTypeLabel }}</span>
+                                    <span class="pdf-icon{{ $isWordDocument ? ' word' : '' }}"><i class="fa {{ $isWordDocument ? 'fa-file-word-o' : 'fa-file-pdf-o' }}" aria-hidden="true"></i></span>
                                 </div>
                                 <div class="pdf-title">{{ $pdf->title }}</div>
                                 @if($pdf->description)
                                     <div class="pdf-desc">{{ $pdf->description }}</div>
                                 @endif
                                 <div class="pdf-date">Actualizado {{ $pdf->updated_at ? $pdf->updated_at->format('d/m/Y') : '' }}</div>
-                                <a href="#" class="pdf-btn open-pdf-modal" data-pdf-url="{{ asset('storage/' . ltrim($pdf->pdf_path, '/')) }}" data-pdf-title="{{ $pdf->title }}" onclick="event.preventDefault(); event.stopPropagation();">
+                                <a href="#" class="pdf-btn{{ $isWordDocument ? ' word' : '' }} open-pdf-modal" data-pdf-url="{{ $documentUrl }}" data-pdf-title="{{ $pdf->title }}" data-preview-mode="{{ $previewMode }}" data-file-extension="{{ $documentExtension }}" onclick="event.preventDefault(); event.stopPropagation();">
                                     Ver documento <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -641,48 +816,141 @@
                         <span id="pdfModalTitle"></span>
                         <button id="pdfModalClose" type="button" aria-label="Cerrar">&times;</button>
                     </div>
-                    <iframe id="pdfModalViewer" title="Vista previa de documento PDF"></iframe>
+                    <iframe id="pdfModalViewer" title="Vista previa de documento"></iframe>
+                    <div id="wordModalViewer">
+                        <div class="word-preview-shell">
+                            <div class="word-preview-toolbar">
+                                <span id="wordPreviewBadge" class="word-preview-badge">WORD</span>
+                                <div class="word-preview-actions">
+                                    <a id="wordPreviewOpenLink" class="word-preview-link" href="#" target="_blank" rel="noopener">Abrir documento</a>
+                                </div>
+                            </div>
+                            <div id="wordPreviewContent" class="word-preview-content"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <script src="https://unpkg.com/mammoth@1.8.0/mammoth.browser.min.js"></script>
             <script>
-                function openPdfModal(url, title) {
-                    const modal = document.getElementById('pdfModalBackdrop');
-                    const viewer = document.getElementById('pdfModalViewer');
-                    const titleNode = document.getElementById('pdfModalTitle');
+                function escapeHtml(value) {
+                    return String(value || '')
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#039;');
+                }
 
-                    if (!modal || !viewer || !titleNode || !url) {
+                function resetDocumentPreviewState() {
+                    const iframeViewer = document.getElementById('pdfModalViewer');
+                    const wordViewer = document.getElementById('wordModalViewer');
+                    const wordContent = document.getElementById('wordPreviewContent');
+
+                    if (iframeViewer) {
+                        iframeViewer.style.display = 'block';
+                        iframeViewer.src = '';
+                    }
+
+                    if (wordViewer) {
+                        wordViewer.classList.remove('active');
+                    }
+
+                    if (wordContent) {
+                        wordContent.innerHTML = '';
+                    }
+                }
+
+                function openPdfModal(url, title, previewMode, extension) {
+                    const modal = document.getElementById('pdfModalBackdrop');
+                    const titleNode = document.getElementById('pdfModalTitle');
+                    const iframeViewer = document.getElementById('pdfModalViewer');
+                    const wordViewer = document.getElementById('wordModalViewer');
+                    const wordContent = document.getElementById('wordPreviewContent');
+                    const wordLink = document.getElementById('wordPreviewOpenLink');
+                    const wordBadge = document.getElementById('wordPreviewBadge');
+
+                    if (!modal || !titleNode || !url) {
                         return;
                     }
 
-                    viewer.src = url + '#toolbar=1&navpanes=0&view=FitH';
+                    resetDocumentPreviewState();
                     titleNode.textContent = title || 'Documento';
+
+                    if (previewMode === 'docx' && wordViewer && wordContent) {
+                        if (iframeViewer) {
+                            iframeViewer.style.display = 'none';
+                        }
+
+                        wordViewer.classList.add('active');
+                        wordBadge.textContent = 'DOCX';
+                        wordLink.href = url;
+                        wordContent.innerHTML = '<div class="word-preview-empty">Cargando vista previa del documento de Word...</div>';
+
+                        fetch(url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('No se pudo cargar el documento.');
+                                }
+                                return response.arrayBuffer();
+                            })
+                            .then(function(arrayBuffer) {
+                                if (!window.mammoth) {
+                                    throw new Error('La librería de vista previa no está disponible.');
+                                }
+
+                                return window.mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+                            })
+                            .then(function(result) {
+                                const html = result && result.value ? result.value : '';
+                                wordContent.innerHTML = html || '<div class="word-preview-empty">No se encontraron bloques de contenido para mostrar en la vista previa.</div>';
+                            })
+                            .catch(function() {
+                                wordContent.innerHTML = '<div class="word-preview-empty">No fue posible generar la vista previa de este archivo Word en este momento. Puedes abrirlo directamente con el botón superior.</div>';
+                            });
+                    } else if (previewMode === 'doc' && wordViewer && wordContent) {
+                        if (iframeViewer) {
+                            iframeViewer.style.display = 'none';
+                        }
+
+                        wordViewer.classList.add('active');
+                        wordBadge.textContent = 'DOC';
+                        wordLink.href = url;
+                        wordContent.innerHTML =
+                            '<div class="word-preview-empty">' +
+                            'La vista previa completa para archivos <strong>.doc</strong> puede variar según el navegador. ' +
+                            'Puedes abrir el documento directamente para revisarlo en una nueva pestaña.' +
+                            '</div>';
+                    } else if (iframeViewer) {
+                        iframeViewer.style.display = 'block';
+                        iframeViewer.src = url + '#toolbar=1&navpanes=0&view=FitH';
+                    }
+
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
                 }
 
                 function closePdfModal() {
                     const modal = document.getElementById('pdfModalBackdrop');
-                    const viewer = document.getElementById('pdfModalViewer');
 
-                    if (!modal || !viewer) {
+                    if (!modal) {
                         return;
                     }
 
                     modal.classList.remove('active');
-                    viewer.src = '';
+                    resetDocumentPreviewState();
                     document.body.style.overflow = '';
                 }
 
                 document.querySelectorAll('.premium-pdf-card').forEach(function(card) {
                     card.addEventListener('click', function() {
-                        openPdfModal(card.dataset.pdfUrl, card.dataset.pdfTitle);
+                        openPdfModal(card.dataset.pdfUrl, card.dataset.pdfTitle, card.dataset.previewMode, card.dataset.fileExtension);
                     });
 
                     card.addEventListener('keydown', function(event) {
                         if (event.key === 'Enter' || event.key === ' ') {
                             event.preventDefault();
-                            openPdfModal(card.dataset.pdfUrl, card.dataset.pdfTitle);
+                            openPdfModal(card.dataset.pdfUrl, card.dataset.pdfTitle, card.dataset.previewMode, card.dataset.fileExtension);
                         }
                     });
                 });
@@ -691,7 +959,7 @@
                     button.addEventListener('click', function(event) {
                         event.preventDefault();
                         event.stopPropagation();
-                        openPdfModal(button.dataset.pdfUrl, button.dataset.pdfTitle);
+                        openPdfModal(button.dataset.pdfUrl, button.dataset.pdfTitle, button.dataset.previewMode, button.dataset.fileExtension);
                     });
                 });
 

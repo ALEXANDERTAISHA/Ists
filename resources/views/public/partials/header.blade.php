@@ -746,6 +746,9 @@
             $key = $menuItem->system_key ?: preg_replace('/[^A-Z]/', '', strtoupper(\Illuminate\Support\Str::ascii($menuItem->title)));
             return $key === 'ACERCA';
         });
+        $acercaMenuHref = ($acercaMenuItem && $acercaMenuItem->hasOwnDesignPresentation())
+            ? route('public.menu-designs.show', $acercaMenuItem->id)
+            : '#';
         $visitSections = \App\Models\VisitSection::active()->ordered()->get();
         $campusItems = \App\Models\CampusItem::active()->where('category', 'servicios')->ordered()->get();
         $vidaEstudiantilItems = \App\Models\CampusItem::active()->where('category', 'Vida Estudiantil')->ordered()->get();
@@ -775,7 +778,7 @@
                 </div>
         <ul class="header-menu" style="display: flex; flex-direction: row; align-items: center; gap: 0.86rem; list-style: none; margin: 0; padding: 0; justify-content: flex-start; max-width: 1400px; width: 100%;">
             <li class="dropdown" style="position: relative;">
-                <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 0.96rem; letter-spacing: 0.32px; padding: 0.42rem 1rem; transition: background 0.2s, color 0.2s;">{{ $acercaMenuItem->title ?? 'ACERCA' }}</a>
+                <a href="{{ $acercaMenuHref }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 0.96rem; letter-spacing: 0.32px; padding: 0.42rem 1rem; transition: background 0.2s, color 0.2s;">{{ $acercaMenuItem->title ?? 'ACERCA' }}</a>
                 <div class="dropdown-content academic-dropdown single-column">
                     <div class="academic-dropdown-columns">
                         <div class="academic-column">
@@ -816,12 +819,14 @@
                         'DOCUMENTOS' => 'DOCUMENTOS',
                         default => $item->title,
                     };
+                    $itemHasDesignLanding = $item->hasOwnDesignPresentation();
+                    $itemMainHref = $itemHasDesignLanding ? route('public.menu-designs.show', $item->id) : '#';
                 @endphp
                 @if($titleKey === 'ACERCA')
                     @continue
                 @elseif($titleKey === 'CARRERAS')
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
+                        <a href="{{ $itemMainHref }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
                         <div class="dropdown-content academic-dropdown single-column">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -839,14 +844,14 @@
                         $hasVidaEstudiantil = isset($vidaEstudiantilItems) && $vidaEstudiantilItems->count() > 0;
                     @endphp
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
+                        <a href="{{ $itemMainHref }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
                         <div class="dropdown-content academic-dropdown{{ $hasVidaEstudiantil ? '' : ' single-column' }}">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
                                     <ul>
                                         @foreach($campusItems ?? [] as $campusItem)
                                             <li>
-                                                <a href="{{ $campusItem->url ?? '#' }}"@if($campusItem->is_external) target="_blank" rel="noopener"@endif>{{ $campusItem->title }}</a>
+                                                <a href="{{ $campusItem->url ?? '#' }}" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;">{{ $campusItem->title }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -856,12 +861,12 @@
                                     <ul>
                                         @foreach(($vidaEstudiantilItems ?? []) as $campusItem)
                                             <li>
-                                                <a href="{{ $campusItem->url ?? '#' }}">{{ $campusItem->title }}</a>
+                                                <a href="{{ $campusItem->url ?? '#' }}" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;">{{ $campusItem->title }}</a>
                                                 @if($campusItem->contents && $campusItem->contents->count())
                                                     <ul style="margin-left:20px;">
                                                         @foreach($campusItem->contents as $content)
                                                             <li>
-                                                                <a href="{{ $content->external_url ?? '#' }}" target="_blank" style="color:#007bff; text-decoration:underline;">{{ $content->title }}</a>
+                                                                <a href="{{ $content->external_url ?? '#' }}" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" style="color:#007bff; text-decoration:underline;">{{ $content->title }}</a>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -882,7 +887,7 @@
                         $secondCol = $visitSections->slice($half);
                     @endphp
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
+                        <a href="{{ $itemMainHref }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
                         <div class="dropdown-content academic-dropdown">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -914,7 +919,7 @@
                     <li><a href="/noticias" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a></li>
                 @elseif($titleKey === 'TRANSPARENCIA')
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
+                        <a href="{{ $itemMainHref }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
                         <div class="dropdown-content academic-dropdown single-column">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -976,7 +981,7 @@
                     </li>
                 @elseif($titleKey === 'DOCUMENTOS')
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
+                        <a href="{{ $itemMainHref }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
                         <div class="dropdown-content academic-dropdown single-column">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -1008,9 +1013,9 @@
                         </div>
                     </li>
                 @else
-                    @if($item->childrenRecursive && $item->childrenRecursive->count() > 0)
+                    @if($item->childrenRecursive && $item->childrenRecursive->count() > 0 && !$itemHasDesignLanding)
                         <li class="dropdown" style="position: relative;">
-                            <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
+                            <a href="{{ $itemMainHref }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a>
                             <div class="dropdown-content academic-dropdown single-column">
                                 <div class="academic-dropdown-columns">
                                     <div class="academic-column">
@@ -1022,7 +1027,7 @@
                             </div>
                         </li>
                     @else
-                        <li><a href="{{ $item->url }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a></li>
+                        <li><a href="{{ $itemHasDesignLanding ? route('public.menu-designs.show', $item->id) : $item->url }}" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;">{{ $displayTitle }}</a></li>
                     @endif
                 @endif
             @endforeach
@@ -1073,6 +1078,7 @@
                         'DOCUMENTOS' => 'DOCUMENTOS',
                         default => $item->title,
                     };
+                    $itemHasDesignLanding = $item->hasOwnDesignPresentation();
                 @endphp
                 @if($titleKey === 'ACERCA')
                     @continue
@@ -1134,10 +1140,10 @@
                             <summary class="mobile-menu__summary">{{ $displayTitle }}</summary>
                             <ul class="mobile-menu__children">
                                 @foreach($campusItems ?? [] as $campusItem)
-                                    <li><a href="{{ $campusItem->url ?? '#' }}"@if($campusItem->is_external) target="_blank" rel="noopener"@endif>{{ $campusItem->title }}</a></li>
+                                    <li><a href="{{ $campusItem->url ?? '#' }}" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;">{{ $campusItem->title }}</a></li>
                                 @endforeach
                                 @foreach($vidaEstudiantilItems ?? [] as $vidaItem)
-                                    <li><a href="{{ $vidaItem->url ?? '#' }}">{{ $vidaItem->title }}</a></li>
+                                    <li><a href="{{ $vidaItem->url ?? '#' }}" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;">{{ $vidaItem->title }}</a></li>
                                 @endforeach
                             </ul>
                         </details>
@@ -1222,7 +1228,7 @@
                         </details>
                     </li>
                 @else
-                    @if($item->childrenRecursive && $item->childrenRecursive->count() > 0)
+                    @if($item->childrenRecursive && $item->childrenRecursive->count() > 0 && !$itemHasDesignLanding)
                         <li class="mobile-menu__item">
                             <details>
                                 <summary class="mobile-menu__summary">{{ $displayTitle }}</summary>
@@ -1232,7 +1238,7 @@
                             </details>
                         </li>
                     @else
-                        <li class="mobile-menu__item"><a href="{{ $item->url }}">{{ $displayTitle }}</a></li>
+                        <li class="mobile-menu__item"><a href="{{ $itemHasDesignLanding ? route('public.menu-designs.show', $item->id) : $item->url }}">{{ $displayTitle }}</a></li>
                     @endif
                 @endif
             @endforeach

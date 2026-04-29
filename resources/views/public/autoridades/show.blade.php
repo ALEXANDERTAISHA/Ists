@@ -222,6 +222,9 @@
             border: 0;
             background: #fff;
         }
+        .pdf-pro-link {
+            cursor: pointer;
+        }
         @media (max-width: 600px) {
             .pdf-preview-modal {
                 padding: 0.6rem;

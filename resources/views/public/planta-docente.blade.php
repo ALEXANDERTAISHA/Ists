@@ -28,8 +28,9 @@
             position: relative;
             min-height: 285px;
             border: 1.5px solid #e0f2f1;
-            max-width: 270px;
+            max-width: 100%;
             margin: 0 auto;
+            width: 100%;
         }
         .team-member-card:hover {
             transform: translateY(-4px) scale(1.015);
@@ -96,6 +97,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.6em;
+            cursor: pointer;
             background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%);
             color: #1565c0 !important;
             font-weight: 700;
@@ -272,6 +274,11 @@
             width: 100%;
             border: 0;
             background: #fff;
+        }
+        @media (max-width: 992px) {
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 240px));
+            }
         }
         @media (max-width: 640px) {
             .team-grid {

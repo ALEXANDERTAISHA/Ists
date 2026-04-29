@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MenuItem;
 use App\Models\MenuItemPdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MenuItemDesignController extends Controller
 {
@@ -25,6 +26,7 @@ class MenuItemDesignController extends Controller
             'main_description' => 'nullable|string',
             'main_description_2' => 'nullable|string',
             'main_image' => 'nullable|image|max:4096',
+            'remove_main_image' => 'nullable|boolean',
             'pdf_file' => 'nullable|file|mimes:pdf|max:20480',
             'is_active' => 'nullable|boolean',
         ]);
@@ -34,7 +36,17 @@ class MenuItemDesignController extends Controller
         $pdf->main_description_2 = $request->main_description_2;
         $pdf->is_active = $request->boolean('is_active', true);
 
+        if ($request->boolean('remove_main_image') && $pdf->main_image_path) {
+            if (Storage::disk('public')->exists($pdf->main_image_path)) {
+                Storage::disk('public')->delete($pdf->main_image_path);
+            }
+            $pdf->main_image_path = null;
+        }
+
         if ($request->hasFile('main_image')) {
+            if ($pdf->main_image_path && Storage::disk('public')->exists($pdf->main_image_path)) {
+                Storage::disk('public')->delete($pdf->main_image_path);
+            }
             $pdf->main_image_path = $request->file('main_image')->store('menu_designs_images', 'public');
         }
 

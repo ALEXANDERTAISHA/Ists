@@ -19,6 +19,7 @@ class MenuItemController extends Controller
             'career_id' => 'nullable|exists:careers,id',
             'order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active');

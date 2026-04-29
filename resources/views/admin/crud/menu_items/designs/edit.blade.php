@@ -26,9 +26,12 @@
                     <label for="main_image" class="form-label fw-bold">Imagen Principal</label>
                     <input type="file" name="main_image" id="main_image" class="form-control form-control-lg" accept="image/*">
                     @if($pdf->main_image_path)
-                        <div class="mt-2">
-                            <img src="{{ asset('storage/' . ltrim($pdf->main_image_path, '/')) }}" alt="Imagen principal actual" style="max-width:180px; border-radius:12px;">
+                        <input type="hidden" name="remove_main_image" id="remove_main_image" value="0">
+                        <div class="mt-2" id="main-image-current" style="position:relative; display:inline-flex; align-items:flex-start;">
+                            <img src="{{ asset('storage/' . ltrim($pdf->main_image_path, '/')) }}" alt="Imagen principal actual" style="max-width:180px; border-radius:12px; border:1px solid #dbe7f7;">
+                            <button type="button" id="remove-main-image-btn" aria-label="Quitar imagen principal" style="position:absolute; top:-10px; right:-10px; width:30px; height:30px; border:none; border-radius:999px; background:#ef4444; color:#fff; font-size:1.05rem; font-weight:800; line-height:1; box-shadow:0 8px 18px rgba(239,68,68,0.28); cursor:pointer;">×</button>
                         </div>
+                        <div id="main-image-removed-note" class="form-text text-danger mt-2" style="display:none;">La imagen principal se quitará al guardar los cambios.</div>
                     @endif
                     <div class="form-text">Opcional. Imagen destacada para la vista principal</div>
                 </div>
@@ -54,4 +57,34 @@
         </div>
     </div>
 </div>
+@if($pdf->main_image_path)
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const removeButton = document.getElementById('remove-main-image-btn');
+    const removeInput = document.getElementById('remove_main_image');
+    const currentImage = document.getElementById('main-image-current');
+    const removedNote = document.getElementById('main-image-removed-note');
+    const fileInput = document.getElementById('main_image');
+
+    if (!removeButton || !removeInput || !currentImage || !removedNote) {
+        return;
+    }
+
+    removeButton.addEventListener('click', function () {
+        removeInput.value = '1';
+        currentImage.style.display = 'none';
+        removedNote.style.display = 'block';
+    });
+
+    if (fileInput) {
+        fileInput.addEventListener('change', function () {
+            if (fileInput.files.length > 0) {
+                removeInput.value = '0';
+                removedNote.style.display = 'none';
+            }
+        });
+    }
+});
+</script>
+@endif
 @endsection
