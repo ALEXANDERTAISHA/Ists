@@ -746,6 +746,9 @@
             $key = $menuItem->system_key ?: preg_replace('/[^A-Z]/', '', strtoupper(\Illuminate\Support\Str::ascii($menuItem->title)));
             return $key === 'ACERCA';
         });
+        $acercaMenuHref = ($acercaMenuItem && $acercaMenuItem->hasOwnDesignPresentation())
+            ? route('public.menu-designs.show', $acercaMenuItem->id)
+            : '#';
         $visitSections = \App\Models\VisitSection::active()->ordered()->get();
         $campusItems = \App\Models\CampusItem::active()->where('category', 'servicios')->ordered()->get();
         $vidaEstudiantilItems = \App\Models\CampusItem::active()->where('category', 'Vida Estudiantil')->ordered()->get();
@@ -775,7 +778,7 @@
                 </div>
         <ul class="header-menu" style="display: flex; flex-direction: row; align-items: center; gap: 0.86rem; list-style: none; margin: 0; padding: 0; justify-content: flex-start; max-width: 1400px; width: 100%;">
             <li class="dropdown" style="position: relative;">
-                <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 0.96rem; letter-spacing: 0.32px; padding: 0.42rem 1rem; transition: background 0.2s, color 0.2s;"><?php echo e($acercaMenuItem->title ?? 'ACERCA'); ?></a>
+                <a href="<?php echo e($acercaMenuHref); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 0.96rem; letter-spacing: 0.32px; padding: 0.42rem 1rem; transition: background 0.2s, color 0.2s;"><?php echo e($acercaMenuItem->title ?? 'ACERCA'); ?></a>
                 <div class="dropdown-content academic-dropdown single-column">
                     <div class="academic-dropdown-columns">
                         <div class="academic-column">
@@ -816,12 +819,14 @@
                         'DOCUMENTOS' => 'DOCUMENTOS',
                         default => $item->title,
                     };
+                    $itemHasDesignLanding = $item->hasOwnDesignPresentation();
+                    $itemMainHref = $itemHasDesignLanding ? route('public.menu-designs.show', $item->id) : '#';
                 ?>
                 <?php if($titleKey === 'ACERCA'): ?>
                     <?php continue; ?>
                 <?php elseif($titleKey === 'CARRERAS'): ?>
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
+                        <a href="<?php echo e($itemMainHref); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
                         <div class="dropdown-content academic-dropdown single-column">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -839,14 +844,14 @@
                         $hasVidaEstudiantil = isset($vidaEstudiantilItems) && $vidaEstudiantilItems->count() > 0;
                     ?>
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
+                        <a href="<?php echo e($itemMainHref); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
                         <div class="dropdown-content academic-dropdown<?php echo e($hasVidaEstudiantil ? '' : ' single-column'); ?>">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
                                     <ul>
                                         <?php $__currentLoopData = $campusItems ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $campusItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li>
-                                                <a href="<?php echo e($campusItem->url ?? '#'); ?>"<?php if($campusItem->is_external): ?> target="_blank" rel="noopener"<?php endif; ?>><?php echo e($campusItem->title); ?></a>
+                                                <a href="<?php echo e($campusItem->url ?? '#'); ?>" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;"><?php echo e($campusItem->title); ?></a>
                                             </li>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </ul>
@@ -856,12 +861,12 @@
                                     <ul>
                                         <?php $__currentLoopData = ($vidaEstudiantilItems ?? []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $campusItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li>
-                                                <a href="<?php echo e($campusItem->url ?? '#'); ?>"><?php echo e($campusItem->title); ?></a>
+                                                <a href="<?php echo e($campusItem->url ?? '#'); ?>" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;"><?php echo e($campusItem->title); ?></a>
                                                 <?php if($campusItem->contents && $campusItem->contents->count()): ?>
                                                     <ul style="margin-left:20px;">
                                                         <?php $__currentLoopData = $campusItem->contents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $content): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <li>
-                                                                <a href="<?php echo e($content->external_url ?? '#'); ?>" target="_blank" style="color:#007bff; text-decoration:underline;"><?php echo e($content->title); ?></a>
+                                                                <a href="<?php echo e($content->external_url ?? '#'); ?>" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" style="color:#007bff; text-decoration:underline;"><?php echo e($content->title); ?></a>
                                                             </li>
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     </ul>
@@ -882,7 +887,7 @@
                         $secondCol = $visitSections->slice($half);
                     ?>
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
+                        <a href="<?php echo e($itemMainHref); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
                         <div class="dropdown-content academic-dropdown">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -916,7 +921,7 @@
                     <li><a href="/noticias" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a></li>
                 <?php elseif($titleKey === 'TRANSPARENCIA'): ?>
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
+                        <a href="<?php echo e($itemMainHref); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
                         <div class="dropdown-content academic-dropdown single-column">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -978,7 +983,7 @@
                     </li>
                 <?php elseif($titleKey === 'DOCUMENTOS'): ?>
                     <li class="dropdown" style="position: relative;">
-                        <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
+                        <a href="<?php echo e($itemMainHref); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
                         <div class="dropdown-content academic-dropdown single-column">
                             <div class="academic-dropdown-columns">
                                 <div class="academic-column">
@@ -1010,9 +1015,9 @@
                         </div>
                     </li>
                 <?php else: ?>
-                    <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0): ?>
+                    <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0 && !$itemHasDesignLanding): ?>
                         <li class="dropdown" style="position: relative;">
-                            <a href="#" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
+                            <a href="<?php echo e($itemMainHref); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a>
                             <div class="dropdown-content academic-dropdown single-column">
                                 <div class="academic-dropdown-columns">
                                     <div class="academic-column">
@@ -1024,7 +1029,7 @@
                             </div>
                         </li>
                     <?php else: ?>
-                        <li><a href="<?php echo e($item->url); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a></li>
+                        <li><a href="<?php echo e($itemHasDesignLanding ? route('public.menu-designs.show', $item->id) : $item->url); ?>" class="header-link" style="font-weight: 600; color: #ffffff; font-size: 1.05rem; letter-spacing: 0.5px; padding: 0.5rem 1.2rem; transition: background 0.2s, color 0.2s;"><?php echo e($displayTitle); ?></a></li>
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -1075,6 +1080,7 @@
                         'DOCUMENTOS' => 'DOCUMENTOS',
                         default => $item->title,
                     };
+                    $itemHasDesignLanding = $item->hasOwnDesignPresentation();
                 ?>
                 <?php if($titleKey === 'ACERCA'): ?>
                     <?php continue; ?>
@@ -1136,10 +1142,10 @@
                             <summary class="mobile-menu__summary"><?php echo e($displayTitle); ?></summary>
                             <ul class="mobile-menu__children">
                                 <?php $__currentLoopData = $campusItems ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $campusItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <li><a href="<?php echo e($campusItem->url ?? '#'); ?>"<?php if($campusItem->is_external): ?> target="_blank" rel="noopener"<?php endif; ?>><?php echo e($campusItem->title); ?></a></li>
+                                    <li><a href="<?php echo e($campusItem->url ?? '#'); ?>" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;"><?php echo e($campusItem->title); ?></a></li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <?php $__currentLoopData = $vidaEstudiantilItems ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vidaItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <li><a href="<?php echo e($vidaItem->url ?? '#'); ?>"><?php echo e($vidaItem->title); ?></a></li>
+                                    <li><a href="<?php echo e($vidaItem->url ?? '#'); ?>" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;"><?php echo e($vidaItem->title); ?></a></li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </details>
@@ -1224,7 +1230,7 @@
                         </details>
                     </li>
                 <?php else: ?>
-                    <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0): ?>
+                    <?php if($item->childrenRecursive && $item->childrenRecursive->count() > 0 && !$itemHasDesignLanding): ?>
                         <li class="mobile-menu__item">
                             <details>
                                 <summary class="mobile-menu__summary"><?php echo e($displayTitle); ?></summary>
@@ -1234,7 +1240,7 @@
                             </details>
                         </li>
                     <?php else: ?>
-                        <li class="mobile-menu__item"><a href="<?php echo e($item->url); ?>"><?php echo e($displayTitle); ?></a></li>
+                        <li class="mobile-menu__item"><a href="<?php echo e($itemHasDesignLanding ? route('public.menu-designs.show', $item->id) : $item->url); ?>"><?php echo e($displayTitle); ?></a></li>
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

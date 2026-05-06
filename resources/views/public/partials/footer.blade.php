@@ -225,7 +225,7 @@
             <p class="ftr-col-title">Recursos</p>
             <ul class="ftr-links">
                 <li><a href="https://chat.whatsapp.com/DpBz7BKBL7sEPwXpJ1xnnb?mode=hqrc" target="_blank" rel="noopener">Admisión SNNA</a></li>
-                <li><a href="{{ url('/transparency/reglamentos') }}">Reglamentos</a></li>
+                <li><a href="{{ url('/menu-designs/64') }}">Reglamentos</a></li>
                 <li><a href="{{ url('/campus') }}">Campus Virtual</a></li>
             </ul>
             <div style="margin-top:1.5rem;">

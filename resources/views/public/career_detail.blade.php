@@ -119,6 +119,9 @@
                     @endif
 
                     @if($pdfUrl)
+                        <div class="career-side-label-block">
+                            <span>Malla Curricular</span>
+                        </div>
                         <a href="{{ $pdfUrl }}" target="_blank" rel="noopener noreferrer" class="career-pdf-cta" aria-label="Abrir malla curricular en PDF">
                             <span class="career-pdf-cta__icon" aria-hidden="true">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" width="16" height="16">
@@ -366,6 +369,20 @@
         font-weight: 700;
         text-decoration: none;
         word-break: break-word;
+    }
+
+    .career-side-label-block {
+        margin: 0.1rem 0 0.05rem;
+        padding: 0 0.1rem;
+    }
+
+    .career-side-label-block span {
+        display: block;
+        color: var(--cd-primary);
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
     .career-pdf-cta {

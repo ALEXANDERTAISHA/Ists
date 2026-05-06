@@ -41,7 +41,7 @@
         <?php endif; ?>
         <li class="mobile-tree-item mobile-tree-level-<?php echo e($level); ?>">
             <?php if($hasCustomUrl): ?>
-                <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link"><?php echo e($node->career->name); ?></a>
+                <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link" <?php if($isServicios): ?> target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" <?php endif; ?>><?php echo e($node->career->name); ?></a>
             <?php else: ?>
                 <a href="<?php echo e(route('career.show', $node->career->slug)); ?>" class="mobile-tree-link"><?php echo e($node->career->name); ?></a>
             <?php endif; ?>
@@ -53,7 +53,7 @@
             <details class="mobile-tree-details">
                 <summary class="mobile-menu__summary mobile-tree-summary">
                     <?php if($hasCustomUrl): ?>
-                        <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link" style="display:inline;"><?php echo e($node->title); ?></a>
+                        <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link" style="display:inline;" <?php if($isServicios): ?> target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" <?php endif; ?>><?php echo e($node->title); ?></a>
                     <?php elseif($node->career && trim($node->title) === trim($node->career->name)): ?>
                         <a href="<?php echo e(route('career.show', $node->career->slug)); ?>" class="mobile-tree-link" style="display:inline;"><?php echo e($node->title); ?></a>
                     <?php elseif($shouldOpenFolderView || $node->hasOwnDesignPresentation()): ?>
@@ -75,7 +75,7 @@
     <?php elseif(!$node->career): ?>
         <li class="mobile-tree-item mobile-tree-level-<?php echo e($level); ?>">
             <?php if($hasCustomUrl): ?>
-                <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link"><?php echo e($node->title); ?></a>
+                <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link" target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;"><?php echo e($node->title); ?></a>
             <?php elseif($node->pdf_file): ?>
                 <a href="<?php echo e(asset($node->pdf_file)); ?>" class="mobile-tree-link" target="_blank" rel="noopener"><?php echo e($node->title); ?></a>
             <?php elseif($node->hasOwnDesignPresentation()): ?>
@@ -87,7 +87,7 @@
     <?php elseif($node->career && trim($node->title) === trim($node->career->name)): ?>
         <li class="mobile-tree-item mobile-tree-level-<?php echo e($level); ?>">
             <?php if($hasCustomUrl): ?>
-                <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link"><?php echo e($node->title); ?></a>
+                <a href="<?php echo e($nodeHref); ?>" class="mobile-tree-link" <?php if($isServicios): ?> target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" <?php endif; ?>><?php echo e($node->title); ?></a>
             <?php else: ?>
                 <a href="<?php echo e(route('career.show', $node->career->slug)); ?>" class="mobile-tree-link"><?php echo e($node->title); ?></a>
             <?php endif; ?>

@@ -37,7 +37,7 @@
             ?>
 
             <?php if($hasCustomUrl): ?>
-                <a href="<?php echo e($nodeHref); ?>" class="menu-tree-link"><?php echo e($node->title); ?></a>
+                <a href="<?php echo e($nodeHref); ?>" class="menu-tree-link" <?php if($isServicios): ?> target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" <?php endif; ?>><?php echo e($node->title); ?></a>
             <?php elseif($hasChildren && !(Str::lower(trim($node->title)) === 'reglamento')): ?>
                 <?php if($level === 0): ?>
                     <?php if($shouldOpenFolderView): ?>
@@ -80,7 +80,7 @@
                     <li class="menu-tree-item menu-tree-level-<?php echo e($level + 1); ?>">
                         <div class="menu-tree-row">
                             <?php if($childHasCustomUrl): ?>
-                                <a href="<?php echo e($childHref); ?>" class="menu-tree-link"><?php echo e($child->title); ?></a>
+                                <a href="<?php echo e($childHref); ?>" class="menu-tree-link" <?php if($isServicios): ?> target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" <?php endif; ?>><?php echo e($child->title); ?></a>
                             <?php elseif($child->career && $child->career->slug): ?>
                                 <a href="<?php echo e(route('career.show', $child->career->slug)); ?>" class="menu-tree-link"><?php echo e($child->title); ?></a>
                             <?php elseif($child->pdf_file): ?>
@@ -105,7 +105,7 @@
             <li class="menu-tree-item menu-tree-level-<?php echo e($level + 1); ?>">
                 <div class="menu-tree-row">
                     <?php if($hasCustomUrl): ?>
-                        <a href="<?php echo e($nodeHref); ?>" class="menu-tree-link"><?php echo e($node->career->name); ?></a>
+                        <a href="<?php echo e($nodeHref); ?>" class="menu-tree-link" <?php if($isServicios): ?> target="_blank" rel="noopener" onclick="window.open(this.href, '_blank', 'noopener'); return false;" <?php endif; ?>><?php echo e($node->career->name); ?></a>
                     <?php elseif($node->career && $node->career->slug): ?>
                         <a href="<?php echo e(route('career.show', $node->career->slug)); ?>" class="menu-tree-link"><?php echo e($node->career->name); ?></a>
                     <?php else: ?>

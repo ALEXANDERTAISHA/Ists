@@ -242,8 +242,8 @@
         .premium-folder-grid,
         .premium-pdf-row {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.1rem;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.85rem;
         }
 
         .premium-folder-grid-item,
@@ -255,7 +255,6 @@
         .premium-pdf-card {
             position: relative;
             display: flex;
-            min-height: 226px;
             height: 100%;
             flex-direction: column;
             overflow: hidden;
@@ -268,8 +267,9 @@
         }
 
         .premium-folder-card {
+            min-height: 192px;
             justify-content: space-between;
-            padding: 1.25rem;
+            padding: 1rem;
             background: linear-gradient(145deg, #fffaf0 0%, #ffffff 58%, #ecfeff 100%);
         }
 
@@ -282,8 +282,8 @@
 
         .folder-icon {
             display: inline-flex;
-            width: 58px;
-            height: 58px;
+            width: 46px;
+            height: 46px;
             align-items: center;
             justify-content: center;
             border-radius: 8px;
@@ -293,15 +293,15 @@
         }
 
         .folder-svg {
-            width: 44px;
-            height: 36px;
+            width: 34px;
+            height: 28px;
         }
 
         .folder-title {
             color: #9a3412;
-            font-size: 1.25rem;
+            font-size: 0.9rem;
             font-weight: 900;
-            line-height: 1.18;
+            line-height: 1.22;
             word-break: break-word;
         }
 
@@ -311,15 +311,18 @@
             background: rgba(254, 243, 199, 0.95);
             border: 1px solid rgba(251, 191, 36, 0.38);
             border-radius: 999px;
-            padding: 0.42rem 0.75rem;
-            font-size: 0.9rem;
+            padding: 0.34rem 0.64rem;
+            font-size: 0.68rem;
             font-weight: 800;
         }
 
         .premium-pdf-card {
             cursor: pointer;
-            padding: 1.25rem;
-            gap: 0.8rem;
+            width: 86%;
+            min-height: 146px;
+            margin: 0 auto;
+            padding: 0.7rem;
+            gap: 0.38rem;
             background:
                 linear-gradient(180deg, rgba(255, 248, 248, 0.95) 0%, rgba(255, 255, 255, 0.98) 28%, rgba(255, 245, 245, 0.96) 100%);
             border: 1px solid rgba(239, 68, 68, 0.16);
@@ -349,7 +352,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0.7rem;
+            gap: 0.45rem;
         }
 
         .pdf-badge {
@@ -359,24 +362,24 @@
             color: #fff;
             background: linear-gradient(90deg, #d92d20, #ef4444);
             border-radius: 999px;
-            padding: 0.44rem 0.92rem;
-            font-size: 0.78rem;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.56rem;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 0.08em;
             box-shadow: 0 10px 22px rgba(239, 68, 68, 0.18);
         }
 
         .pdf-icon {
             display: inline-flex;
-            width: 48px;
-            height: 48px;
+            width: 32px;
+            height: 32px;
             align-items: center;
             justify-content: center;
             color: #c2410c;
             background: linear-gradient(180deg, rgba(255, 237, 237, 0.96), rgba(255, 245, 245, 0.98));
             border: 1px solid rgba(248, 113, 113, 0.22);
             border-radius: 8px;
-            font-size: 1.35rem;
+            font-size: 0.88rem;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
@@ -393,26 +396,26 @@
 
         .pdf-title {
             color: #111827;
-            font-size: 1.22rem;
+            font-size: 0.78rem;
             font-weight: 900;
-            line-height: 1.22;
+            line-height: 1.2;
             text-align: left;
             word-break: break-word;
         }
 
         .pdf-desc {
             color: #475569;
-            font-size: 0.95rem;
-            line-height: 1.55;
+            font-size: 0.68rem;
+            line-height: 1.35;
             font-weight: 500;
         }
 
         .pdf-date {
             margin-top: auto;
             color: #9f1239;
-            font-size: 0.82rem;
+            font-size: 0.58rem;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
         }
 
@@ -424,14 +427,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.55rem;
+            gap: 0.45rem;
             width: 100%;
-            margin-top: 0.3rem;
+            margin-top: 0.2rem;
             color: #fff;
             background: linear-gradient(90deg, #b45353, #d97777 52%, #e79a9a);
             border-radius: 8px;
-            padding: 0.82rem 1rem;
-            font-size: 0.96rem;
+            padding: 0.5rem 0.7rem;
+            font-size: 0.66rem;
             font-weight: 900;
             letter-spacing: 0.2px;
             text-decoration: none;
@@ -684,9 +687,13 @@
                 flex-direction: column;
             }
 
-            .premium-folder-card,
+            .premium-folder-card {
+                min-height: 176px;
+            }
+
             .premium-pdf-card {
-                min-height: 196px;
+                width: 100%;
+                min-height: 142px;
             }
 
             #pdfModalBackdrop {

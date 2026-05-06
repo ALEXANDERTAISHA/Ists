@@ -1,5 +1,5 @@
-<style>
-/* ── Footer Premium ── */
+﻿<style>
+/* â”€â”€ Footer Premium â”€â”€ */
 .ftr {
     background: #0c1a2e;
     color: rgba(255,255,255,0.72);
@@ -21,14 +21,15 @@
     display:flex; align-items:center; gap:0.75rem;
     margin-bottom:1rem;
 }
-.ftr-brand-icon {
-    width:44px; height:44px;
-    background: linear-gradient(135deg,#00796b,#1abc9c);
-    border-radius:12px;
-    display:flex; align-items:center; justify-content:center;
-    flex-shrink:0;
+.ftr-brand-logo-img {
+    height: 58px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
-.ftr-brand-icon svg { color:#fff; }
+
 .ftr-brand-name {
     font-size:0.95rem; font-weight:800;
     color:#fff; line-height:1.2; letter-spacing:-0.3px;
@@ -152,6 +153,17 @@
 @media(max-width:640px) {
     .ftr-main { grid-template-columns: 1fr; gap:2rem; padding-top:2.5rem; }
     .ftr-bottom { flex-direction:column; text-align:center; gap:0.25rem; }
+    .ftr-brand-logo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+    }
+    .ftr-brand-logo-img {
+        width: 138px;
+        min-width: 138px;
+        max-width: 138px;
+        height: 54px;
+    }
     .back-to-top {
         right: 0.85rem;
         bottom: 0.85rem;
@@ -161,6 +173,11 @@
 }
 </style>
 
+<?php
+    $footerLogoPath = \App\Models\Setting::where('key', 'header_logo_path')->value('value');
+    $footerLogoUrl = !empty($footerLogoPath) ? asset(ltrim($footerLogoPath, '/')) : asset('assets/images/logoists.png');
+?>
+
 <footer class="ftr">
     <div class="ftr-top-bar"></div>
 
@@ -168,13 +185,9 @@
         
         <div>
             <div class="ftr-brand-logo">
-                <div class="ftr-brand-icon">
-                    <img src="<?php echo e(asset('assets/images/logoists.png')); ?>" alt="Logo ISTS" style="height: 48px; width: 48px; min-width:48px; min-height:48px; max-width:48px; max-height:48px; border-radius:10px; background:#fff; object-fit:contain;">
-                </div>
-                <div>
-                    <div class="ftr-brand-name">ISTS Sucúa</div>
-                    <div class="ftr-brand-tagline">Instituto Superior Tecnológico</div>
-                </div>
+                <a href="<?php echo e(url('/')); ?>" aria-label="Ir a la página principal" style="display:inline-flex; align-items:center;">
+                    <img src="<?php echo e($footerLogoUrl); ?>" alt="Logo ISTS" class="ftr-brand-logo-img">
+                </a>
             </div>
             <p class="ftr-brand-desc">
                 Formando profesionales de excelencia para el desarrollo tecnológico y social de la Amazonía ecuatoriana desde 1995.
@@ -212,7 +225,7 @@
             <p class="ftr-col-title">Recursos</p>
             <ul class="ftr-links">
                 <li><a href="https://chat.whatsapp.com/DpBz7BKBL7sEPwXpJ1xnnb?mode=hqrc" target="_blank" rel="noopener">Admisión SNNA</a></li>
-                <li><a href="<?php echo e(url('/transparency/reglamentos')); ?>">Reglamentos</a></li>
+                <li><a href="<?php echo e(url('/menu-designs/64')); ?>">Reglamentos</a></li>
                 <li><a href="<?php echo e(url('/campus')); ?>">Campus Virtual</a></li>
             </ul>
             <div style="margin-top:1.5rem;">
@@ -275,7 +288,10 @@
     </div>
 </footer>
 
-<button id="back-to-top" class="back-to-top" aria-label="Volver arriba">↑</button>
+<button id="back-to-top" class="back-to-top" aria-label="Volver arriba">&uarr;</button>
 
 <script src="<?php echo e(asset(ltrim(($base ?? '') . '/js/main.js', '/'))); ?>"></script>
+
+
+
 <?php /**PATH C:\workspace\ists\resources\views/public/partials/footer.blade.php ENDPATH**/ ?>

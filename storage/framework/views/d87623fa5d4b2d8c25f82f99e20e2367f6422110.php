@@ -236,6 +236,7 @@ body {
     padding: 0.48rem 0.72rem 0.48rem 0.55rem;
     font-size: 0.84rem;
     gap: 0.48rem;
+    cursor: pointer;
 }
 .autoridad-card .pdf-pro-link::before {
     min-width: 38px;

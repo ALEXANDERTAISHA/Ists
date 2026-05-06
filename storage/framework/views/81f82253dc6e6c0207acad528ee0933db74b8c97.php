@@ -1,23 +1,32 @@
 <?php
 use App\Models\AcademicCalendarEvent;
-$event = AcademicCalendarEvent::orderBy('start_date', 'asc')->whereDate('end_date', '>=', now())->first();
-?>
-<?php if($event): ?>
-    <div class="footer-calendar-card" style="background: #f9fafb; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 1rem; margin-top: 1.5rem;">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="font-size: 2rem; color: var(--color-primary);">📆</div>
-            <div>
-                <div style="font-weight: bold; color: var(--color-primary); font-size: 1.1rem;"><?php echo e($event->title); ?></div>
-                <div style="color: var(--color-secondary); font-size: 0.95rem;">
-                    <?php echo e(\Carbon\Carbon::parse($event->start_date)->format('d/m/Y')); ?> - <?php echo e(\Carbon\Carbon::parse($event->end_date)->format('d/m/Y')); ?>
 
-                </div>
-                <?php if($event->description): ?>
-                    <div style="color: #444; font-size: 0.95rem; margin-top: 0.3rem;"><?php echo e($event->description); ?></div>
-                <?php endif; ?>
-            </div>
+$event = AcademicCalendarEvent::orderBy('start_date', 'asc')
+    ->whereDate('end_date', '>=', now())
+    ->first();
+?>
+
+<?php if($event): ?>
+    <div style="margin-top: 0.35rem;">
+        <div style="font-weight: 700; color: rgba(255,255,255,0.92); font-size: 0.95rem; line-height: 1.45;">
+            <?php echo e($event->title); ?>
+
         </div>
-        <a href="<?php echo e(url('/calendario')); ?>" class="btn btn-primary mt-2" style="margin-top: 1rem; display: inline-block;">Ver Calendario Completo</a>
+        <div style="color: rgba(255,255,255,0.58); font-size: 0.84rem; margin-top: 0.15rem;">
+            <?php echo e(\Carbon\Carbon::parse($event->start_date)->format('d/m/Y')); ?> - <?php echo e(\Carbon\Carbon::parse($event->end_date)->format('d/m/Y')); ?>
+
+        </div>
+        <?php if($event->description): ?>
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 0.3rem; line-height: 1.6;">
+                <?php echo e(\Illuminate\Support\Str::limit(trim(strip_tags($event->description)), 90)); ?>
+
+            </div>
+        <?php endif; ?>
+        <div style="margin-top: 0.45rem;">
+            <a href="<?php echo e(url('/calendario')); ?>" style="color: #6ee7d8; text-decoration: none; font-size: 0.84rem; font-weight: 700;">
+                Ver calendario completo
+            </a>
+        </div>
     </div>
 <?php endif; ?>
 <?php /**PATH C:\workspace\ists\resources\views/public/partials/footer_calendar_card.blade.php ENDPATH**/ ?>
