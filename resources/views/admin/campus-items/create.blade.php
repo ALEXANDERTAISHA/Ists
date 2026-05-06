@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-12">
                     <label for="pdf_file" class="form-label">Archivo PDF</label>
-                    <input type="file" class="form-control @error('pdf_file') is-invalid @enderror" id="pdf_file" name="pdf_file" accept="application/pdf">
+                    <input type="file" class="form-control @error('pdf_file') is-invalid @enderror" id="pdf_file" name="pdf_file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                     @error('pdf_file')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     <small class="form-text text-muted">Puedes subir un archivo PDF (máx. 10MB)</small>
                 </div>

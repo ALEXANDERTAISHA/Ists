@@ -59,7 +59,7 @@
             <div class="col-md-6">
                 <div class="teachers-file-card teachers-file-card--pdf">
                     <label for="pdf" class="form-label teachers-label mb-2"><i class="bi bi-file-earmark-pdf-fill"></i> PDF (Currículum)</label>
-                    <input type="file" name="pdf" id="pdf" accept="application/pdf" class="form-control teachers-input">
+                    <input type="file" name="pdf" id="pdf" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control teachers-input">
                     @if($item->pdf_path)
                         <a href="{{ asset('storage/' . $item->pdf_path) }}" target="_blank" class="teachers-current-pdf">
                             <span class="teachers-current-pdf__icon"><i class="bi bi-file-earmark-pdf-fill"></i></span>

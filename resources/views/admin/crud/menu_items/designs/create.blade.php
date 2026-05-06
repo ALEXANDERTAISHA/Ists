@@ -37,7 +37,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="pdf_files" class="form-label fw-bold">Subir PDFs (puedes seleccionar varios)</label>
-                    <input type="file" name="pdf_files[]" id="pdf_files" class="form-control form-control-lg" accept="application/pdf" multiple onchange="previewPDFs(event)">
+                    <input type="file" name="pdf_files[]" id="pdf_files" class="form-control form-control-lg" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onchange="previewPDFs(event)">
                     <div class="form-text">Opcional. Puedes guardar el diseño aunque no subas PDFs.</div>
                 </div>
                 <div class="mb-3 form-check form-switch">

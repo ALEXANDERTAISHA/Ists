@@ -27,7 +27,7 @@ class MenuItemDesignController extends Controller
             'main_description_2' => 'nullable|string',
             'main_image' => 'nullable|image|max:4096',
             'remove_main_image' => 'nullable|boolean',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:20480',
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -93,7 +93,7 @@ class MenuItemDesignController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'pdf_files' => 'nullable|array',
-            'pdf_files.*' => 'nullable|file|mimes:pdf|max:20480',
+            'pdf_files.*' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
             'parent_id' => 'required|exists:menu_items,id',
             'main_description' => 'nullable|string',
             'main_description_2' => 'nullable|string',

@@ -202,7 +202,7 @@ class ContentController extends Controller
             "description" => "nullable|string",
             "content"   => "nullable|string",
             "image_url" => "nullable|image|mimes:jpeg,png,jpg,gif,svg",
-            "file_url"  => "nullable|file|mimes:pdf",
+            "file_url"  => "nullable|file|mimes:pdf,doc,docx",
             "url"       => "nullable|url",
             "is_external" => "nullable|boolean",
             "status"    => "nullable|in:published,draft,archived",
@@ -343,7 +343,7 @@ class ContentController extends Controller
             "parent_id" => "nullable|exists:contents,id",
             "image_file" => "nullable|file|image",
             "pdf_files" => "nullable|array",
-            "pdf_files.*" => "nullable|file|mimes:pdf",
+            "pdf_files.*" => "nullable|file|mimes:pdf,doc,docx",
             "external_pdf_url" => "nullable|url",
             "featured" => "nullable|boolean",
         ];

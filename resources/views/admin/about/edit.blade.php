@@ -60,7 +60,7 @@
                     @else
                         <span class="about-no-pdf">Sin PDF cargado</span>
                     @endif
-                    <input type="file" name="file_url" id="file_url" class="form-control-file" accept="application/pdf">
+                    <input type="file" name="file_url" id="file_url" class="form-control-file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                     <small class="form-text text-muted">Sube un nuevo PDF para reemplazar el actual.</small>
                 </div>
 

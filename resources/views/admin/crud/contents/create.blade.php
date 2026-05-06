@@ -137,7 +137,7 @@
 
                             <div class="form-group">
                                 <label for="file_url">Archivo PDF o Enlace externo</label>
-                                <input type="file" name="file_url" id="file_url" class="form-control" accept="application/pdf">
+                                <input type="file" name="file_url" id="file_url" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                                 <input type="url" name="url" id="url" class="form-control" value="{{ old('url') }}" placeholder="https://example.com (opcional)">
                             </div>
 

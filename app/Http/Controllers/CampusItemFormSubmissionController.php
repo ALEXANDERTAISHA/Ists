@@ -24,7 +24,7 @@ class CampusItemFormSubmissionController extends Controller
             'ciclo' => 'required|string|max:50',
             'nivel' => 'required|string|max:50',
             'institucion' => 'required|string|max:255',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:10240',
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
         ]);
 
         $pdfPath = null;

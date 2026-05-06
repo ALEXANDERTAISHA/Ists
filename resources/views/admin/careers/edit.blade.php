@@ -183,7 +183,7 @@
                                    class="form-control @error('curriculum_pdf') is-invalid @enderror"
                                    id="curriculum_pdf"
                                    name="curriculum_pdf"
-                                   accept="application/pdf">
+                                   accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                             <small class="text-muted">PDF. Máximo 5MB. Dejar vacío para mantener el PDF actual</small>
                             @error('curriculum_pdf')
                                 <div class="invalid-feedback">{{ $message }}</div>

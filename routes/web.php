@@ -4,6 +4,7 @@ use App\Http\Controllers\ChatbotController as PublicChatbotController;
 use App\Http\Controllers\Admin\ChatbotController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\PublicMediaController;
 Route::post('/chatbot/send', [PublicChatbotController::class, 'send'])->name('chatbot.send');
 
 // Ruta para crear docentes desde la gestión de Acerca (si se requiere fuera del resource)
@@ -58,6 +59,12 @@ use App\Http\Controllers\MenuItemPdfController;
 
 // Public routes
 Route::get("/", [PublicController::class, "home"])->name("home");
+Route::get('/media/{path}', [PublicMediaController::class, 'show'])
+    ->where('path', '.*')
+    ->name('public.media');
+Route::get('/storage/{path}', [PublicMediaController::class, 'show'])
+    ->where('path', '.*')
+    ->name('public.storage');
 Route::get("/ajax/content/mision-vision", [
     PublicController::class,
     "getMisionVisionAjax",

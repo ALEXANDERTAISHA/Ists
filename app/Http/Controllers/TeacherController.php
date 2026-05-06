@@ -38,7 +38,7 @@ class TeacherController extends Controller
             "department" => "nullable|string|max:255",
             "bio" => "nullable|string",
             "image" => "nullable|image",
-            "pdf" => "nullable|mimes:pdf", // 10MB Max
+            "pdf" => "nullable|mimes:pdf,doc,docx", // 10MB Max
             "order" => "nullable|integer",
         ]);
 
@@ -87,7 +87,7 @@ class TeacherController extends Controller
             "department" => "nullable|string|max:255",
             "bio" => "nullable|string",
             "image" => "nullable|image",
-            "pdf" => "nullable|mimes:pdf", // 10MB Max
+            "pdf" => "nullable|mimes:pdf,doc,docx", // 10MB Max
             "order" => "nullable|integer",
         ]);
 

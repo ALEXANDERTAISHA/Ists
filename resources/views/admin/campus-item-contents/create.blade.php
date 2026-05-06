@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="pdf_file" class="form-label">Archivo PDF</label>
-            <input type="file" name="pdf_file" id="pdf_file" class="form-control" accept="application/pdf">
+            <input type="file" name="pdf_file" id="pdf_file" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
         </div>
         <div class="mb-3">
             <label for="image_file" class="form-label">Imagen (local) <span class="text-muted">(opcional)</span></label>

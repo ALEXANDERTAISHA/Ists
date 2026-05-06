@@ -54,7 +54,7 @@
         </div>
         <div class="form-group">
             <label for="files">Archivos adjuntos (PDF, reglamentos, etc.)</label>
-            <input type="file" name="files[]" id="files" class="form-control-file" accept="application/pdf" multiple>
+            <input type="file" name="files[]" id="files" class="form-control-file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple>
             <small class="form-text text-muted">Puedes subir varios archivos PDF.</small>
         </div>
         <div class="form-group">

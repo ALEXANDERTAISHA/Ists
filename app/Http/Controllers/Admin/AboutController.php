@@ -47,7 +47,7 @@ class AboutController extends Controller
             "title" => "required|string|max:255",
             "body" => "nullable|string",
             "image_url" => "nullable|image|mimes:jpeg,png,jpg,gif,svg",
-            "file_url" => "nullable|mimes:pdf|max:10240", // Max 10MB
+            "file_url" => "nullable|mimes:pdf,doc,docx|max:10240", // Max 10MB
         ]);
 
         $contentModel = new Content();
@@ -133,7 +133,7 @@ class AboutController extends Controller
             "title" => "required|string|max:255",
             "body" => "nullable|string",
             "image_url" => "nullable|image|mimes:jpeg,png,jpg,gif,svg",
-            "file_url" => "nullable|mimes:pdf|max:10240",
+            "file_url" => "nullable|mimes:pdf,doc,docx|max:10240",
         ]);
 
         $contentModel = new Content();

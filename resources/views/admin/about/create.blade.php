@@ -43,7 +43,7 @@
                 <div class="form-group about-pdf-group">
                     <label for="file_url" class="about-pdf-label"><i class="bi bi-file-earmark-pdf-fill me-1"></i> Archivo PDF (Opcional)</label>
                     <span class="about-no-pdf">Sin PDF cargado</span>
-                    <input type="file" name="file_url" id="file_url" class="form-control-file" accept="application/pdf">
+                    <input type="file" name="file_url" id="file_url" class="form-control-file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                     <small class="form-text text-muted">Sube un PDF institucional en formato claro y legible.</small>
                 </div>
 

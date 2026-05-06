@@ -37,7 +37,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="pdf_file" class="form-label fw-bold">Reemplazar PDF (opcional)</label>
-                    <input type="file" name="pdf_file" id="pdf_file" class="form-control form-control-lg" accept="application/pdf">
+                    <input type="file" name="pdf_file" id="pdf_file" class="form-control form-control-lg" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                     @if($pdf->pdf_path)
                         <div class="mt-2">
                             <a href="{{ asset('storage/' . ltrim($pdf->pdf_path, '/')) }}" target="_blank">Ver PDF actual</a>

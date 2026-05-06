@@ -30,7 +30,7 @@
 
                     <div class="col-12 col-md-6">
                         <label for="pdf_file" class="form-label" style="font-weight:700;">Archivo PDF (opcional)</label>
-                        <input type="file" name="pdf_file" id="pdf_file" class="form-control" accept="application/pdf">
+                        <input type="file" name="pdf_file" id="pdf_file" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                         <small style="color:#94a3b8;">Puedes adjuntar un archivo PDF para este menú.</small>
                     </div>
 

@@ -45,7 +45,7 @@ class AutoridadController extends Controller
             "categoria" => "nullable|string|max:255",
             "biografia" => "nullable|string",
             "foto_path" => "nullable|image|mimes:jpeg,png,jpg,gif,svg",
-            "pdf_path" => "nullable|mimes:pdf|max:10240", // Max 10MB
+            "pdf_path" => "nullable|mimes:pdf,doc,docx|max:10240", // Max 10MB
             "orden" => "required|integer",
         ]);
 
@@ -117,7 +117,7 @@ class AutoridadController extends Controller
             "categoria" => "nullable|string|max:255",
             "biografia" => "nullable|string",
             "foto_path" => "nullable|image|mimes:jpeg,png,jpg,gif,svg",
-            "pdf_path" => "nullable|mimes:pdf|max:10240",
+            "pdf_path" => "nullable|mimes:pdf,doc,docx|max:10240",
             "orden" => "required|integer",
         ]);
 

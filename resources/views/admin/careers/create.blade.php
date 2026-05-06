@@ -143,7 +143,7 @@
                                    class="form-control @error('curriculum_pdf') is-invalid @enderror"
                                    id="curriculum_pdf"
                                    name="curriculum_pdf"
-                                   accept="application/pdf">
+                                   accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                             <small class="text-muted">PDF. Máximo 5MB</small>
                             <div class="mt-2">
                                 <span class="text-info small">La opción para ver o descargar el PDF estará disponible después de crear la carrera.</span>

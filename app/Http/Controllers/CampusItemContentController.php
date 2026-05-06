@@ -24,7 +24,7 @@ class CampusItemContentController extends Controller
             'date' => 'nullable|date',
             'description' => 'nullable|string',
             'external_url' => 'nullable|string|max:255',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:10240',
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
             'contact_name' => 'nullable|string|max:255',
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:50',

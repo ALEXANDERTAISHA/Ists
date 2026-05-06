@@ -30,7 +30,7 @@ class EventController extends Controller
             'date' => 'required|date',
             'place' => 'nullable|string|max:255',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
-            'files.*' => 'nullable|mimes:pdf',
+            'files.*' => 'nullable|mimes:pdf,doc,docx',
             'status' => 'required|in:published,draft',
         ]);
 
@@ -91,7 +91,7 @@ class EventController extends Controller
             'date' => 'required|date',
             'place' => 'nullable|string|max:255',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
-            'files.*' => 'nullable|mimes:pdf',
+            'files.*' => 'nullable|mimes:pdf,doc,docx',
             'status' => 'required|in:published,draft',
         ]);
 

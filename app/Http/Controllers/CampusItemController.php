@@ -40,7 +40,7 @@ class CampusItemController extends Controller
             'order' => 'required|integer|min:0',
             'is_active' => 'boolean',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'pdf_file' => 'nullable|file|mimes:pdf',
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx',
             'schedule' => 'nullable|string|max:255',
             'location' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',

@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('content')
 <div class="admin-content">
@@ -179,7 +179,7 @@
                            class="form-control @error('pdf_file') is-invalid @enderror" 
                            id="pdf_file" 
                            name="pdf_file" 
-                           accept="application/pdf">
+                           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                     @error('pdf_file')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

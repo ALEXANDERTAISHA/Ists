@@ -58,7 +58,7 @@
                     <div class="custom-file-upload">
                         <label for="pdf_path" class="btn btn-info">Seleccionar PDF</label>
                         <span id="pdf_path_name" style="margin-left: 10px;">No se ha seleccionado ningún PDF.</span>
-                        <input type="file" name="pdf_path" id="pdf_path" accept="application/pdf" style="display: none;" onchange="document.getElementById('pdf_path_name').textContent = this.files.length > 0 ? this.files[0].name : 'No se ha seleccionado ningún PDF.';">
+                        <input type="file" name="pdf_path" id="pdf_path" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display: none;" onchange="document.getElementById('pdf_path_name').textContent = this.files.length > 0 ? this.files[0].name : 'No se ha seleccionado ningún PDF.';">
                     </div>
                 </div>
 

@@ -36,7 +36,7 @@ class CareerController extends Controller
             "coordinator_email" => "nullable|email|max:255",
             "image" => "nullable|image|mimes:jpeg,jpg,png,webp",
             "image_2" => "nullable|image|mimes:jpeg,jpg,png,webp",
-            "curriculum_pdf" => "nullable|file|mimes:pdf",
+            "curriculum_pdf" => "nullable|file|mimes:pdf,doc,docx",
             "sort_order" => "nullable|integer",
             "cover_image" => "nullable|image|mimes:jpeg,jpg,png,webp",
         ]);
@@ -119,7 +119,7 @@ class CareerController extends Controller
                 "coordinator_email" => "nullable|email|max:255",
                 "image" => "nullable|image|mimes:jpeg,jpg,png,webp",
                 "image_2" => "nullable|image|mimes:jpeg,jpg,png,webp",
-                "curriculum_pdf" => "nullable|file|mimes:pdf",
+                "curriculum_pdf" => "nullable|file|mimes:pdf,doc,docx",
                 "sort_order" => "nullable|integer",
                 "cover_image" => "nullable|image|mimes:jpeg,jpg,png,webp",
             ]);

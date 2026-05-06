@@ -69,7 +69,7 @@
                 @endforeach
             </ul>
             <label for="files">Agregar nuevos archivos (PDF)</label>
-            <input type="file" name="files[]" id="files" class="form-control-file" accept="application/pdf" multiple>
+            <input type="file" name="files[]" id="files" class="form-control-file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple>
         </div>
         <div class="form-group">
             <label>Enlaces actuales</label>

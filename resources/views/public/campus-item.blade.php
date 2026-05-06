@@ -114,7 +114,7 @@
                                                 </div>
                                                 <div class="mb-2">
                                                     <label class="form-label">Cargar PDF (opcional)</label>
-                                                    <input type="file" name="pdf_file" class="form-control" accept="application/pdf">
+                                                    <input type="file" name="pdf_file" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Enviar formulario</button>
                                             </form>

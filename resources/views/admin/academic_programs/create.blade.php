@@ -26,7 +26,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="document" class="form-label">Documento PDF informativo</label>
-                    <input type="file" name="document" id="document" class="form-control" accept="application/pdf">
+                    <input type="file" name="document" id="document" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">

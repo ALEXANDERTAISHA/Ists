@@ -32,7 +32,7 @@
                             <a href="{{ asset('storage/' . $academicProgram->document) }}" target="_blank" class="pdf-pro-link">Ver PDF actual</a>
                         </div>
                     @endif
-                    <input type="file" name="document" id="document" class="form-control" accept="application/pdf">
+                    <input type="file" name="document" id="document" class="form-control" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
