@@ -47,6 +47,7 @@ class PublicFile
 
         $publicCandidates = [
             public_path($path),
+            public_path('storage/' . $storagePath),
             public_path($storagePath),
         ];
 
@@ -95,8 +96,11 @@ class PublicFile
     public static function normalize(string $value): string
     {
         $path = str_replace('\\', '/', trim($value));
+        $path = ltrim($path, '/');
 
-        return ltrim($path, '/');
+        return str_starts_with($path, 'public/storage/')
+            ? substr($path, strlen('public/'))
+            : $path;
     }
 
     public static function withoutStoragePrefix(string $path): string

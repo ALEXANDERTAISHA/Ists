@@ -457,16 +457,14 @@
                     @foreach($careers as $career)
                         @php
                             $meta   = $careerMeta[$career->slug] ?? $defaultMeta;
-                            $img1Ok = $career->image_path  && \App\Support\PublicFile::path($career->image_path);
-                            $img2Ok = $career->image_path_2 && \App\Support\PublicFile::path($career->image_path_2);
-                            $hasImg = $img1Ok || $img2Ok;
-                            $imgSrc = $img1Ok ? \App\Support\PublicFile::url($career->image_path) : ($img2Ok ? \App\Support\PublicFile::url($career->image_path_2) : null);
+                            $imgPath = $career->image_path ?: $career->image_path_2;
+                            $imgSrc = $imgPath ? \App\Support\PublicFile::url($imgPath) : null;
                         @endphp
                         <a href="{{ route('career.show', $career->slug) }}" class="hc-card" style="--hc-grad:{{ $meta['grad'] }};--hc-glow:{{ $meta['glow'] }};">
                             {{-- Visual area --}}
                             <div class="hc-card-visual">
-                                @if($hasImg)
-                                    <img src="{{ $imgSrc }}" alt="{{ $career->name }}" class="hc-card-img">
+                                @if($imgSrc)
+                                    <img src="{{ $imgSrc }}" alt="{{ $career->name }}" class="hc-card-img" onerror="this.remove()">
                                 @endif
                                 <div class="hc-card-overlay" style="background:{{ $meta['grad'] }};"></div>
                                 <div class="hc-card-icon-wrap">
