@@ -151,23 +151,6 @@ body {
     border-color: rgba(0, 121, 107, 0.28);
     box-shadow: 0 14px 34px rgba(0, 121, 107, 0.11), 0 1.5px 4px rgba(0,0,0,0.04);
 }
-.autoridad-card--rector::before {
-    content: 'MÁXIMA AUTORIDAD';
-    position: absolute;
-    top: 0.78rem;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0.2rem 0.56rem;
-    border-radius: 999px;
-    background: linear-gradient(135deg, rgba(0, 121, 107, 0.12), rgba(25, 118, 210, 0.12));
-    color: #00695c;
-    font-size: 0.58rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-}
-.autoridad-card--rector .autoridad-img-wrap {
-    margin-top: 0.92rem;
-}
 .autoridad-card:hover {
     box-shadow: 0 10px 28px rgba(44,62,80,0.14), 0 2px 8px rgba(0,0,0,0.07);
     transform: translateY(-4px) scale(1.012);
@@ -352,10 +335,6 @@ body {
     }
     .autoridad-card--rector {
         width: 100%;
-    }
-    .autoridad-card--rector::before {
-        top: 0.72rem;
-        font-size: 0.6rem;
     }
     .autoridad-card {
         padding: 1.05rem 0.8rem 0.95rem;
