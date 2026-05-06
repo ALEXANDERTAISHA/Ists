@@ -2153,6 +2153,12 @@ span.badge-inactive {
 }
 .page-link:hover { background: var(--admin-primary) !important; color: #fff !important; }
 .page-item.active .page-link { background: var(--admin-gradient) !important; border-color: transparent !important; }
+.admin-content nav[role="navigation"] svg,
+.admin-content .pagination svg {
+    width: 1rem !important;
+    height: 1rem !important;
+    display: inline-block;
+}
 
 /* ==================== FORMULARIO PROFESIONAL ==================== */
 .form-group {

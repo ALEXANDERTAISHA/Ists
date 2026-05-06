@@ -61,7 +61,7 @@
         </table>
     </div>
     <div class="mt-3">
-        {{ $inscripciones->withQueryString()->links() }}
+        {{ $inscripciones->withQueryString()->links('pagination::bootstrap-5') }}
     </div>
 </div>
 @endsection

@@ -28,5 +28,5 @@
     </table>
 </div>
 <div class="mt-3">
-    {{ $contacts->links() }}
+    {{ $contacts->links('pagination::bootstrap-5') }}
 </div>

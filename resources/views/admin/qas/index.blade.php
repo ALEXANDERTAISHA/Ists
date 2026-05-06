@@ -215,7 +215,7 @@
     </div>
 
         <!-- Paginación -->
-        {{ $items->links() }}
+        {{ $items->links('pagination::bootstrap-5') }}
     </div>
     
     <!-- Tab Content: Messages History -->

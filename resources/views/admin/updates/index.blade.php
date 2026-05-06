@@ -115,7 +115,7 @@
             </div>
 
             <div class="pagination-wrapper">
-                {{ $updates->links() }}
+                {{ $updates->links('pagination::bootstrap-5') }}
             </div>
         @endif
     </div>
