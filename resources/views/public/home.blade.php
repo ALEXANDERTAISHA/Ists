@@ -457,10 +457,10 @@
                     @foreach($careers as $career)
                         @php
                             $meta   = $careerMeta[$career->slug] ?? $defaultMeta;
-                            $img1Ok = $career->image_path  && file_exists(public_path('storage/' . $career->image_path));
-                            $img2Ok = $career->image_path_2 && file_exists(public_path('storage/' . $career->image_path_2));
+                            $img1Ok = $career->image_path  && \App\Support\PublicFile::path($career->image_path);
+                            $img2Ok = $career->image_path_2 && \App\Support\PublicFile::path($career->image_path_2);
                             $hasImg = $img1Ok || $img2Ok;
-                            $imgSrc = $img1Ok ? asset('storage/' . $career->image_path) : ($img2Ok ? asset('storage/' . $career->image_path_2) : null);
+                            $imgSrc = $img1Ok ? \App\Support\PublicFile::url($career->image_path) : ($img2Ok ? \App\Support\PublicFile::url($career->image_path_2) : null);
                         @endphp
                         <a href="{{ route('career.show', $career->slug) }}" class="hc-card" style="--hc-grad:{{ $meta['grad'] }};--hc-glow:{{ $meta['glow'] }};">
                             {{-- Visual area --}}
