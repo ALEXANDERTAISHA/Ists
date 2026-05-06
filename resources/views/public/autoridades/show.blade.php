@@ -26,7 +26,7 @@
                 <h4 class="text-muted">{{ $autoridad->cargo }}</h4>
                 <p class="text-muted">Categoría: {{ $autoridad->categoria }}</p>
                 @if($autoridad->pdf_path)
-                    <button type="button" class="pdf-pro-link js-open-authority-pdf" data-pdf-url="{{ asset('storage/' . $autoridad->pdf_path) }}" data-authority-name="{{ $autoridad->nombre }}">Ver Currículum PDF</button>
+                    <button type="button" class="pdf-pro-link js-open-authority-pdf" data-pdf-url="{{ $autoridad->pdf_url }}" data-authority-name="{{ $autoridad->nombre }}">Ver Currículum PDF</button>
                 @endif
             </div>
             <div class="col-md-8">

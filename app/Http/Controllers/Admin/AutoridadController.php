@@ -61,10 +61,9 @@ class AutoridadController extends Controller
         $data["slug"] = $this->generateUniqueSlug($request->nombre);
 
         if ($request->hasFile("foto_path")) {
-            $file = $request->file("foto_path");
-            $filename = uniqid() . '-' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/images'), $filename);
-            $data["foto_path"] = $filename;
+            $data["foto_path"] = $request
+                ->file("foto_path")
+                ->store("autoridades/fotos", "public");
         }
 
         if ($request->hasFile("pdf_path")) {
@@ -142,23 +141,16 @@ class AutoridadController extends Controller
 
         if ($request->hasFile("foto_path")) {
             // Eliminar foto anterior del disco público
-            if ($autoridad->foto_path && file_exists(public_path('uploads/images/' . $autoridad->foto_path))) {
-                unlink(public_path('uploads/images/' . $autoridad->foto_path));
-            }
-            $file = $request->file("foto_path");
-            $filename = uniqid() . '-' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/images'), $filename);
-            $data["foto_path"] = $filename;
+            $this->deleteAuthorityFile($autoridad->foto_path, "uploads/images");
+
+            $data["foto_path"] = $request
+                ->file("foto_path")
+                ->store("autoridades/fotos", "public");
         }
 
         if ($request->hasFile("pdf_path")) {
-            // Eliminar PDF anterior
-            if (
-                $autoridad->pdf_path &&
-                Storage::disk("public")->exists($autoridad->pdf_path)
-            ) {
-                Storage::disk("public")->delete($autoridad->pdf_path);
-            }
+            $this->deleteAuthorityFile($autoridad->pdf_path, "uploads/pdfs");
+
             $data["pdf_path"] = $request
                 ->file("pdf_path")
                 ->store("autoridades/pdfs", "public");
@@ -179,21 +171,8 @@ class AutoridadController extends Controller
      */
     public function destroy(Autoridad $autoridad)
     {
-        // Eliminar foto del almacenamiento
-        if (
-            $autoridad->foto_path &&
-            Storage::disk("public")->exists($autoridad->foto_path)
-        ) {
-            Storage::disk("public")->delete($autoridad->foto_path);
-        }
-
-        // Eliminar PDF del almacenamiento
-        if (
-            $autoridad->pdf_path &&
-            Storage::disk("public")->exists($autoridad->pdf_path)
-        ) {
-            Storage::disk("public")->delete($autoridad->pdf_path);
-        }
+        $this->deleteAuthorityFile($autoridad->foto_path, "uploads/images");
+        $this->deleteAuthorityFile($autoridad->pdf_path, "uploads/pdfs");
 
         $autoridad->delete();
 
@@ -229,5 +208,36 @@ class AutoridadController extends Controller
         }
 
         return $slug;
+    }
+
+    protected function deleteAuthorityFile(?string $value, ?string $legacyDirectory = null): void
+    {
+        if (empty($value) || filter_var($value, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $path = ltrim((string) $value, "/");
+
+        if (str_starts_with($path, "storage/")) {
+            $path = substr($path, strlen("storage/"));
+        }
+
+        if (Storage::disk("public")->exists($path)) {
+            Storage::disk("public")->delete($path);
+            return;
+        }
+
+        $publicPaths = [public_path($path)];
+
+        if ($legacyDirectory) {
+            $publicPaths[] = public_path($legacyDirectory . "/" . $path);
+        }
+
+        foreach ($publicPaths as $publicPath) {
+            if (file_exists($publicPath) && is_file($publicPath)) {
+                unlink($publicPath);
+                return;
+            }
+        }
     }
 }

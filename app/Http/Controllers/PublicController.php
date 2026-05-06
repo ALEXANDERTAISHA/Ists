@@ -407,6 +407,20 @@ class PublicController extends Controller
         return view("public.autoridades.show", compact("autoridad"));
     }
 
+    public function showAutoridadCurriculum(Autoridad $autoridad)
+    {
+        $path = $autoridad->pdfAbsolutePath();
+
+        if (!$path) {
+            abort(404);
+        }
+
+        return response()->file($path, [
+            "Content-Type" => "application/pdf",
+            "Content-Disposition" => 'inline; filename="' . basename($path) . '"',
+        ]);
+    }
+
     /**
      * Muestra la información y contenidos de un campus item por slug.
      */

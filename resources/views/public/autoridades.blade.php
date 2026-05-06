@@ -12,19 +12,8 @@
             @forelse($autoridades as $autoridad)
                 <div class="autoridad-card">
                     <div class="autoridad-img-wrap">
-                        @if($autoridad->foto_path)
-                            @php
-                                $filePath = public_path('uploads/images/' . $autoridad->foto_path);
-                            @endphp
-                            <div style="font-size:12px;color:#b00;background:#fff;padding:2px 6px;border-radius:6px;margin-bottom:4px;">
-                                Archivo solicitado: {{ $autoridad->foto_path }}<br>
-                                @if(!file_exists($filePath))
-                                    <span style="color:red;">¡Archivo no encontrado en uploads/images!</span>
-                                @else
-                                    <span style="color:green;">Archivo encontrado.</span>
-                                @endif
-                            </div>
-                            <img src="{{ asset('uploads/images/' . $autoridad->foto_path) }}" alt="Foto de {{ $autoridad->nombre }}" class="autoridad-img">
+                        @if($autoridad->foto_url)
+                            <img src="{{ $autoridad->foto_url }}" alt="Foto de {{ $autoridad->nombre }}" class="autoridad-img">
                         @endif
                     </div>
                     <div class="autoridad-info">
@@ -35,7 +24,7 @@
                             <div class="autoridad-bio">{!! $autoridad->biografia !!}</div>
                         @endif
                         @if($autoridad->pdf_path)
-                            <a href="{{ asset('storage/' . $autoridad->pdf_path) }}" target="_blank" class="pdf-pro-link">Ver Currículum PDF</a>
+                            <a href="{{ $autoridad->pdf_url }}" target="_blank" class="pdf-pro-link">Ver Currículum PDF</a>
                         @endif
                     </div>
                 </div>

@@ -49,20 +49,9 @@
                 <div class="form-group">
                     <label>Foto (Opcional)</label>
                     @if($autoridad->foto_path)
-                        @php
-                            $filePath = public_path('uploads/images/' . $autoridad->foto_path);
-                        @endphp
                         <div class="mb-2">
                             <p>Foto actual:</p>
-                            <div style="font-size:12px;color:#b00;background:#fff;padding:2px 6px;border-radius:6px;margin-bottom:4px;">
-                                Archivo: {{ $autoridad->foto_path }}<br>
-                                @if(!file_exists($filePath))
-                                    <span style="color:red;">¡Archivo no encontrado en uploads/images!</span>
-                                @else
-                                    <span style="color:green;">Archivo encontrado.</span>
-                                @endif
-                            </div>
-                            <img src="{{ asset('uploads/images/' . $autoridad->foto_path) }}" alt="Foto actual" style="max-width: 200px; height: auto;">
+                            <img src="{{ $autoridad->foto_url }}" alt="Foto actual" style="max-width: 200px; height: auto;">
                         </div>
                     @endif
                     <div class="custom-file-upload">
@@ -77,7 +66,7 @@
                     <label>Currículum en PDF (Opcional)</label>
                     @if($autoridad->pdf_path)
                         <div class="mb-2">
-                            <p>PDF actual: <a href="{{ asset('storage/' . $autoridad->pdf_path) }}" target="_blank" class="pdf-pro-link">Ver PDF</a></p>
+                            <p>PDF actual: <a href="{{ $autoridad->pdf_url }}" target="_blank" class="pdf-pro-link">Ver PDF</a></p>
                         </div>
                     @endif
                     <div class="custom-file-upload">

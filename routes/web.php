@@ -142,6 +142,13 @@ Route::get("/autoridades", [PublicController::class, "showAutoridades"])->name(
     "autoridades",
 );
 
+Route::get("/autoridades/{autoridad}/curriculum", [
+    PublicController::class,
+    "showAutoridadCurriculum",
+])
+    ->whereNumber("autoridad")
+    ->name("autoridades.curriculum");
+
 // Ruta pública para el detalle de una autoridad individual por slug
 Route::get("/autoridades/{slug}", [
     PublicController::class,
