@@ -24,24 +24,17 @@
     $pdfUpdatedLabel = null;
     $pdfSizeLabel = null;
     if (!empty($career->curriculum_pdf)) {
-        $pdfUrl = \Illuminate\Support\Str::startsWith($career->curriculum_pdf, '/')
-            ? asset(ltrim($career->curriculum_pdf, '/'))
-            : asset('storage/' . ltrim($career->curriculum_pdf, '/'));
+        $pdfUrl = \App\Support\PublicFile::url($career->curriculum_pdf);
 
         if (!empty($career->updated_at)) {
             $pdfUpdatedLabel = $career->updated_at->format('d/m/Y');
         }
 
         if (!\Illuminate\Support\Str::startsWith($career->curriculum_pdf, ['http://', 'https://'])) {
-            $storagePath = ltrim($career->curriculum_pdf, '/');
-            if (\Illuminate\Support\Str::startsWith($storagePath, 'storage/')) {
-                $storagePath = ltrim(substr($storagePath, strlen('storage/')), '/');
-            }
-
             try {
-                $disk = \Illuminate\Support\Facades\Storage::disk('public');
-                if ($disk->exists($storagePath)) {
-                    $sizeBytes = (int) $disk->size($storagePath);
+                $pdfPath = \App\Support\PublicFile::path($career->curriculum_pdf);
+                if ($pdfPath && is_file($pdfPath)) {
+                    $sizeBytes = (int) filesize($pdfPath);
                     $sizeMb = $sizeBytes / 1048576;
                     $pdfSizeLabel = $sizeMb >= 1
                         ? number_format($sizeMb, 1) . ' MB'

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Career;
 use App\Models\AcademicSection;
+use App\Support\PublicFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -79,7 +80,9 @@ class CareerController extends Controller
         if ($request->hasFile("curriculum_pdf")) {
             $file = $request->file("curriculum_pdf");
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/careers/curriculum'), $filename);
+            $destDir = public_path('uploads/careers/curriculum');
+            if (!is_dir($destDir)) { mkdir($destDir, 0755, true); }
+            $file->move($destDir, $filename);
             $validated["curriculum_pdf"] = '/uploads/careers/curriculum/' . $filename;
         }
 
@@ -195,13 +198,13 @@ class CareerController extends Controller
 
                 if ($request->file("curriculum_pdf")->isValid()) {
                     // Eliminar PDF anterior si existe
-                    if ($career->curriculum_pdf && file_exists(public_path($career->curriculum_pdf))) {
-                        unlink(public_path($career->curriculum_pdf));
-                    }
+                    PublicFile::delete($career->curriculum_pdf);
 
                     $file = $request->file("curriculum_pdf");
                     $filename = time() . '_' . $file->getClientOriginalName();
-                    $file->move(public_path('uploads/careers/curriculum'), $filename);
+                    $destDir = public_path('uploads/careers/curriculum');
+                    if (!is_dir($destDir)) { mkdir($destDir, 0755, true); }
+                    $file->move($destDir, $filename);
                     $validated["curriculum_pdf"] = '/uploads/careers/curriculum/' . $filename;
                     \Log::info(
                         "PDF de malla curricular guardado en: " . $validated["curriculum_pdf"],

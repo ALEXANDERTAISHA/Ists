@@ -172,7 +172,7 @@
 
                             @if($career->curriculum_pdf)
                                     <div class="mb-2 d-flex gap-2">
-                                        <a href="{{ asset('storage/' . $career->curriculum_pdf) }}"
+                                        <a href="{{ \App\Support\PublicFile::url($career->curriculum_pdf) }}"
                                            target="_blank"
                                            class="pdf-pro-link">Ver PDF Actual</a>
 
