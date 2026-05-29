@@ -784,7 +784,7 @@
         @if($pdfs->count())
             <section class="premium-section">
                 <div class="premium-section-heading">
-                    <h2 class="premium-section-title">Documentos de {{ $displayTitle }}</h2>
+                    <h2 class="premium-section-title">Documentos {{ $menuItem->title }}</h2>
                     <span class="premium-section-pill">{{ $documentCount }} documento(s)</span>
                 </div>
 
