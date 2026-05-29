@@ -65,7 +65,7 @@
             margin: 0;
             max-width: 820px;
             color: #fff;
-            font-size: clamp(1.7rem, 3.35vw, 3rem);
+            font-size: clamp(1.45rem, 2.65vw, 2.45rem);
             font-weight: 900;
             line-height: 1.02;
         }
