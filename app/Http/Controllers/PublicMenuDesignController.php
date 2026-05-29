@@ -12,6 +12,7 @@ class PublicMenuDesignController extends Controller
     public function show($id)
     {
         $menuItem = MenuItem::with(['pdfs', 'childrenRecursive'])->findOrFail($id);
+        $menuPathTitle = $this->buildMenuPathTitle($menuItem);
 
         $mainDesign = $menuItem->pdfs->first(function ($pdf) {
             return (bool) $pdf->is_active;
@@ -25,6 +26,30 @@ class PublicMenuDesignController extends Controller
             return (bool) $pdf->is_active && filled($pdf->pdf_path);
         })->values();
 
-        return view('public.menu_designs.show', compact('menuItem', 'childrenWithPdfs', 'pdfs', 'mainDesign'));
+        return view('public.menu_designs.show', compact('menuItem', 'menuPathTitle', 'childrenWithPdfs', 'pdfs', 'mainDesign'));
+    }
+
+    private function buildMenuPathTitle(MenuItem $menuItem): string
+    {
+        $items = collect();
+        $current = $menuItem;
+
+        while ($current) {
+            $items->prepend($this->formatMenuTitle($current->title));
+            $current = $current->parent;
+        }
+
+        return $items->implode('/');
+    }
+
+    private function formatMenuTitle(string $title): string
+    {
+        $trimmedTitle = trim($title);
+
+        if ($trimmedTitle === mb_strtoupper($trimmedTitle, 'UTF-8') && mb_strlen($trimmedTitle, 'UTF-8') > 6) {
+            return mb_convert_case($trimmedTitle, MB_CASE_TITLE, 'UTF-8');
+        }
+
+        return $trimmedTitle;
     }
 }

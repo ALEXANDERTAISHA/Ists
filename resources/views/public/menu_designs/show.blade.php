@@ -4,6 +4,7 @@
 @php
     $folderCount = isset($childrenWithPdfs) ? $childrenWithPdfs->count() : 0;
     $documentCount = $pdfs->count();
+    $displayTitle = $menuPathTitle ?? $menuItem->title;
 @endphp
 
 <main class="main-content menu-designs-premium">
@@ -712,7 +713,7 @@
             <div class="menu-hero-content">
                 <div>
                     <p class="menu-hero-eyebrow">Documentos institucionales</p>
-                    <h1 class="menu-hero-title">{{ $menuItem->title }}</h1>
+                    <h1 class="menu-hero-title">{{ $displayTitle }}</h1>
                 </div>
 
                 <div class="menu-hero-metrics" aria-label="Resumen de contenidos">
@@ -783,7 +784,7 @@
         @if($pdfs->count())
             <section class="premium-section">
                 <div class="premium-section-heading">
-                    <h2 class="premium-section-title">Documentos de {{ $menuItem->title }}</h2>
+                    <h2 class="premium-section-title">Documentos de {{ $displayTitle }}</h2>
                     <span class="premium-section-pill">{{ $documentCount }} documento(s)</span>
                 </div>
 
