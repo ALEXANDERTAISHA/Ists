@@ -4,7 +4,8 @@
 @php
     $folderCount = isset($childrenWithPdfs) ? $childrenWithPdfs->count() : 0;
     $documentCount = $pdfs->count();
-    $displayTitle = $menuPathTitle ?? $menuItem->title;
+    $displayPath = $menuPathTitle ?? $menuItem->title;
+    $displayTitle = 'Documentos ' . trim($menuItem->title);
 @endphp
 
 <main class="main-content menu-designs-premium">
@@ -712,7 +713,7 @@
         <section class="menu-hero">
             <div class="menu-hero-content">
                 <div>
-                    <p class="menu-hero-eyebrow">Documentos institucionales</p>
+                    <p class="menu-hero-eyebrow">{{ $displayPath }}</p>
                     <h1 class="menu-hero-title">{{ $displayTitle }}</h1>
                 </div>
 
